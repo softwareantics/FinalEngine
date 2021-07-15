@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Resources
 {
-    public interface IResourceManager
+    using System;
+
+    public interface IResourceManager : IDisposable
     {
         T GetResource<T>(string filePath);
 

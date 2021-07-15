@@ -6,6 +6,6 @@ namespace FinalEngine.Resources
 {
     internal interface IResourceLoaderInternal
     {
-        object LoadResource(string filePath);
+        IResource LoadResource(string filePath);
     }
 }
