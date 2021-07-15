@@ -40,7 +40,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Launching", "Launching", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.Launching", "FinalEngine.Launching\FinalEngine.Launching.csproj", "{2C32F809-791A-47F0-988B-A7629930823C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.ECS", "FinalEngine.ECS\FinalEngine.ECS.csproj", "{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalEngine.ECS", "FinalEngine.ECS\FinalEngine.ECS.csproj", "{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Resources", "FinalEngine.Resources\FinalEngine.Resources.csproj", "{E01E352D-632F-4199-B81C-93E9B646E8AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,10 @@ Global
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E01E352D-632F-4199-B81C-93E9B646E8AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01E352D-632F-4199-B81C-93E9B646E8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01E352D-632F-4199-B81C-93E9B646E8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01E352D-632F-4199-B81C-93E9B646E8AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{82A89B14-C583-4762-AAB1-F81E1C29E5D8} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 		{2C32F809-791A-47F0-988B-A7629930823C} = {B08DA1A9-E4B4-43A7-B464-D17FCDE63C35}
 		{976CD388-3DE5-4BA3-942F-C61C8D8F4C89} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
+		{E01E352D-632F-4199-B81C-93E9B646E8AA} = {198F3F27-340D-4617-86BB-AE9D9D5494A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A278B383-0D14-41B3-A71C-4505E1D503DF}
