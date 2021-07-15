@@ -9,7 +9,7 @@ namespace FinalEngine.Resources
     {
         public abstract T LoadResource(string filePath);
 
-        object IResourceLoaderInternal.LoadResource(string filePath)
+        IResource IResourceLoaderInternal.LoadResource(string filePath)
         {
             return this.LoadResource(filePath);
         }

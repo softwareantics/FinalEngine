@@ -38,21 +38,21 @@ namespace FinalEngine.Tests.Rendering.Textures
         public void ConstructorShouldThrowArgumentNullExceptionWhenFactoryIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(this.fileSystem.Object, null, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, null, this.invoker.Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenFileSystemIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(null, this.factory.Object, this.invoker.Object));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(null, this.factory.Object, this.invoker.Object));
         }
 
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenInvokerIsNull()
         {
             // Arrange, act and assert
-            Assert.Throws<ArgumentNullException>(() => new Texture2DLoader(this.fileSystem.Object, this.factory.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, null));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace FinalEngine.Tests.Rendering.Textures
                 PixelFormat.Rgba,
                 SizedFormat.Rgba8)).Returns(this.texture.Object);
 
-            this.loader = new Texture2DLoader(this.fileSystem.Object, this.factory.Object, this.invoker.Object);
+            this.loader = new Texture2DResourceLoader(this.fileSystem.Object, this.factory.Object, this.invoker.Object);
         }
 
         [TearDown]

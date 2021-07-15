@@ -34,5 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.IO\FinalEngine.IO.csproj" />
+    <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
   </ItemGroup>
 </Project>

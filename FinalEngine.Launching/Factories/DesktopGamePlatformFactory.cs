@@ -18,6 +18,7 @@ namespace FinalEngine.Launching.Factories
     using FinalEngine.Rendering.OpenGL;
     using FinalEngine.Rendering.OpenGL.Invocation;
     using FinalEngine.Rendering.Textures;
+    using FinalEngine.Resources;
     using OpenTK.Windowing.Common;
     using OpenTK.Windowing.Desktop;
     using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -77,7 +78,7 @@ namespace FinalEngine.Launching.Factories
             out IMouse mouse,
             out IRenderContext renderContext,
             out IRenderDevice renderDevice,
-            out ITexture2DLoader textureLoader)
+            out IResourceManager resourceManager)
         {
             var settings = new NativeWindowSettings()
             {
@@ -119,7 +120,10 @@ namespace FinalEngine.Launching.Factories
             renderDevice = new OpenGLRenderDevice(opengl);
 
             var image = new ImageInvoker();
-            textureLoader = new Texture2DLoader(fileSystem, renderDevice.Factory, image);
+            var textureLoader = new Texture2DResourceLoader(fileSystem, renderDevice.Factory, image);
+
+            resourceManager = new ResourceManager();
+            resourceManager.RegisterLoader(textureLoader);
         }
     }
 }

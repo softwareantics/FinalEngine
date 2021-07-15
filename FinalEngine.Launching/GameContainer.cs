@@ -11,7 +11,7 @@ namespace FinalEngine.Launching
     using FinalEngine.IO;
     using FinalEngine.Platform;
     using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Textures;
+    using FinalEngine.Resources;
 
     [ExcludeFromCodeCoverage]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Class is constantly changing, not 100% certain if I'm going to keep it or not.")]
@@ -45,7 +45,7 @@ namespace FinalEngine.Launching
                 out IMouse mouse,
                 out IRenderContext renderContext,
                 out IRenderDevice renderDevice,
-                out ITexture2DLoader textureLoader);
+                out IResourceManager resourceManager);
 
             this.Window = window;
             this.EventsProcessor = eventsProcessor;
@@ -58,7 +58,7 @@ namespace FinalEngine.Launching
             this.RenderContext = renderContext;
             this.RenderDevice = renderDevice;
 
-            this.TextureLoader = textureLoader;
+            this.ResourceManager = resourceManager;
         }
 
         /// <summary>
@@ -117,13 +117,7 @@ namespace FinalEngine.Launching
         /// </value>
         protected IRenderDevice RenderDevice { get; }
 
-        /// <summary>
-        ///   Gets the texture loader.
-        /// </summary>
-        /// <value>
-        ///   The texture loader.
-        /// </value>
-        protected ITexture2DLoader TextureLoader { get; }
+        protected IResourceManager? ResourceManager { get; private set; }
 
         /// <summary>
         ///   Gets the window.
@@ -217,6 +211,12 @@ namespace FinalEngine.Launching
 
             if (disposing)
             {
+                if (this.ResourceManager != null)
+                {
+                    this.ResourceManager.Dispose();
+                    this.ResourceManager = null;
+                }
+
                 if (this.RenderContext != null)
                 {
                     this.RenderContext.Dispose();

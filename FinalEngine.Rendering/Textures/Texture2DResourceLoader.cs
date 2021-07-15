@@ -8,6 +8,7 @@ namespace FinalEngine.Rendering.Textures
     using System.IO;
     using FinalEngine.IO;
     using FinalEngine.Rendering.Invocation;
+    using FinalEngine.Resources;
     using SixLabors.ImageSharp;
     using SixLabors.ImageSharp.PixelFormats;
 
@@ -15,7 +16,7 @@ namespace FinalEngine.Rendering.Textures
     ///   Provides a standard implementation of an <see cref="ITexture2DLoader"/>.
     /// </summary>
     /// <seealso cref="FinalEngine.Rendering.Textures.ITexture2DLoader"/>
-    public class Texture2DLoader : ITexture2DLoader
+    public class Texture2DResourceLoader : ResourceLoaderBase<ITexture2D>
     {
         /// <summary>
         ///   The GPU resource factory.
@@ -33,7 +34,7 @@ namespace FinalEngine.Rendering.Textures
         private readonly IImageInvoker invoker;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="Texture2DLoader"/> class.
+        ///   Initializes a new instance of the <see cref="Texture2DResourceLoader"/> class.
         /// </summary>
         /// <param name="fileSystem">
         ///   The file system used to open textures to load.
@@ -47,7 +48,7 @@ namespace FinalEngine.Rendering.Textures
         /// <exception cref="ArgumentNullException">
         ///   The specified <paramref name="fileSystem"/>, <paramref name="factory"/> or <paramref name="invoker"/> parameter is null.
         /// </exception>
-        public Texture2DLoader(IFileSystem fileSystem, IGPUResourceFactory factory, IImageInvoker invoker)
+        public Texture2DResourceLoader(IFileSystem fileSystem, IGPUResourceFactory factory, IImageInvoker invoker)
         {
             this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem), $"The specified {nameof(fileSystem)} parameter cannot be null.");
             this.factory = factory ?? throw new ArgumentNullException(nameof(factory), $"The specified {nameof(factory)} parameter cannot be null.");
@@ -69,7 +70,7 @@ namespace FinalEngine.Rendering.Textures
         /// <exception cref="FileNotFoundException">
         ///   The specified <paramref name="filePath"/> parameter cannot be located by the file system.
         /// </exception>
-        public ITexture2D LoadTexture(string filePath)
+        public override ITexture2D LoadResource(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {

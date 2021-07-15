@@ -27,6 +27,8 @@ namespace FinalEngine.ECS
         /// </param>
         void AddSystem(EntitySystemBase system);
 
+        void ProcessAll(GameLoopType type);
+
         /// <summary>
         ///   Removes the specified <paramref name="entity"/> from this <see cref="IEntityWorld"/>.
         /// </summary>

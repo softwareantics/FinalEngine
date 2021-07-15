@@ -9,7 +9,7 @@ namespace FinalEngine.Launching
     using FinalEngine.IO;
     using FinalEngine.Platform;
     using FinalEngine.Rendering;
-    using FinalEngine.Rendering.Textures;
+    using FinalEngine.Resources;
 
     /// <summary>
     ///   Defines an interface that provides a method for creating all the resources required for running a game on any platform.
@@ -63,6 +63,6 @@ namespace FinalEngine.Launching
             out IMouse mouse,
             out IRenderContext renderContext,
             out IRenderDevice renderDevice,
-            out ITexture2DLoader textureLoader);
+            out IResourceManager resourceManager);
     }
 }

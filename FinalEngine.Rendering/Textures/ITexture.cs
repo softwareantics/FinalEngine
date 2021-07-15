@@ -4,13 +4,13 @@
 
 namespace FinalEngine.Rendering.Textures
 {
-    using System;
+    using FinalEngine.Resources;
 
     /// <summary>
     ///   Defines an interface that represents a texture.
     /// </summary>
     /// <seealso cref="System.IDisposable"/>
-    public interface ITexture : IDisposable
+    public interface ITexture : IResource
     {
         /// <summary>
         ///   Gets the format of this <see cref="ITexture"/>.
