@@ -2,12 +2,42 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:behaviours="clr-namespace:FinalEngine.Editor.Behaviours"
         xmlns:controls="clr-namespace:FinalEngine.Editor.Controls"
         mc:Ignorable="d"
+        Title="Final Engine"
         Width="800"
-        Title="MainView" Height="450">
-    <Grid>
-        <controls:SceneControl DataContext="{Binding SceneDataContext}" />
-    </Grid>
+        Height="450"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <!-- #region BEHAVIOURS -->
+
+    <b:Interaction.Behaviors>
+        <behaviours:WindowCloseBehaviour CloseTrigger="{Binding IsClosed}" />
+    </b:Interaction.Behaviors>
+
+    <!-- #endregion -->
+
+    <DockPanel LastChildFill="True">
+
+        <!-- #region MAIN MENU -->
+
+        <Menu DockPanel.Dock="Top"
+              IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding CloseCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <!-- #endregion -->
+
+        <!-- #region SCENE VIEW -->
+
+        <controls:SceneControl DockPanel.Dock="Bottom" DataContext="{Binding SceneDataContext}" />
+
+        <!-- #endregion -->
+    </DockPanel>
 </Window>

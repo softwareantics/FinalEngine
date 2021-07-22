@@ -4,8 +4,14 @@
 
 namespace FinalEngine.Editor.Contexts
 {
+    using System.Windows.Input;
+
     public interface IMainDataContext
     {
+        ICommand CloseCommand { get; }
+
+        bool IsClosed { get; }
+
         ISceneDataContext SceneDataContext { get; }
     }
 }
