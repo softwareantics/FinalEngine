@@ -18,6 +18,8 @@ namespace FinalEngine.Editor.ViewModels
         {
             this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice), $"The specified {nameof(renderDevice)} parameter cannot be null.");
 
+            this.Title = "Scene";
+
             this.InitializeCommand = new RelayCommand(o => this.Initialize());
             this.RenderCommand = new RelayCommand(o => this.Render());
         }

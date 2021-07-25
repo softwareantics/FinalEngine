@@ -10,13 +10,20 @@ namespace FinalEngine.Editor.Selectors
 
     public class PanesStyleSelector : StyleSelector
     {
+        public Style DocumentStyle { get; set; }
+
         public Style ToolStyle { get; set; }
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            if (item is ToolViewModelBase)
+            if (item is IToolViewModel)
             {
                 return this.ToolStyle;
+            }
+
+            if (item is IPaneViewModel)
+            {
+                return this.DocumentStyle;
             }
 
             return base.SelectStyle(item, container);

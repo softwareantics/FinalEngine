@@ -17,52 +17,54 @@
             <DockingManager.Theme>
                 <Vs2013DarkTheme />
             </DockingManager.Theme>
-            
+
             <!-- TEMPLATE SELECTOR -->
             <DockingManager.LayoutItemTemplateSelector>
                 <selectors:PaneTemplateSelector>
-                    
+
                     <!-- CONSOLE -->
                     <selectors:PaneTemplateSelector.ConsoleViewTemplate>
                         <DataTemplate>
                             <views:ConsoleView/>
                         </DataTemplate>
                     </selectors:PaneTemplateSelector.ConsoleViewTemplate>
-                    
+
                     <!-- PROJECT EXPLORER -->
                     <selectors:PaneTemplateSelector.ProjectExplorerViewTemplate>
                         <DataTemplate>
                             <views:ProjectExplorerView/>
                         </DataTemplate>
                     </selectors:PaneTemplateSelector.ProjectExplorerViewTemplate>
-                    
+
                     <!-- SCENE HIERARCHY -->
                     <selectors:PaneTemplateSelector.SceneHierarchyViewTemplate>
                         <DataTemplate>
                             <views:SceneHierarchyView/>
                         </DataTemplate>
                     </selectors:PaneTemplateSelector.SceneHierarchyViewTemplate>
-                    
+
                     <!-- PROPERTIES -->
                     <selectors:PaneTemplateSelector.PropertiesViewTemplate>
                         <DataTemplate>
                             <views:PropertiesView/>
                         </DataTemplate>
                     </selectors:PaneTemplateSelector.PropertiesViewTemplate>
-                    
+
                     <!-- SCENE -->
                     <selectors:PaneTemplateSelector.SceneViewTemplate>
                         <DataTemplate>
                             <views:SceneView/>
                         </DataTemplate>
                     </selectors:PaneTemplateSelector.SceneViewTemplate>
-                    
+
                 </selectors:PaneTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
-
+            
             <!-- STYLE SELECTOR -->
             <DockingManager.LayoutItemContainerStyleSelector>
-                <selectors:PanesStyleSelector ToolStyle="{StaticResource ToolStyle}"/>
+                <selectors:PanesStyleSelector ToolStyle="{StaticResource ToolStyle}"
+                                              DocumentStyle="{StaticResource DocumentStyle}"/>
+
             </DockingManager.LayoutItemContainerStyleSelector>
 
             <LayoutRoot>

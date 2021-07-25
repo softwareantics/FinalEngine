@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
                 <ResourceDictionary Source="Styles/ToolStyle.xaml"/>
+                <ResourceDictionary Source="Styles/DocumentStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

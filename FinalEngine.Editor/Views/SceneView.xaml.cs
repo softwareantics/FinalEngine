@@ -4,10 +4,7 @@
 
 namespace FinalEngine.Editor.Views
 {
-    using System.Diagnostics;
-    using System.Drawing;
     using System.Windows.Controls;
-    using OpenTK.Graphics.OpenGL4;
     using OpenTK.Windowing.Common;
     using OpenTK.Wpf;
 
@@ -30,17 +27,6 @@ namespace FinalEngine.Editor.Views
             };
 
             this.glwpfControl.Start(settings);
-        }
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Debug.WriteLine(this.DataContext?.GetType().ToString());
-        }
-
-        private void glwpfControl_Render(System.TimeSpan obj)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-            GL.ClearColor(Color.CadetBlue);
         }
     }
 }

@@ -10,7 +10,9 @@
                  Height="450"
                  WindowStartupLocation="CenterScreen"
                  WindowState="Maximized"
-                 GlowBrush="{DynamicResource MahApps.Brushes.Accent2}">
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
+                 NonActiveGlowBrush="{DynamicResource MahApps.Brushes.Accent3}"
+                 BorderThickness="3">
 
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">

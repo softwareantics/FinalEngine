@@ -13,7 +13,7 @@ namespace FinalEngine.Editor.ViewModels
         public ConsoleViewModel()
         {
             this.Title = "Console";
-            this.Clicked = new RelayCommand(o => Debug.Assert(false));
+            this.Clicked = new RelayCommand(o => Debug.WriteLine(this.Title));
         }
 
         public ICommand Clicked { get; }

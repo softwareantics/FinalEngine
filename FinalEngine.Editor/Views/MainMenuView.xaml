@@ -6,9 +6,12 @@
              mc:Ignorable="d">
     <WrapPanel Margin="4">
         <Menu IsMainMenu="True">
-            <MenuItem Header="_File">
-                <MenuItem Header="E_xit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
-            </MenuItem>
+            <MenuItem Header="_File"/>
+            <MenuItem Header="_Edit"/>
+            <MenuItem Header="_View"/>
+            <MenuItem Header="_Settings"/>
+            <MenuItem Header="_Layout"/>
+            <MenuItem Header="_Help"/>
         </Menu>
     </WrapPanel>
 </UserControl>

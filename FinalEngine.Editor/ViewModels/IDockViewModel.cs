@@ -11,13 +11,5 @@ namespace FinalEngine.Editor.ViewModels
         IEnumerable<IToolViewModel> Anchorables { get; }
 
         IEnumerable<IPaneViewModel> Documents { get; }
-
-        IProjectExplorerViewModel ProjectExplorerViewModel { get; }
-
-        IPropertiesViewModel PropertiesViewModel { get; }
-
-        ISceneHierarchyViewModel SceneHierarchyViewModel { get; }
-
-        ISceneViewModel SceneViewModel { get; }
     }
 }
