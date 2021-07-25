@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="FinalEngine.Editor.Views.DockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:selectors="clr-namespace:FinalEngine.Editor.Selectors"
+             xmlns:views="clr-namespace:FinalEngine.Editor.Views"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450">
+    <Grid>
+        <DockingManager x:Name="dockManager"
+                        AnchorablesSource="{Binding Anchorables}"
+                        DocumentsSource="{Binding Documents}">
+
+            <!-- THEME -->
+            <DockingManager.Theme>
+                <Vs2013DarkTheme />
+            </DockingManager.Theme>
+            
+            <!-- TEMPLATE SELECTOR -->
+            <DockingManager.LayoutItemTemplateSelector>
+                <selectors:PaneTemplateSelector>
+                    
+                    <!-- CONSOLE -->
+                    <selectors:PaneTemplateSelector.ConsoleViewTemplate>
+                        <DataTemplate>
+                            <views:ConsoleView/>
+                        </DataTemplate>
+                    </selectors:PaneTemplateSelector.ConsoleViewTemplate>
+                    
+                    <!-- PROJECT EXPLORER -->
+                    <selectors:PaneTemplateSelector.ProjectExplorerViewTemplate>
+                        <DataTemplate>
+                            <views:ProjectExplorerView/>
+                        </DataTemplate>
+                    </selectors:PaneTemplateSelector.ProjectExplorerViewTemplate>
+                    
+                    <!-- SCENE HIERARCHY -->
+                    <selectors:PaneTemplateSelector.SceneHierarchyViewTemplate>
+                        <DataTemplate>
+                            <views:SceneHierarchyView/>
+                        </DataTemplate>
+                    </selectors:PaneTemplateSelector.SceneHierarchyViewTemplate>
+                    
+                    <!-- PROPERTIES -->
+                    <selectors:PaneTemplateSelector.PropertiesViewTemplate>
+                        <DataTemplate>
+                            <views:PropertiesView/>
+                        </DataTemplate>
+                    </selectors:PaneTemplateSelector.PropertiesViewTemplate>
+                    
+                    <!-- SCENE -->
+                    <selectors:PaneTemplateSelector.SceneViewTemplate>
+                        <DataTemplate>
+                            <views:SceneView/>
+                        </DataTemplate>
+                    </selectors:PaneTemplateSelector.SceneViewTemplate>
+                    
+                </selectors:PaneTemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+
+            <!-- STYLE SELECTOR -->
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <selectors:PanesStyleSelector ToolStyle="{StaticResource ToolStyle}"/>
+            </DockingManager.LayoutItemContainerStyleSelector>
+
+            <LayoutRoot>
+                <LayoutPanel Orientation="Vertical">
+                    <LayoutDocumentPane/>
+                    <LayoutAnchorablePane DockHeight="150"/>
+                </LayoutPanel>
+            </LayoutRoot>
+
+        </DockingManager>
+    </Grid>
+</UserControl>

@@ -4,6 +4,8 @@
 
 namespace FinalEngine.Editor.Views
 {
+    using System;
+    using FinalEngine.Editor.ViewModels;
     using MahApps.Metro.Controls;
 
     /// <summary>
@@ -14,8 +16,10 @@ namespace FinalEngine.Editor.Views
         /// <summary>
         ///   Initializes a new instance of the <see cref="MainView"/> class.
         /// </summary>
-        public MainView()
+        public MainView(IMainViewModel viewModel)
         {
+            this.DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel), $"The specified {nameof(viewModel)} parameter cannot be null.");
+
             this.InitializeComponent();
         }
     }

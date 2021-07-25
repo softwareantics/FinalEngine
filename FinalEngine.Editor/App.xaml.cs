@@ -6,7 +6,11 @@ namespace FinalEngine.Editor
 {
     using System;
     using System.Windows;
+    using FinalEngine.Editor.ViewModels;
     using FinalEngine.Editor.Views;
+    using FinalEngine.Rendering;
+    using FinalEngine.Rendering.OpenGL;
+    using FinalEngine.Rendering.OpenGL.Invocation;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -47,6 +51,18 @@ namespace FinalEngine.Editor
         private static IServiceProvider CreateAndConfigureServiceProvider()
         {
             var services = new ServiceCollection();
+
+            services.AddSingleton<IOpenGLInvoker, OpenGLInvoker>();
+            services.AddSingleton<IRenderDevice, OpenGLRenderDevice>();
+
+            services.AddSingleton<ISceneViewModel, SceneViewModel>();
+            services.AddSingleton<IPropertiesViewModel, PropertiesViewModel>();
+            services.AddSingleton<ISceneHierarchyViewModel, SceneHierarchyViewModel>();
+            services.AddSingleton<IProjectExplorerViewModel, ProjectExplorerViewModel>();
+            services.AddSingleton<IConsoleViewModel, ConsoleViewModel>();
+            services.AddSingleton<IDockViewModel, DockViewModel>();
+            services.AddSingleton<IMainMenuViewModel, MainMenuViewModel>();
+            services.AddSingleton<IMainViewModel, MainViewModel>();
 
             services.AddSingleton<MainView>();
 
