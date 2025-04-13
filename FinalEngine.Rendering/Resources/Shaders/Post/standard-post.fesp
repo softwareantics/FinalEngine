@@ -1,0 +1,4 @@
+{
+    "Vertex": "standard-post.vert",
+    "Fragment": "standard-post.frag"
+}

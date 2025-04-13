@@ -1,5 +1,5 @@
 // <copyright file="GameContainerBase.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Runtime;
@@ -48,6 +48,12 @@ public abstract class GameContainerBase : IDisposable
     protected IKeyboard Keyboard { get; private set; }
 
     protected IMouse Mouse { get; private set; }
+
+    //// TODO: DELETE THIS
+    protected IServiceProvider Provider
+    {
+        get { return ServiceLocator.Provider; }
+    }
 
     protected IRenderDevice RenderDevice { get; }
 

@@ -31,6 +31,31 @@ internal sealed class OpenGLGPUResourceFactory : IGPUResourceFactory
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
+    public ITextureCube CreateCubeTexture(
+        TextureCubeDescription description,
+        ITexture2D right,
+        ITexture2D left,
+        ITexture2D top,
+        ITexture2D bottom,
+        ITexture2D back,
+        ITexture2D front,
+        SizedFormat internalFormat = SizedFormat.Rgba8)
+    {
+        ArgumentNullException.ThrowIfNull(right, nameof(right));
+        ArgumentNullException.ThrowIfNull(left, nameof(left));
+        ArgumentNullException.ThrowIfNull(left, nameof(top));
+        ArgumentNullException.ThrowIfNull(left, nameof(bottom));
+        ArgumentNullException.ThrowIfNull(left, nameof(back));
+        ArgumentNullException.ThrowIfNull(left, nameof(front));
+
+        var cubeFaces = new List<ITexture2D>()
+        {
+            right, left, top, bottom, front, back,
+        };
+
+        return new OpenGLTextureCube(this.invoker, this.mapper, description, internalFormat, cubeFaces.Cast<IOpenGLTexture>().ToArray().AsReadOnly());
+    }
+
     public IFrameBuffer CreateFrameBuffer(IReadOnlyCollection<ITexture2D>? colorTargets, ITexture2D? depthTarget = null)
     {
         if (depthTarget is not null and not IOpenGLTexture)
