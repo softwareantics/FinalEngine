@@ -1,11 +1,13 @@
 // <copyright file="GameContainerBase.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Runtime;
 
 using System;
+using System.Drawing;
 using FinalEngine.ECS;
+using FinalEngine.Input.Controllers;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Platform;
@@ -22,6 +24,7 @@ public abstract class GameContainerBase : IDisposable
         this.Window = ServiceLocator.Provider.GetRequiredService<IWindow>();
         this.Keyboard = ServiceLocator.Provider.GetRequiredService<IKeyboard>();
         this.Mouse = ServiceLocator.Provider.GetRequiredService<IMouse>();
+        this.Controller = ServiceLocator.Provider.GetRequiredService<IGameController>();
         this.RenderDevice = ServiceLocator.Provider.GetRequiredService<IRenderDevice>();
         this.ResourceManager = ServiceLocator.Provider.GetRequiredService<IResourceManager>();
         this.Drawer = ServiceLocator.Provider.GetRequiredService<ISpriteDrawer>();
@@ -40,6 +43,8 @@ public abstract class GameContainerBase : IDisposable
     {
         this.Dispose(false);
     }
+
+    protected IGameController Controller { get; private set; }
 
     protected ISpriteDrawer Drawer { get; private set; }
 
@@ -78,6 +83,7 @@ public abstract class GameContainerBase : IDisposable
 
     public virtual void Render(float delta)
     {
+        this.RenderDevice.Clear(Color.CornflowerBlue);
         this.World.ProcessAll(GameLoopType.Render);
     }
 
