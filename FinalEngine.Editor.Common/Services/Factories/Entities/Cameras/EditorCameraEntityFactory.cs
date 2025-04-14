@@ -6,7 +6,6 @@ namespace FinalEngine.Editor.Common.Services.Factories.Entities.Cameras;
 
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components;
-using FinalEngine.Editor.Common.Components;
 using FinalEngine.Rendering.Components;
 
 internal sealed class EditorCameraEntityFactory : IEntityFactory
@@ -24,7 +23,6 @@ internal sealed class EditorCameraEntityFactory : IEntityFactory
 
         entity.AddComponent<PerspectiveComponent>();
         entity.AddComponent<CameraComponent>();
-        entity.AddComponent<HideComponent>();
 
         return entity;
     }

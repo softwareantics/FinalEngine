@@ -16,12 +16,15 @@ public sealed class Game : GameContainerBase
     public override void Initialize()
     {
         this.World.AddSystem<CameraUpdateEntitySystem>();
-        this.World.AddSystem<LightRenderEntitySystem>();
         this.World.AddSystem<MeshRenderEntitySystem>();
+        this.World.AddSystem<LightRenderEntitySystem>();
         this.World.AddSystem<PerspectiveRenderEntitySystem>();
+        this.World.AddSystem<SpriteRenderEntitySystem>();
 
         var camera = new Entity();
 
+        camera.AddComponent<TransformComponent>();
+        camera.AddComponent<PerspectiveComponent>();
         camera.AddComponent(new CameraComponent()
         {
             Viewport = this.Window.ClientBounds,
@@ -32,19 +35,12 @@ public sealed class Game : GameContainerBase
             Speed = 0.1f,
         });
 
-        camera.AddComponent(new TransformComponent());
-        camera.AddComponent(new PerspectiveComponent()
-        {
-            AspectRatio = this.Window.ClientSize.Width / this.Window.ClientSize.Height,
-        });
-
         this.World.AddEntity(camera);
 
         var cube = new Entity();
 
         cube.AddComponent<TransformComponent>();
         cube.AddComponent<MeshComponent>();
-
         this.World.AddEntity(cube);
 
         var light = new Entity();
