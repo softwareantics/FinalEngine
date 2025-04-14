@@ -14,6 +14,8 @@ using FinalEngine.Rendering.Cameras;
 using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Effects;
 using FinalEngine.Rendering.Renderers;
+using FinalEngine.Rendering.Textures;
+using FinalEngine.Resources;
 
 [EntitySystemProcess(EventName = "Render")]
 public sealed class PerspectiveRenderEntitySystem : EntitySystemBase
@@ -22,13 +24,22 @@ public sealed class PerspectiveRenderEntitySystem : EntitySystemBase
 
     private readonly IRenderingEngine renderingEngine;
 
-    public PerspectiveRenderEntitySystem(IRenderingEngine renderingEngine, IRenderQueue<IRenderEffect> postRenderer)
+    public PerspectiveRenderEntitySystem(
+        IRenderingEngine renderingEngine,
+        IRenderQueue<IRenderEffect> postRenderer,
+        IRenderDevice renderDevice)
     {
+        ArgumentNullException.ThrowIfNull(renderDevice);
+
         this.renderingEngine = renderingEngine ?? throw new ArgumentNullException(nameof(renderingEngine));
         this.renderEffectQueue = postRenderer ?? throw new ArgumentNullException(nameof(postRenderer));
     }
 
+    public (Vector3, float) AmbientLight { get; set; } = new(new Vector3(0.3f, 0.3f, 0.3f), 0.5f);
+
     public InversionRenderEffect Inversion { get; } = new InversionRenderEffect();
+
+    public ITextureCube SkyboxTexture { get; set; } = ResourceManager.Instance.LoadResource<ITextureCube>("Resources\\Textures\\Skybox\\skybox.fesk");
 
     public ToneMappingRenderEffect ToneMapping { get; } = new ToneMappingRenderEffect();
 
@@ -41,10 +52,13 @@ public sealed class PerspectiveRenderEntitySystem : EntitySystemBase
 
     protected override void Process([NotNull] IEnumerable<Entity> entities)
     {
+        this.renderingEngine.SetAmbientLight(this.AmbientLight.Item1, this.AmbientLight.Item2);
+        this.renderingEngine.SetSkybox(this.SkyboxTexture);
+
         foreach (var entity in entities)
         {
-            ////this.enderEffectQueue.Enqueue(this.ToneMapping);
-            ////this.enderEffectQueue.Enqueue(this.Inversion);
+            this.renderEffectQueue.Enqueue(this.ToneMapping);
+            this.renderEffectQueue.Enqueue(this.Inversion);
 
             var transform = entity.GetComponent<TransformComponent>();
             var perspective = entity.GetComponent<PerspectiveComponent>();

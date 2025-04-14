@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
         services.AddSingleton<ISceneManager, SceneManager>();
 
-        services.AddSingleton<EditorCameraUpdateEntitySystem>();
+        services.AddSingleton<ViewportUpdateEntitySystem>();
         services.AddSingleton<EditorCameraEntityFactory>();
 
         return services;

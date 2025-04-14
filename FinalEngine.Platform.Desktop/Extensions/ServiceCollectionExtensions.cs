@@ -1,5 +1,5 @@
 // <copyright file="ServiceCollectionExtensions.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop.Extensions;
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
 
                 AutoLoadBindings = false,
 
-                WindowBorder = WindowBorder.Fixed,
+                WindowBorder = WindowBorder.Resizable,
                 WindowState = WindowState.Normal,
 
                 Size = new Vector2i(1280, 720),

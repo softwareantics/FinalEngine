@@ -141,6 +141,11 @@ internal sealed class PostRenderer : IPostRenderer, IDisposable
                      this.colorTexture.Description.Width != size.Width ||
                      this.colorTexture.Description.Height != size.Height;
 
+        if (size.Width <= 0 || size.Height <= 0)
+        {
+            size = new Size(1, 1);
+        }
+
         if (reset)
         {
             this.colorTexture?.Dispose();

@@ -61,14 +61,14 @@ public static class ServiceCollectionExtensions
         services.AddResourceLoader<IShader, ShaderResourceLoader>();
         services.AddResourceLoader<IShaderProgram, ShaderProgramResourceLoader>();
         services.AddResourceLoader<ITexture2D, Texture2DResourceLoader>();
+        services.AddResourceLoader<ITextureCube, TextureCubeResourceLoader>();
         services.AddResourceLoader<Model, ModelResourceLoader>();
-        //// TODO: Model should likely have an interface.
 
         services.AddSingleton<SpriteRenderEntitySystem>();
         services.AddSingleton<MeshRenderEntitySystem>();
         services.AddSingleton<LightRenderEntitySystem>();
+        services.AddSingleton<CameraUpdateEntitySystem>();
         services.AddSingleton<PerspectiveRenderEntitySystem>();
-        services.AddSingleton<SpaceShipUpdateEntitySystem>();
 
         return services;
     }

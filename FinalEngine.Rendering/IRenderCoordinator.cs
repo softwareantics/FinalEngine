@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Rendering;
 
-public interface IRenderCoordinator
+internal interface IRenderCoordinator
 {
     bool CanRenderEffects { get; }
 

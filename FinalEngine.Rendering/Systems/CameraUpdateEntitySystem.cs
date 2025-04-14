@@ -1,8 +1,8 @@
-// <copyright file="EditorCameraUpdateEntitySystem.cs" company="Software Antics">
+// <copyright file="CameraUpdateEntitySystem.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Editor.Common.Systems;
+namespace FinalEngine.Rendering.Systems;
 
 using System;
 using System.Collections.Generic;
@@ -12,20 +12,19 @@ using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Attributes;
 using FinalEngine.ECS.Components;
-using FinalEngine.Editor.Common.Blackboard;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Maths;
 using FinalEngine.Rendering.Components;
 
 [EntitySystemProcess(EventName = "Update")]
-public class EditorCameraUpdateEntitySystem : EntitySystemBase
+public sealed class CameraUpdateEntitySystem : EntitySystemBase
 {
     private readonly IKeyboard keyboard;
 
     private readonly IMouse mouse;
 
-    public EditorCameraUpdateEntitySystem(IKeyboard keyboard, IMouse mouse)
+    public CameraUpdateEntitySystem(IKeyboard keyboard, IMouse mouse)
     {
         this.keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
         this.mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
@@ -43,8 +42,6 @@ public class EditorCameraUpdateEntitySystem : EntitySystemBase
             TransformComponent transform = entity.Transform;
             VelocityComponent velocity = entity.Velocity;
             CameraComponent camera = entity.Camera;
-
-            camera.Viewport = this.World.GetResource<ViewportBlackboardResource>().Resource;
 
             if (!camera.IsEnabled)
             {

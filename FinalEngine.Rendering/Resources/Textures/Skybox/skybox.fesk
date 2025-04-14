@@ -1,0 +1,8 @@
+{
+    "Top": "default_top.png",
+    "Bottom": "default_bottom.png",
+    "Left": "default_left.png",
+    "Right": "default_right.png",
+    "Front": "default_front.png",
+    "Back": "default_back.png"
+}

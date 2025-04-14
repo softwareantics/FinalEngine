@@ -36,16 +36,17 @@ internal sealed class SceneManager : ISceneManager
     {
         this.renderPipeline.Initialize();
 
-        this.ActiveScene.AddSystem<EditorCameraUpdateEntitySystem>();
-        this.ActiveScene.AddSystem<SpaceShipUpdateEntitySystem>();
+        this.ActiveScene.AddResource(new ViewportBlackboardResource());
+
+        this.ActiveScene.AddSystem<ViewportUpdateEntitySystem>();
+        this.ActiveScene.AddSystem<CameraUpdateEntitySystem>();
+
         this.ActiveScene.AddSystem<MeshRenderEntitySystem>();
         this.ActiveScene.AddSystem<LightRenderEntitySystem>();
         this.ActiveScene.AddSystem<PerspectiveRenderEntitySystem>();
         this.ActiveScene.AddSystem<SpriteRenderEntitySystem>();
 
         this.ActiveScene.AddEntityFromFactory<EditorCameraEntityFactory>();
-
-        this.ActiveScene.AddResource(new ViewportBlackboardResource());
     }
 
     public void Render()

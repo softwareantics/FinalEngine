@@ -10,11 +10,14 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
+using FinalEngine.Rendering;
 using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
     private static bool isInitialized;
+
+    private readonly IPipeline pipeline;
 
     private readonly ISceneManager sceneManager;
 
@@ -24,11 +27,13 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        ISceneManager sceneManager)
+        ISceneManager sceneManager,
+        IPipeline pipeline)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
+        this.pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
 
         this.Title = "Scene View";
         this.ContentID = "SceneView";
@@ -51,6 +56,8 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
         //// TODO: Move this to Load method.
         if (!isInitialized)
         {
+            this.pipeline.SetDefaultFrameBufferTarget(defaultFrameBuffer);
+
             this.sceneManager.Initialize();
             isInitialized = true;
         }

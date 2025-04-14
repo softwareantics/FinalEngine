@@ -7,11 +7,13 @@ namespace FinalEngine.Rendering;
 using System;
 using System.Drawing;
 using System.IO.Abstractions;
+using System.Numerics;
 using FinalEngine.Rendering.Cameras;
 using FinalEngine.Rendering.Renderers.Effects;
 using FinalEngine.Rendering.Renderers.Lighting;
 using FinalEngine.Rendering.Renderers.Scenes;
 using FinalEngine.Rendering.Renderers.Skyboxes;
+using FinalEngine.Rendering.Textures;
 
 internal sealed class RenderingEngine : IRenderingEngine
 {
@@ -86,23 +88,32 @@ internal sealed class RenderingEngine : IRenderingEngine
         this.renderCoordinator.ClearQueues();
     }
 
+    public void SetAmbientLight(Vector3 color, float strength)
+    {
+        this.lightRenderer.SetAmbientLight(color, strength);
+    }
+
+    public void SetSkybox(ITextureCube texture)
+    {
+        ArgumentNullException.ThrowIfNull(texture);
+        this.skyboxRenderer.SetSkybox(texture);
+    }
+
     private void RenderScene(Camera camera)
     {
-        if (!this.renderCoordinator.CanRenderGeometry)
+        if (this.renderCoordinator.CanRenderGeometry)
         {
-            return;
-        }
-
-        if (!this.renderCoordinator.CanRenderLights)
-        {
-            this.sceneRenderer.Render(camera, true);
-        }
-        else
-        {
-            this.lightRenderer.Render(() =>
+            if (!this.renderCoordinator.CanRenderLights)
             {
-                this.sceneRenderer.Render(camera, false);
-            });
+                this.sceneRenderer.Render(camera, true);
+            }
+            else
+            {
+                this.lightRenderer.Render(() =>
+                {
+                    this.sceneRenderer.Render(camera, false);
+                });
+            }
         }
 
         this.skyboxRenderer.Render(camera);

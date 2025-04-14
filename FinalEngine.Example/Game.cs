@@ -7,92 +7,57 @@ namespace FinalEngine.Example;
 using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components;
-using FinalEngine.Rendering;
 using FinalEngine.Rendering.Components;
-using FinalEngine.Rendering.Geometry;
-using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Systems;
 using FinalEngine.Runtime;
-using Microsoft.Extensions.DependencyInjection;
 
 public sealed class Game : GameContainerBase
 {
-    private Model model;
-
-    private IRenderingEngine renderingEngine;
-
     public override void Initialize()
     {
-        this.World.AddSystem<MeshRenderEntitySystem>();
+        this.World.AddSystem<CameraUpdateEntitySystem>();
         this.World.AddSystem<LightRenderEntitySystem>();
-        this.World.AddSystem<FlyCameraUpdateEntitySystem>();
+        this.World.AddSystem<MeshRenderEntitySystem>();
         this.World.AddSystem<PerspectiveRenderEntitySystem>();
 
-        this.model = this.ResourceManager.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
-
-        this.Populate(this.model);
-
-        this.renderingEngine = this.Provider.GetRequiredService<IRenderingEngine>();
-
         var camera = new Entity();
-
-        camera.AddComponent<TransformComponent>();
-
-        camera.AddComponent(new VelocityComponent()
-        {
-            Speed = 0.5f,
-        });
-
-        camera.AddComponent(new PerspectiveComponent()
-        {
-            AspectRatio = this.Window.ClientSize.Width / this.Window.ClientSize.Height,
-        });
 
         camera.AddComponent(new CameraComponent()
         {
             Viewport = this.Window.ClientBounds,
         });
 
+        camera.AddComponent(new VelocityComponent()
+        {
+            Speed = 0.1f,
+        });
+
+        camera.AddComponent(new TransformComponent());
+        camera.AddComponent(new PerspectiveComponent()
+        {
+            AspectRatio = this.Window.ClientSize.Width / this.Window.ClientSize.Height,
+        });
+
         this.World.AddEntity(camera);
 
-        var entity = new Entity();
+        var cube = new Entity();
 
-        entity.AddComponent(new TransformComponent()
+        cube.AddComponent<TransformComponent>();
+        cube.AddComponent<MeshComponent>();
+
+        this.World.AddEntity(cube);
+
+        var light = new Entity();
+
+        light.AddComponent(new TransformComponent()
         {
-            Position = new Vector3(-80, 4, -30),
+            Position = new Vector3(2, 2, 0),
         });
 
-        entity.AddComponent(new LightComponent()
-        {
-            Type = LightType.Point,
-        });
+        light.AddComponent<LightComponent>();
 
-        this.World.AddEntity(entity);
+        this.World.AddEntity(light);
 
         base.Initialize();
-    }
-
-    private void Populate(Model model)
-    {
-        if (model.RenderModel != null)
-        {
-            model.RenderModel.Transform.Scale = new Vector3(0.2f);
-
-            var entity = new Entity();
-
-            entity.AddComponent(model.RenderModel.Transform);
-            entity.AddComponent(new MeshComponent()
-            {
-                Mesh = model.RenderModel.Mesh,
-                Material = model.RenderModel.Material,
-            });
-
-            this.World.AddEntity(entity);
-        }
-
-        foreach (var child in model.Children)
-        {
-            this.Populate(child);
-        }
     }
 }
