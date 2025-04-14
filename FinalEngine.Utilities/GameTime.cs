@@ -34,7 +34,7 @@ public sealed class GameTime : IGameTime
         this.waitTime = OneSecondAsMilliSeconds / frameCap;
     }
 
-    public static float Delta { get; private set; }
+    public static float Delta { get; private set; } = 8.3f;
 
     public static float FrameRate { get; private set; }
 

@@ -53,7 +53,6 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     private void Render(int defaultFrameBuffer)
     {
-        //// TODO: Move this to Load method.
         if (!isInitialized)
         {
             this.pipeline.SetDefaultFrameBufferTarget(defaultFrameBuffer);

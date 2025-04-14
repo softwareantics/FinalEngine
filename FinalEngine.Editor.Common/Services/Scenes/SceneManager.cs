@@ -41,6 +41,7 @@ internal sealed class SceneManager : ISceneManager
 
         this.ActiveScene.AddSystem<ViewportUpdateEntitySystem>();
         this.ActiveScene.AddSystem<CameraUpdateEntitySystem>();
+        this.ActiveScene.AddSystem<SpinUpdateEntitySystem>();
 
         this.ActiveScene.AddSystem<MeshRenderEntitySystem>();
         this.ActiveScene.AddSystem<LightRenderEntitySystem>();

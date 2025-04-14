@@ -16,12 +16,7 @@ internal sealed class EditorCameraEntityFactory : IEntityFactory
         var entity = new Entity();
 
         entity.AddComponent<TransformComponent>();
-
-        entity.AddComponent(new VelocityComponent()
-        {
-            Speed = 0.1f,
-        });
-
+        entity.AddComponent<VelocityComponent>();
         entity.AddComponent<PerspectiveComponent>();
         entity.AddComponent<CameraComponent>();
 

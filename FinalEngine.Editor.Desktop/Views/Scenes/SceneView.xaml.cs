@@ -10,11 +10,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using FinalEngine.Editor.Desktop.Framework.Input;
 using FinalEngine.Editor.ViewModels.Scenes;
+using FinalEngine.Utilities;
 using OpenTK.Windowing.Common;
 using OpenTK.Wpf;
 
 public partial class SceneView : UserControl
 {
+    private readonly IGameTime gameTime;
+
     static SceneView()
     {
         FocusableProperty.OverrideMetadata(typeof(GLWpfControl), new FrameworkPropertyMetadata(true));
@@ -46,6 +49,8 @@ public partial class SceneView : UserControl
             UseDeviceDpi = true,
         });
 
+        this.gameTime = new GameTime(120.0d);
+
         KeyboardDevice.Initialize(this.glWpfControl);
         MouseDevice.Initialize(this.glWpfControl);
     }
@@ -73,6 +78,11 @@ public partial class SceneView : UserControl
 
     private void GlWpfControl_Render(System.TimeSpan obj)
     {
+        if (!this.gameTime.CanProcessNextFrame())
+        {
+            return;
+        }
+
         if (this.DataContext is ISceneViewPaneViewModel vm)
         {
             vm.RenderCommand.Execute(this.glWpfControl.Framebuffer);
@@ -81,6 +91,11 @@ public partial class SceneView : UserControl
 
     private void GlWpfControl_SizeChanged(object sender, SizeChangedEventArgs e)
     {
+        if (!this.gameTime.CanProcessNextFrame())
+        {
+            return;
+        }
+
         if (this.DataContext is ISceneViewPaneViewModel vm)
         {
             int w = (int)e.NewSize.Width;

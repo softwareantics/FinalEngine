@@ -52,21 +52,21 @@ public sealed class DockViewModel : ObservableObject, IDockViewModel
 
         this.logger.LogInformation("Creating tool views...");
 
-        this.Tools = new List<IToolViewModel>()
-        {
+        this.Tools =
+        [
             projectExplorerFactory.Create(),
             sceneHierarchyFactory.Create(),
             propertiesFactory.Create(),
             consoleFactory.Create(),
             entitySystemsFactory.Create(),
-        };
+        ];
 
         this.logger.LogInformation("Creating pane views...");
 
-        this.Panes = new List<IPaneViewModel>()
-        {
+        this.Panes =
+        [
             sceneViewFactory.Create(),
-        };
+        ];
     }
 
     public ICommand LoadCommand

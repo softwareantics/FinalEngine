@@ -77,10 +77,12 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
         var scene = this.sceneManager.ActiveScene;
         var entity = new Entity();
 
-        entity!.AddComponent(new TagComponent()
+        entity.AddComponent(new TagComponent()
         {
             Name = this.EntityName,
         });
+
+        entity.AddComponent<TransformComponent>();
 
         scene.AddEntity(entity);
 
