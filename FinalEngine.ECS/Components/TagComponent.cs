@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.ECS.Components.Core;
+namespace FinalEngine.ECS.Components;
 
 using System.ComponentModel;
 

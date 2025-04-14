@@ -9,9 +9,6 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:SceneViewPaneViewModel}">
     <Grid>
-        <glwpf:GLWpfControl x:Name="glWpfControl"
-                            SizeChanged="GlWpfControl_SizeChanged"
-                            Render="{eb:EventBinding RenderCommand.Execute, `null`}">
-        </glwpf:GLWpfControl>
+        <glwpf:GLWpfControl x:Name="glWpfControl" />
     </Grid>
 </UserControl>

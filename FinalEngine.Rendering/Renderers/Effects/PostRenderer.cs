@@ -74,55 +74,6 @@ internal sealed class PostRenderer : IPostRenderer, IDisposable
         get { return this.renderEffects.Count > 0; }
     }
 
-    private ITexture2D ColorTexture
-    {
-        get
-        {
-            return this.colorTexture ??= this.renderDevice.Factory.CreateTexture2D<byte>(
-            new Texture2DDescription()
-            {
-                Width = this.renderDevice.Rasterizer.GetViewport().Width,
-                Height = this.renderDevice.Rasterizer.GetViewport().Height,
-                MinFilter = TextureFilterMode.Linear,
-                MagFilter = TextureFilterMode.Linear,
-                WrapS = TextureWrapMode.Repeat,
-                WrapT = TextureWrapMode.Repeat,
-                PixelType = PixelType.Float,
-                GenerateMipmaps = false,
-            },
-            null,
-            PixelFormat.Rgb,
-            SizedFormat.Rgba16F);
-        }
-    }
-
-    private ITexture2D DepthTexture
-    {
-        get
-        {
-            return this.depthTexture ??= this.renderDevice.Factory.CreateTexture2D<byte>(
-            new Texture2DDescription()
-            {
-                Width = this.renderDevice.Rasterizer.GetViewport().Width,
-                Height = this.renderDevice.Rasterizer.GetViewport().Height,
-                MinFilter = TextureFilterMode.Nearest,
-                MagFilter = TextureFilterMode.Nearest,
-                WrapS = TextureWrapMode.Repeat,
-                WrapT = TextureWrapMode.Repeat,
-                PixelType = PixelType.Float,
-                GenerateMipmaps = false,
-            },
-            null,
-            PixelFormat.Depth,
-            SizedFormat.Depth24);
-        }
-    }
-
-    private IFrameBuffer FrameBuffer
-    {
-        get { return this.frameBuffer ??= this.renderDevice.Factory.CreateFrameBuffer([this.ColorTexture], this.DepthTexture); }
-    }
-
     private IShaderProgram ShaderProgram
     {
         get { return this.shaderProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Post\\standard-post.fesp"); }
@@ -147,26 +98,28 @@ internal sealed class PostRenderer : IPostRenderer, IDisposable
         this.renderEffects.Add(renderable);
     }
 
-    public void Render(ICamera camera, Action renderScene)
+    public void Render(Camera camera, Action renderScene)
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, this);
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
         ArgumentNullException.ThrowIfNull(renderScene, nameof(renderScene));
 
-        this.renderDevice.Pipeline.SetFrameBuffer(this.FrameBuffer);
-        this.renderDevice.Rasterizer.SetViewport(camera.Bounds);
+        this.CreateFrameBuffer(camera.Viewport.Size);
+
+        this.renderDevice.Pipeline.SetFrameBuffer(this.frameBuffer);
+        this.renderDevice.Rasterizer.SetViewport(camera.Viewport);
         this.renderDevice.Clear(Color.Black);
 
         renderScene();
 
         this.renderDevice.Pipeline.SetFrameBuffer(null);
-        this.renderDevice.Rasterizer.SetViewport(camera.Bounds);
+        this.renderDevice.Rasterizer.SetViewport(camera.Viewport);
         this.renderDevice.Clear(Color.Black);
 
         this.renderDevice.Pipeline.SetShaderProgram(this.ShaderProgram);
 
         this.renderDevice.Pipeline.SetUniform("u_screenTexture", 0);
-        this.renderDevice.Pipeline.SetTexture(this.ColorTexture, 0);
+        this.renderDevice.Pipeline.SetTexture(this.colorTexture!, 0);
 
         foreach (var renderEffect in this.renderEffects)
         {
@@ -180,6 +133,54 @@ internal sealed class PostRenderer : IPostRenderer, IDisposable
 
         this.mesh!.Bind(this.renderDevice.InputAssembler);
         this.mesh.Draw(this.renderDevice);
+    }
+
+    private void CreateFrameBuffer(Size size)
+    {
+        bool reset = this.colorTexture == null || this.depthTexture == null || this.frameBuffer == null ||
+                     this.colorTexture.Description.Width != size.Width ||
+                     this.colorTexture.Description.Height != size.Height;
+
+        if (reset)
+        {
+            this.colorTexture?.Dispose();
+            this.depthTexture?.Dispose();
+            this.frameBuffer?.Dispose();
+
+            this.colorTexture = this.renderDevice.Factory.CreateTexture2D<byte>(
+                new Texture2DDescription()
+                {
+                    Width = size.Width,
+                    Height = size.Height,
+                    MinFilter = TextureFilterMode.Linear,
+                    MagFilter = TextureFilterMode.Linear,
+                    WrapS = TextureWrapMode.Repeat,
+                    WrapT = TextureWrapMode.Repeat,
+                    PixelType = PixelType.Float,
+                    GenerateMipmaps = false,
+                },
+                null,
+                PixelFormat.Rgb,
+                SizedFormat.Rgba16F);
+
+            this.depthTexture = this.renderDevice.Factory.CreateTexture2D<byte>(
+                new Texture2DDescription()
+                {
+                    Width = size.Width,
+                    Height = size.Height,
+                    MinFilter = TextureFilterMode.Nearest,
+                    MagFilter = TextureFilterMode.Nearest,
+                    WrapS = TextureWrapMode.Repeat,
+                    WrapT = TextureWrapMode.Repeat,
+                    PixelType = PixelType.Float,
+                    GenerateMipmaps = false,
+                },
+                null,
+                PixelFormat.Depth,
+                SizedFormat.Depth24);
+
+            this.frameBuffer = this.renderDevice.Factory.CreateFrameBuffer([this.colorTexture], this.depthTexture);
+        }
     }
 
     private void Dispose(bool disposing)

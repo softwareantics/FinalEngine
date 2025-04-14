@@ -8,6 +8,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FinalEngine.ECS;
+using FinalEngine.ECS.Components;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using Microsoft.Extensions.Logging;
@@ -73,7 +75,14 @@ public sealed class CreateEntityViewModel : ObservableValidator, ICreateEntityVi
         this.logger.LogInformation($"Creating new entity...");
 
         var scene = this.sceneManager.ActiveScene;
-        scene.AddEntity(this.EntityName, this.EntityGuid);
+        var entity = new Entity();
+
+        entity!.AddComponent(new TagComponent()
+        {
+            Name = this.EntityName,
+        });
+
+        scene.AddEntity(entity);
 
         this.logger.LogInformation($"Entity with ID: '{this.EntityGuid}' created!");
 

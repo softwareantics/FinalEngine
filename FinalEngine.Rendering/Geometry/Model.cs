@@ -8,9 +8,6 @@ using System;
 using System.Collections.Generic;
 using FinalEngine.Resources;
 
-//// TODO: Figure out how to load models and then create entities for ECS? Lmao...
-//// TODO: Figure out what stuff inside Rendering/Geometry needs to be internal.
-
 public sealed class Model : IResource
 {
     private readonly List<Model> children;

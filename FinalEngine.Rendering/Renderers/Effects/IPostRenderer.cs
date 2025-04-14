@@ -10,5 +10,5 @@ using FinalEngine.Rendering.Effects;
 
 internal interface IPostRenderer : IRenderQueue<IRenderEffect>
 {
-    void Render(ICamera camera, Action renderScene);
+    void Render(Camera camera, Action renderScene);
 }

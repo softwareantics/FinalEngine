@@ -4,11 +4,18 @@
 
 namespace FinalEngine.Editor.Common.Services.Scenes;
 
-using FinalEngine.Editor.Common.Models.Scenes;
+using System.Drawing;
+using FinalEngine.ECS;
 
 public interface ISceneManager
 {
-    IScene ActiveScene { get; }
+    IEntityWorld ActiveScene { get; }
 
     void Initialize();
+
+    void Render();
+
+    void SetViewport(Rectangle viewport);
+
+    void Update();
 }

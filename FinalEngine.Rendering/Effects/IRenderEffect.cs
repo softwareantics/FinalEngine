@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Rendering.Effects;
 
-internal interface IRenderEffect
+public interface IRenderEffect
 {
     bool Enabled { get; set; }
 

@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Tests.ECS.Components;
 
-using FinalEngine.ECS.Components.Core;
+using FinalEngine.ECS.Components;
 using NUnit.Framework;
 
 [TestFixture]

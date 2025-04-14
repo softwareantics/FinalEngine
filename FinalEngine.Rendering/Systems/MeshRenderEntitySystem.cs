@@ -13,7 +13,7 @@ using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;
 
-[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
+[EntitySystemProcess(EventName = "Render")]
 public sealed class MeshRenderEntitySystem : EntitySystemBase
 {
     private readonly IRenderQueue<RenderModel> renderQueue;

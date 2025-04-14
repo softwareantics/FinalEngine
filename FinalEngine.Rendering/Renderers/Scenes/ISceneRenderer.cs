@@ -8,5 +8,5 @@ using FinalEngine.Rendering.Cameras;
 
 internal interface ISceneRenderer
 {
-    void Render(ICamera camera, bool useBuiltInShader);
+    void Render(Camera camera, bool useBuiltInShader);
 }

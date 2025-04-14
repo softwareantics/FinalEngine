@@ -29,7 +29,7 @@ internal sealed class SceneRenderer : ISceneRenderer
         get { return this.geometryProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\standard-geometry.fesp"); }
     }
 
-    public void Render(ICamera camera, bool useBuiltInShader)
+    public void Render(Camera camera, bool useBuiltInShader)
     {
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
 
@@ -42,10 +42,10 @@ internal sealed class SceneRenderer : ISceneRenderer
         this.geometryRenderer.Render();
     }
 
-    private void UpdateUniforms(ICamera camera)
+    private void UpdateUniforms(Camera camera)
     {
         this.renderDevice.Pipeline.SetUniform("u_projection", camera.Projection);
         this.renderDevice.Pipeline.SetUniform("u_view", camera.View);
-        this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Position);
+        this.renderDevice.Pipeline.SetUniform("u_viewPosition", camera.Transform.Translation);
     }
 }

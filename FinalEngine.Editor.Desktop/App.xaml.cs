@@ -10,10 +10,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.Audio.OpenAL.Extensions;
 using FinalEngine.ECS.Extensions;
 using FinalEngine.Editor.Common.Extensions;
-using FinalEngine.Editor.Common.Models.Scenes;
-using FinalEngine.Editor.Common.Services.Application;
-using FinalEngine.Editor.Common.Services.Environment;
-using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.Desktop.Extensions;
 using FinalEngine.Editor.Desktop.Services.Actions;
 using FinalEngine.Editor.Desktop.Services.Layout;
@@ -90,11 +86,7 @@ public partial class App : Application
         services.AddResourceManager();
         services.AddEditorPlatform();
 
-        services.AddTransient<IScene, Scene>();
-
-        services.AddSingleton<IApplicationContext, ApplicationContext>();
-        services.AddSingleton<IEnvironmentContext, EnvironmentContext>();
-        services.AddSingleton<ISceneManager, SceneManager>();
+        services.AddCommon();
 
         services.AddFactory<IProjectExplorerToolViewModel, ProjectExplorerToolViewModel>();
         services.AddFactory<ISceneHierarchyToolViewModel, SceneHierarchyToolViewModel>();

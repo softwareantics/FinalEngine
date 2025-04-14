@@ -10,15 +10,11 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Docking.Panes;
-using FinalEngine.Rendering;
-using FinalEngine.Rendering.Systems;
 using Microsoft.Extensions.Logging;
 
 public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneViewModel
 {
     private static bool isInitialized;
-
-    private readonly IRenderDevice renderDevice;
 
     private readonly ISceneManager sceneManager;
 
@@ -28,12 +24,10 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     public SceneViewPaneViewModel(
         ILogger<SceneViewPaneViewModel> logger,
-        IRenderDevice renderDevice,
         ISceneManager sceneManager)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
-        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
 
         this.Title = "Scene View";
@@ -44,7 +38,7 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
 
     public ICommand RenderCommand
     {
-        get { return this.renderCommand ??= new RelayCommand(this.Render); }
+        get { return this.renderCommand ??= new RelayCommand<int>(this.Render); }
     }
 
     public IRelayCommand<Rectangle> UpdateViewCommand
@@ -52,21 +46,21 @@ public sealed class SceneViewPaneViewModel : PaneViewModelBase, ISceneViewPaneVi
         get { return this.updateViewCommand ??= new RelayCommand<Rectangle>(this.UpdateView); }
     }
 
-    private void Render()
+    private void Render(int defaultFrameBuffer)
     {
+        //// TODO: Move this to Load method.
         if (!isInitialized)
         {
             this.sceneManager.Initialize();
-            this.sceneManager.ActiveScene.AddSystem<SpriteRenderEntitySystem>();
             isInitialized = true;
         }
 
-        this.renderDevice.Clear(Color.Black);
-        this.sceneManager.ActiveScene.Render();
+        this.sceneManager.Update();
+        this.sceneManager.Render();
     }
 
     private void UpdateView(Rectangle viewport)
     {
-        this.renderDevice.Rasterizer.SetViewport(viewport);
+        this.sceneManager.SetViewport(viewport);
     }
 }

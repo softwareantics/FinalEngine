@@ -13,7 +13,7 @@ using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Lighting;
 using FinalEngine.Rendering.Renderers;
 
-[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
+[EntitySystemProcess(EventName = "Render")]
 public sealed class LightRenderEntitySystem : EntitySystemBase
 {
     private readonly IRenderQueue<Light> renderQueue;

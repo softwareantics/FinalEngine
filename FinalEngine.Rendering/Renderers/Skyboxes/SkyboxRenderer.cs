@@ -81,7 +81,7 @@ internal sealed class SkyboxRenderer : ISkyboxRenderer, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public void Render(ICamera camera)
+    public void Render(Camera camera)
     {
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
         ObjectDisposedException.ThrowIf(this.isDisposed, this);

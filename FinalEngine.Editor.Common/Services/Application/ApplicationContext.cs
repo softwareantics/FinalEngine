@@ -9,7 +9,7 @@ using System.IO.Abstractions;
 using System.Reflection;
 using FinalEngine.Editor.Common.Services.Environment;
 
-public sealed class ApplicationContext : IApplicationContext
+internal sealed class ApplicationContext : IApplicationContext
 {
     private readonly IEnvironmentContext environment;
 

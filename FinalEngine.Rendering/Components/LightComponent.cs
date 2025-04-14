@@ -5,11 +5,13 @@
 namespace FinalEngine.Rendering.Components;
 
 using System;
+using System.ComponentModel;
 using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.Maths;
 using FinalEngine.Rendering.Lighting;
 
+[Category("Rendering")]
 public class LightComponent : IEntityComponent
 {
     public LightComponent()

@@ -28,6 +28,8 @@ internal sealed class OpenGLPipeline : IPipeline
 
     private IOpenGLTexture? boundTexture;
 
+    private int defaultFrameBufferTarget;
+
     public OpenGLPipeline(IOpenGLInvoker invoker)
     {
         this.invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
@@ -64,6 +66,12 @@ internal sealed class OpenGLPipeline : IPipeline
         return content;
     }
 
+    public void SetDefaultFrameBufferTarget(int frameBuffer)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThan(frameBuffer, 0);
+        this.defaultFrameBufferTarget = frameBuffer;
+    }
+
     public void SetFrameBuffer(IFrameBuffer? frameBuffer)
     {
         if (this.boundFrameBuffer == frameBuffer)
@@ -74,7 +82,7 @@ internal sealed class OpenGLPipeline : IPipeline
         if (frameBuffer == null)
         {
             this.boundFrameBuffer = null;
-            this.invoker.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            this.invoker.BindFramebuffer(FramebufferTarget.Framebuffer, this.defaultFrameBufferTarget);
             return;
         }
 

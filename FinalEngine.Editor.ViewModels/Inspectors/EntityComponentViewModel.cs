@@ -15,7 +15,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
-using FinalEngine.ECS.Components.Core;
+using FinalEngine.ECS.Components;
 using FinalEngine.Editor.ViewModels.Editing.DataTypes;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 

@@ -6,8 +6,8 @@ namespace FinalEngine.Example;
 
 using System.Numerics;
 using FinalEngine.ECS;
+using FinalEngine.ECS.Components;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Cameras;
 using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Lighting;
@@ -17,8 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 public sealed class Game : GameContainerBase
 {
-    private FlyCamera camera;
-
     private Model model;
 
     private IRenderingEngine renderingEngine;
@@ -27,14 +25,35 @@ public sealed class Game : GameContainerBase
     {
         this.World.AddSystem<MeshRenderEntitySystem>();
         this.World.AddSystem<LightRenderEntitySystem>();
-
-        this.camera = new FlyCamera(this.Window.ClientSize.Width, this.Window.ClientSize.Height);
+        this.World.AddSystem<FlyCameraUpdateEntitySystem>();
+        this.World.AddSystem<PerspectiveRenderEntitySystem>();
 
         this.model = this.ResourceManager.LoadResource<Model>("Resources\\Models\\Sponza\\sponza.obj");
 
         this.Populate(this.model);
 
         this.renderingEngine = this.Provider.GetRequiredService<IRenderingEngine>();
+
+        var camera = new Entity();
+
+        camera.AddComponent<TransformComponent>();
+
+        camera.AddComponent(new VelocityComponent()
+        {
+            Speed = 0.5f,
+        });
+
+        camera.AddComponent(new PerspectiveComponent()
+        {
+            AspectRatio = this.Window.ClientSize.Width / this.Window.ClientSize.Height,
+        });
+
+        camera.AddComponent(new CameraComponent()
+        {
+            Viewport = this.Window.ClientBounds,
+        });
+
+        this.World.AddEntity(camera);
 
         var entity = new Entity();
 
@@ -51,20 +70,6 @@ public sealed class Game : GameContainerBase
         this.World.AddEntity(entity);
 
         base.Initialize();
-    }
-
-    public override void Render(float delta)
-    {
-        this.renderingEngine.Render(this.camera);
-        base.Render(delta);
-    }
-
-    public override void Update(float delta)
-    {
-        this.Window.Title = $"{GameTime.FrameRate}";
-        this.camera.Update(this.RenderDevice.Pipeline, this.Keyboard, this.Mouse);
-
-        base.Update(delta);
     }
 
     private void Populate(Model model)

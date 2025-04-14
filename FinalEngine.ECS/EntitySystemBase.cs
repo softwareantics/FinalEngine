@@ -21,6 +21,8 @@ public abstract class EntitySystemBase
 
     public Guid UniqueIdentifier { get; }
 
+    protected IEntityWorld World { get; private set; }
+
     public void Process()
     {
         this.Process(this.entities.ToList());
@@ -53,6 +55,11 @@ public abstract class EntitySystemBase
     internal void RemoveAllEntities()
     {
         this.entities.Clear();
+    }
+
+    internal void SetWorld(IEntityWorld world)
+    {
+        this.World = world ?? throw new ArgumentNullException(nameof(world));
     }
 
     protected virtual bool IsMatch([NotNull] IReadOnlyEntity entity)

@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage(Justification = "Invocation")]
-public sealed class EnvironmentContext : IEnvironmentContext
+internal sealed class EnvironmentContext : IEnvironmentContext
 {
     public string GetFolderPath(Environment.SpecialFolder folder)
     {

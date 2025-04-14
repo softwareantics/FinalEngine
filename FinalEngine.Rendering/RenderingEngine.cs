@@ -50,12 +50,12 @@ internal sealed class RenderingEngine : IRenderingEngine
         this.renderDevice.Pipeline.AddShaderHeader("effects", fileSystem.File.ReadAllText("Resources\\Shaders\\Includes\\effects.glsl"));
     }
 
-    public void Render(ICamera camera)
+    public void Render(Camera camera)
     {
         ArgumentNullException.ThrowIfNull(camera, nameof(camera));
 
         this.renderDevice.Pipeline.SetFrameBuffer(null);
-        this.renderDevice.Rasterizer.SetViewport(camera.Bounds);
+        this.renderDevice.Rasterizer.SetViewport(camera.Viewport);
         this.renderDevice.Clear(Color.Black);
 
         this.renderDevice.OutputMerger.SetDepthState(new DepthStateDescription()
@@ -86,7 +86,7 @@ internal sealed class RenderingEngine : IRenderingEngine
         this.renderCoordinator.ClearQueues();
     }
 
-    private void RenderScene(ICamera camera)
+    private void RenderScene(Camera camera)
     {
         if (!this.renderCoordinator.CanRenderGeometry)
         {

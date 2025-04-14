@@ -9,7 +9,7 @@ using FinalEngine.Rendering.Textures;
 
 internal interface ISkyboxRenderer
 {
-    void Render(ICamera camera);
+    void Render(Camera camera);
 
     void SetSkybox(ITextureCube? texture);
 }

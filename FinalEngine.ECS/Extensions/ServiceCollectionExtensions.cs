@@ -1,5 +1,5 @@
 // <copyright file="ServiceCollectionExtensions.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.ECS.Extensions;
@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IEntityWorld, EntityWorld>();
         services.AddSingleton<IEntitySystemResolver, EntitySystemResolver>();
+        services.AddSingleton<IEntityFactoryResolver, EntityFactoryResolver>();
 
         return services;
     }

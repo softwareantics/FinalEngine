@@ -82,7 +82,7 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
             return;
         }
 
-        this.sceneManager.ActiveScene.RemoveEntity(this.SelectedEntity.UniqueIdentifier);
+        this.sceneManager.ActiveScene.RemoveEntity(this.SelectedEntity);
         this.messenger.Send(new EntityDeletedMessage());
     }
 }

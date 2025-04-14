@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Effects;
 
 using System;
 
-internal sealed class InversionRenderEffect : IRenderEffect
+public sealed class InversionRenderEffect : IRenderEffect
 {
     public bool Enabled { get; set; }
 

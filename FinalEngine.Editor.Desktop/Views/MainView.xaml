@@ -53,7 +53,9 @@
 
                 <!-- SCENE -->
                 <MenuItem Header="_Scene">
-                    <MenuItem Header="Create _Entity" InputGestureText="Ctrl+Shift+E" Command="{Binding CreateEntityCommand}" />
+                    <MenuItem Header="Create _Entity" InputGestureText="Ctrl+Shift+E" Command="{Binding CreateEntityCommand}" CommandParameter="Empty" />
+                    <MenuItem Header="Create _Cube" Command="{Binding CreateEntityCommand}" CommandParameter="Cube" />
+                    <MenuItem Header="Create _Light" Command="{Binding CreateEntityCommand}" CommandParameter="Light" />
                 </MenuItem>
 
                 <!-- WINDOW -->

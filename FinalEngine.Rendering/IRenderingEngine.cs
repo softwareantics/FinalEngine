@@ -8,5 +8,5 @@ using FinalEngine.Rendering.Cameras;
 
 public interface IRenderingEngine
 {
-    void Render(ICamera camera);
+    void Render(Camera camera);
 }

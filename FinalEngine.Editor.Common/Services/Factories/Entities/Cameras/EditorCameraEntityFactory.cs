@@ -1,0 +1,31 @@
+// <copyright file="EditorCameraEntityFactory.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
+namespace FinalEngine.Editor.Common.Services.Factories.Entities.Cameras;
+
+using FinalEngine.ECS;
+using FinalEngine.ECS.Components;
+using FinalEngine.Editor.Common.Components;
+using FinalEngine.Rendering.Components;
+
+internal sealed class EditorCameraEntityFactory : IEntityFactory
+{
+    public Entity CreateEntity()
+    {
+        var entity = new Entity();
+
+        entity.AddComponent<TransformComponent>();
+
+        entity.AddComponent(new VelocityComponent()
+        {
+            Speed = 0.1f,
+        });
+
+        entity.AddComponent<PerspectiveComponent>();
+        entity.AddComponent<CameraComponent>();
+        entity.AddComponent<HideComponent>();
+
+        return entity;
+    }
+}

@@ -1,5 +1,5 @@
 // <copyright file="SpriteRenderEntitySystem.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Rendering.Systems;
@@ -14,7 +14,7 @@ using FinalEngine.Maths;
 using FinalEngine.Rendering.Batching;
 using FinalEngine.Rendering.Components;
 
-[EntitySystemProcess(ExecutionType = GameLoopType.Render)]
+[EntitySystemProcess(EventName = "Render")]
 public sealed class SpriteRenderEntitySystem : EntitySystemBase
 {
     private readonly ISpriteDrawer drawer;

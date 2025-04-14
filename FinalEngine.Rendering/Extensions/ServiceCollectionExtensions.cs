@@ -67,6 +67,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<SpriteRenderEntitySystem>();
         services.AddSingleton<MeshRenderEntitySystem>();
         services.AddSingleton<LightRenderEntitySystem>();
+        services.AddSingleton<PerspectiveRenderEntitySystem>();
+        services.AddSingleton<SpaceShipUpdateEntitySystem>();
 
         return services;
     }

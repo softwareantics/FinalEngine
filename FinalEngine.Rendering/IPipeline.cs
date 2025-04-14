@@ -17,6 +17,8 @@ public interface IPipeline
 
     string GetShaderHeader(string name);
 
+    void SetDefaultFrameBufferTarget(int frameBuffer);
+
     void SetFrameBuffer(IFrameBuffer? frameBuffer);
 
     void SetShaderProgram(IShaderProgram program);

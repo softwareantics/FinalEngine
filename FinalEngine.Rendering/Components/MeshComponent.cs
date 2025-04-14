@@ -4,11 +4,16 @@
 
 namespace FinalEngine.Rendering.Components;
 
+using System.ComponentModel;
 using FinalEngine.ECS;
 using FinalEngine.Rendering.Geometry;
+using FinalEngine.Resources;
 
+[Category("Rendering")]
 public sealed class MeshComponent : IEntityComponent
 {
+    private static readonly Model Model = ResourceManager.Instance.LoadResource<Model>("Resources\\Models\\Cube\\cube.obj");
+
     private IMaterial? material;
 
     public IMaterial Material
@@ -17,5 +22,5 @@ public sealed class MeshComponent : IEntityComponent
         set { this.material = value; }
     }
 
-    public IMesh? Mesh { get; set; }
+    public IMesh? Mesh { get; set; } = Model.RenderModel!.Mesh;
 }

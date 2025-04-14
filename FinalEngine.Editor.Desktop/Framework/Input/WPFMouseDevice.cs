@@ -1,5 +1,5 @@
 // <copyright file="WPFMouseDevice.cs" company="Software Antics">
-// Copyright (c) Software Antics. All rights reserved.
+//     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Editor.Desktop.Framework.Input;
@@ -7,9 +7,9 @@ namespace FinalEngine.Editor.Desktop.Framework.Input;
 using System;
 using System.Drawing;
 using System.Windows;
-using System.Windows.Controls;
 using FinalEngine.Editor.Desktop.External;
 using FinalEngine.Input.Mouses;
+using OpenTK.Wpf;
 using WMouseButton = System.Windows.Input.MouseButton;
 using WMouseButtonEventArgs = System.Windows.Input.MouseButtonEventArgs;
 using WMouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -25,7 +25,7 @@ internal sealed class WPFMouseDevice : IMouseDevice
 
     public event EventHandler<MouseScrollEventArgs>? Scroll;
 
-    public void Initialize(UserControl control)
+    public void Initialize(GLWpfControl control)
     {
         ArgumentNullException.ThrowIfNull(control, nameof(control));
 

@@ -9,6 +9,8 @@ using System.Drawing;
 
 public interface IWindow : IDisposable
 {
+    Rectangle ClientBounds { get; }
+
     Size ClientSize { get; }
 
     bool IsExiting { get; }

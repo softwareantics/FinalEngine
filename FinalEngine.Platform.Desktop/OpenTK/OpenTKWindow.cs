@@ -30,6 +30,15 @@ internal sealed class OpenTKWindow : IWindow, IEventsProcessor
         get { return !this.IsExiting; }
     }
 
+    public Rectangle ClientBounds
+    {
+        get
+        {
+            ObjectDisposedException.ThrowIf(this.isDisposed, this);
+            return new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+        }
+    }
+
     public Size ClientSize
     {
         get

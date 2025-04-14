@@ -6,15 +6,14 @@ namespace FinalEngine.Rendering.Cameras;
 
 using System.Drawing;
 using System.Numerics;
-using FinalEngine.Rendering.Components;
 
-public interface ICamera
+public struct Camera
 {
-    Rectangle Bounds { get; }
+    public Matrix4x4 Projection { get; set; }
 
-    Matrix4x4 Projection { get; }
+    public Matrix4x4 Transform { get; set; }
 
-    TransformComponent Transform { get; }
+    public Matrix4x4 View { get; set; }
 
-    Matrix4x4 View { get; }
+    public Rectangle Viewport { get; set; }
 }

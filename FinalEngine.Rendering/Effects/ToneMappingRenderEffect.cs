@@ -6,14 +6,14 @@ namespace FinalEngine.Rendering.Effects;
 
 using System;
 
-internal enum ToneMappingAlgorithm
+public enum ToneMappingAlgorithm
 {
     Reinhard,
 
     Exposure,
 }
 
-internal sealed class ToneMappingRenderEffect : IRenderEffect
+public sealed class ToneMappingRenderEffect : IRenderEffect
 {
     public ToneMappingRenderEffect()
     {

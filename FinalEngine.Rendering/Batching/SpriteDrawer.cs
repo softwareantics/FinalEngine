@@ -67,8 +67,6 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
             indices,
             indices.Length * sizeof(int));
 
-        this.ProjectionWidth = this.renderDevice.Rasterizer.GetViewport().Width;
-        this.ProjectionHeight = this.renderDevice.Rasterizer.GetViewport().Height;
         this.Transform = Matrix4x4.CreateTranslation(Vector3.Zero);
     }
 
@@ -96,6 +94,9 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
     public void Begin()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, this);
+
+        this.ProjectionWidth = this.renderDevice.Rasterizer.GetViewport().Width;
+        this.ProjectionHeight = this.renderDevice.Rasterizer.GetViewport().Height;
 
         this.renderDevice.Pipeline.SetFrameBuffer(null);
         this.renderDevice.Pipeline.SetShaderProgram(this.ShaderProgram!);

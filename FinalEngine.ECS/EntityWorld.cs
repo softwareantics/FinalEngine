@@ -6,25 +6,38 @@ namespace FinalEngine.ECS;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using FinalEngine.ECS.Attributes;
+using FinalEngine.ECS.Blackboard;
 using FinalEngine.ECS.Exceptions;
 using FinalEngine.ECS.Resolving;
 
 internal sealed class EntityWorld : IEntityWorld
 {
-    private readonly List<Entity> entities;
+    private readonly ObservableCollection<Entity> entities;
 
-    private readonly IEntitySystemResolver resolver;
+    private readonly IEntityFactoryResolver factoryResolver;
+
+    private readonly IEntitySystemResolver systemResolver;
 
     private readonly List<EntitySystemBase> systems;
 
-    public EntityWorld(IEntitySystemResolver resolver)
+    private readonly Dictionary<Type, IBlackboardResource> typeToResourceMap;
+
+    public EntityWorld(IEntitySystemResolver systemResolver, IEntityFactoryResolver factoryResolver)
     {
-        this.resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
+        this.systemResolver = systemResolver ?? throw new ArgumentNullException(nameof(systemResolver));
+        this.factoryResolver = factoryResolver ?? throw new ArgumentNullException(nameof(factoryResolver));
+        this.typeToResourceMap = [];
 
         this.entities = [];
         this.systems = [];
+    }
+
+    public IReadOnlyCollection<Entity> Entities
+    {
+        get { return this.entities; }
     }
 
     public void AddEntity(Entity entity)
@@ -46,6 +59,27 @@ internal sealed class EntityWorld : IEntityWorld
         this.entities.Add(entity);
     }
 
+    public void AddEntityFromFactory<TFactory>()
+        where TFactory : IEntityFactory
+    {
+        this.AddEntity(this.factoryResolver.GetEntityFactory<TFactory>().CreateEntity());
+    }
+
+    public void AddResource<T>(T resource)
+            where T : IBlackboardResource
+    {
+        ArgumentNullException.ThrowIfNull(resource);
+
+        var key = typeof(T);
+
+        if (this.typeToResourceMap.ContainsKey(key))
+        {
+            throw new InvalidOperationException($"A resource of type '{key.Name}' has already been added.");
+        }
+
+        this.typeToResourceMap[key] = resource;
+    }
+
     public void AddSystem(EntitySystemBase system)
     {
         ArgumentNullException.ThrowIfNull(system, nameof(system));
@@ -63,33 +97,39 @@ internal sealed class EntityWorld : IEntityWorld
             system.AddOrRemoveByAspect(entity);
         }
 
+        system.SetWorld(this);
         this.systems.Add(system);
     }
 
     public void AddSystem<TSystem>()
         where TSystem : EntitySystemBase
     {
-        this.AddSystem(this.resolver.GetEntitySystem<TSystem>());
+        this.AddSystem(this.systemResolver.GetEntitySystem<TSystem>());
     }
 
-    public void ProcessAll(GameLoopType type)
+    public T GetResource<T>()
+            where T : IBlackboardResource
     {
+        if (!this.typeToResourceMap.TryGetValue(typeof(T), out var r))
+        {
+            throw new KeyNotFoundException($"No resource of type '{typeof(T).Name}' has been added.");
+        }
+
+        return (T)r;
+    }
+
+    public void ProcessAll(string eventName)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(eventName);
+
         foreach (var system in this.systems)
         {
-            var loopType = GameLoopType.Update;
             var attribute = system.GetType().GetCustomAttribute<EntitySystemProcessAttribute>();
 
-            if (attribute != null)
+            if (attribute != null && attribute.EventName == eventName)
             {
-                loopType = attribute.ExecutionType;
+                system.Process();
             }
-
-            if (loopType != type)
-            {
-                continue;
-            }
-
-            system.Process();
         }
     }
 

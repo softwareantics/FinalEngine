@@ -13,7 +13,7 @@ using FinalEngine.Maths;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Components;
 
-public sealed class FlyCamera : ICamera
+public sealed class FlyCamera
 {
     private readonly float height;
 

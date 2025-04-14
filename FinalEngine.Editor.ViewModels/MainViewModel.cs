@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinalEngine.Editor.Common.Services.Application;
 using FinalEngine.Editor.Common.Services.Factories;
+using FinalEngine.Editor.Common.Services.Scenes;
 using FinalEngine.Editor.ViewModels.Dialogs.Entities;
 using FinalEngine.Editor.ViewModels.Dialogs.Layout;
 using FinalEngine.Editor.ViewModels.Docking;
@@ -24,6 +25,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
     private readonly ILayoutManager layoutManager;
 
     private readonly ILogger<MainViewModel> logger;
+
+    private readonly ISceneManager sceneManager;
 
     private readonly IViewPresenter viewPresenter;
 
@@ -46,7 +49,8 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         ILayoutManager layoutManager,
         IFactory<IDockViewModel> dockViewModelFactory,
         IResourceManager resourceManager,
-        IResourceLoaderFetcher fetcher)
+        IResourceLoaderFetcher fetcher,
+        ISceneManager sceneManager)
     {
         ArgumentNullException.ThrowIfNull(applicationContext, nameof(applicationContext));
         ArgumentNullException.ThrowIfNull(dockViewModelFactory, nameof(dockViewModelFactory));
@@ -56,6 +60,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.viewPresenter = viewPresenter ?? throw new ArgumentNullException(nameof(viewPresenter));
         this.layoutManager = layoutManager ?? throw new ArgumentNullException(nameof(layoutManager));
+        this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
 
         this.DockViewModel = dockViewModelFactory.Create();
         this.Title = applicationContext.Title;
@@ -70,7 +75,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
 
     public ICommand CreateEntityCommand
     {
-        get { return this.createEntityCommand ??= new RelayCommand(this.CreateEntity); }
+        get { return this.createEntityCommand ??= new RelayCommand<string>(this.CreateEntity); }
     }
 
     public IDockViewModel DockViewModel { get; }
@@ -111,7 +116,7 @@ public sealed class MainViewModel : ObservableObject, IMainViewModel
         closeable.Close();
     }
 
-    private void CreateEntity()
+    private void CreateEntity(string? type)
     {
         this.viewPresenter.ShowView<ICreateEntityViewModel>();
     }
