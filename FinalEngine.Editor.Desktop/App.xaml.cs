@@ -29,6 +29,7 @@ using FinalEngine.Editor.ViewModels.Services.Entities;
 using FinalEngine.Editor.ViewModels.Services.Interactions;
 using FinalEngine.Editor.ViewModels.Services.Layout;
 using FinalEngine.Input.Extensions;
+using FinalEngine.Physics.Extensions;
 using FinalEngine.Rendering.Extensions;
 using FinalEngine.Rendering.OpenGL.Extensions;
 using FinalEngine.Resources.Extensions;
@@ -82,6 +83,7 @@ public partial class App : Application
         services.AddOpenGL();
         services.AddOpenAL();
         services.AddInput();
+        services.AddPhysics();
         services.AddRendering();
         services.AddResourceManager();
         services.AddEditorPlatform();
