@@ -31,8 +31,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
+    <ProjectReference Include="..\FinalEngine.Physics\FinalEngine.Physics.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering\FinalEngine.Rendering.csproj" />
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.Utilities\FinalEngine.Utilities.csproj" />
   </ItemGroup>
 </Project>

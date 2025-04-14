@@ -14,7 +14,7 @@ public class PerspectiveComponent : IEntityComponent
 {
     public float AspectRatio { get; set; } = 1280.0f / 720.0f;
 
-    public float FarPlaneDistance { get; set; } = 1000.0f;
+    public float FarPlaneDistance { get; set; } = 10000.0f;
 
     public float FieldOfView { get; set; } = 70.0f;
 

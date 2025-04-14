@@ -2,9 +2,9 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime;
+namespace FinalEngine.Utilities;
 
-internal interface IGameTime
+public interface IGameTime
 {
     bool CanProcessNextFrame();
 }

@@ -11,6 +11,7 @@ using FinalEngine.Editor.Common.Blackboard;
 using FinalEngine.Editor.Common.Services.Factories.Entities.Cameras;
 using FinalEngine.Editor.Common.Systems;
 using FinalEngine.Input;
+using FinalEngine.Physics.Systems;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Systems;
 

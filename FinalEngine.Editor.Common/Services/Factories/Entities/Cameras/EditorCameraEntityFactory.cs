@@ -6,6 +6,7 @@ namespace FinalEngine.Editor.Common.Services.Factories.Entities.Cameras;
 
 using FinalEngine.ECS;
 using FinalEngine.ECS.Components;
+using FinalEngine.Physics.Components;
 using FinalEngine.Rendering.Components;
 
 internal sealed class EditorCameraEntityFactory : IEntityFactory

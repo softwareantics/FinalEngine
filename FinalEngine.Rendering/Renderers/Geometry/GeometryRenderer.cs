@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Renderers.Geometry;
 
 using System;
 using System.Collections.Generic;
-using FinalEngine.Rendering.Components;
+using FinalEngine.ECS.Components;
 using FinalEngine.Rendering.Geometry;
 
 internal sealed class GeometryRenderer : IRenderQueue<Model>, IGeometryRenderer

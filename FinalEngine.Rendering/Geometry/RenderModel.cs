@@ -4,7 +4,7 @@
 
 namespace FinalEngine.Rendering.Geometry;
 
-using FinalEngine.Rendering.Components;
+using FinalEngine.ECS.Components;
 
 public sealed class RenderModel
 {

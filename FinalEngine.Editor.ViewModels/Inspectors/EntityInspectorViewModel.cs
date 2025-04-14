@@ -15,7 +15,6 @@ using FinalEngine.ECS;
 using FinalEngine.ECS.Components;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using FinalEngine.Editor.ViewModels.Services.Entities;
-using FinalEngine.Rendering.Components;
 
 public sealed class EntityInspectorViewModel : ObservableObject, IEntityInspectorViewModel
 {

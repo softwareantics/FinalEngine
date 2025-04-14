@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Attributes;
+using FinalEngine.ECS.Components;
 using FinalEngine.Editor.Common.Blackboard;
-using FinalEngine.Rendering.Components;
 
 [EntitySystemProcess(EventName = "Update")]
 internal sealed class ViewportUpdateEntitySystem : EntitySystemBase

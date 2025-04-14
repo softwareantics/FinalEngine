@@ -2,10 +2,10 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime;
+namespace FinalEngine.Utilities;
 
 using System;
-using FinalEngine.Runtime.Invocation;
+using FinalEngine.Utilities.Invocation;
 
 public sealed class GameTime : IGameTime
 {
@@ -49,7 +49,7 @@ public sealed class GameTime : IGameTime
 
         if (currentTime >= this.lastTime + this.waitTime)
         {
-            Delta = (float)(currentTime - this.lastTime);
+            Delta = (float)(currentTime - this.lastTime) / (float)OneSecondAsMilliSeconds;
             FrameRate = (float)Math.Round(OneSecondAsMilliSeconds / Delta);
 
             this.lastTime = currentTime;

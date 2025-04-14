@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Attributes;
+using FinalEngine.ECS.Components;
 using FinalEngine.Rendering.Components;
 using FinalEngine.Rendering.Geometry;
 using FinalEngine.Rendering.Renderers;

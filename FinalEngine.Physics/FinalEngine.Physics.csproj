@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.ECS\FinalEngine.ECS.csproj" />
+    <ProjectReference Include="..\FinalEngine.Input\FinalEngine.Input.csproj" />
+    <ProjectReference Include="..\FinalEngine.Maths\FinalEngine.Maths.csproj" />
     <ProjectReference Include="..\FinalEngine.Resources\FinalEngine.Resources.csproj" />
+    <ProjectReference Include="..\FinalEngine.Utilities\FinalEngine.Utilities.csproj" />
   </ItemGroup>
 </Project>

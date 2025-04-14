@@ -2,13 +2,13 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Components;
+namespace FinalEngine.ECS.Components;
 
 using System.ComponentModel;
 using System.Numerics;
 using FinalEngine.ECS;
 
-[Category("Rendering")]
+[Category("Core")]
 public class TransformComponent : IEntityComponent
 {
     public TransformComponent()

@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using FinalEngine.ECS;
 using FinalEngine.ECS.Attributes;
+using FinalEngine.ECS.Components;
 using FinalEngine.Maths;
 using FinalEngine.Rendering.Batching;
 using FinalEngine.Rendering.Components;

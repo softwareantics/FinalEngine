@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Editor.Common\FinalEngine.Editor.Common.csproj" />
+    <ProjectReference Include="..\FinalEngine.Physics\FinalEngine.Physics.csproj" />
     <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 

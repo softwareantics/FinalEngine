@@ -14,6 +14,5 @@ internal sealed class Startup
     {
         ArgumentNullException.ThrowIfNull(services, nameof(services));
         services.AddRuntime<Game>();
-        services.AddSingleton<GameControllerInputEntitySystem>();
     }
 }
