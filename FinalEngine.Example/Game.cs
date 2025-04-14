@@ -20,6 +20,7 @@ public sealed class Game : GameContainerBase
         this.World.AddSystem<LightRenderEntitySystem>();
         this.World.AddSystem<PerspectiveRenderEntitySystem>();
         this.World.AddSystem<SpriteRenderEntitySystem>();
+        this.World.AddSystem<GameControllerInputEntitySystem>();
 
         var camera = new Entity();
 
