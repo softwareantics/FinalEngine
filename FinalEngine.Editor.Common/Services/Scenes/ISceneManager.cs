@@ -9,12 +9,13 @@ using FinalEngine.ECS;
 
 public interface ISceneManager
 {
-    IEntityWorld ActiveScene { get; }
+    IEntityWorld Scene { get; }
 
     void Initialize();
 
     void Render();
 
+    //// TODO: fix this.
     void SetViewport(Rectangle viewport);
 
     void Update();

@@ -6,16 +6,20 @@ namespace FinalEngine.Editor.ViewModels.Scenes;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FinalEngine.ECS;
 using FinalEngine.Editor.Common.Services.Scenes;
+using FinalEngine.Editor.ViewModels.Commands.Entities;
 using FinalEngine.Editor.ViewModels.Docking.Tools;
 using FinalEngine.Editor.ViewModels.Messages.Entities;
 using Microsoft.Extensions.Logging;
 
 public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHierarchyToolViewModel
 {
+    private readonly ObservableCollection<Entity> entities;
+
     private readonly ILogger<SceneHierarchyToolViewModel> logger;
 
     private readonly IMessenger messenger;
@@ -28,17 +32,21 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
 
     public SceneHierarchyToolViewModel(
         ILogger<SceneHierarchyToolViewModel> logger,
-        IMessenger messenger,
-        ISceneManager sceneManager)
+        ISceneManager sceneManager,
+        IMessenger messenger)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
         this.sceneManager = sceneManager ?? throw new ArgumentNullException(nameof(sceneManager));
+        this.messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+        this.entities = [];
 
         this.Title = "Scene Hierarchy";
         this.ContentID = "SceneHierarchy";
 
         this.logger.LogInformation($"Initializing {this.Title}...");
+
+        this.messenger.Register<EntityCreatedMessage>(this, this.HandlEntityCreated);
+        this.messenger.Register<EntityDeletedMessage>(this, this.HandleEntityDeleted);
     }
 
     public IRelayCommand DeleteEntityCommand
@@ -48,7 +56,7 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
 
     public IReadOnlyCollection<Entity> Entities
     {
-        get { return this.sceneManager.ActiveScene.Entities; }
+        get { return this.entities; }
     }
 
     public Entity? SelectedEntity
@@ -82,7 +90,24 @@ public sealed class SceneHierarchyToolViewModel : ToolViewModelBase, ISceneHiera
             return;
         }
 
-        this.sceneManager.ActiveScene.RemoveEntity(this.SelectedEntity);
-        this.messenger.Send(new EntityDeletedMessage());
+        var command = new DeleteEntityCommand(
+            this.sceneManager,
+            this.messenger,
+            this.SelectedEntity);
+
+        command.Execute();
+    }
+
+    private void HandleEntityDeleted(object recipient, EntityDeletedMessage message)
+    {
+        this.entities.Remove(message.Entity);
+    }
+
+    private void HandlEntityCreated(object recipient, EntityCreatedMessage message)
+    {
+        var entity = message.Entity;
+
+        this.entities.Add(entity);
+        this.SelectedEntity = entity;
     }
 }

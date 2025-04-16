@@ -4,10 +4,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:FinalEngine.Editor.ViewModels.Scenes;assembly=FinalEngine.Editor.ViewModels"
+             xmlns:converters="clr-namespace:FinalEngine.Editor.Desktop.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:SceneHierarchyToolViewModel}">
+
+    <UserControl.Resources>
+        <converters:EditorEntitiesFilterConverter x:Key="EditorEntitiesFilterConverter" />
+    </UserControl.Resources>
     <Grid>
-        <ListBox ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}"
+        <ListBox ItemsSource="{Binding Entities, Converter={StaticResource EditorEntitiesFilterConverter}}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  SelectedItem="{Binding SelectedEntity}">

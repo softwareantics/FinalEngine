@@ -16,7 +16,6 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IEntityWorld, EntityWorld>();
         services.AddSingleton<IEntitySystemResolver, EntitySystemResolver>();
-        services.AddSingleton<IEntityFactoryResolver, EntityFactoryResolver>();
 
         return services;
     }

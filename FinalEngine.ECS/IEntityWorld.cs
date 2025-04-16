@@ -5,17 +5,11 @@
 namespace FinalEngine.ECS;
 
 using System;
-using System.Collections.Generic;
 using FinalEngine.ECS.Blackboard;
 
 public interface IEntityWorld
 {
-    IReadOnlyCollection<Entity> Entities { get; }
-
     void AddEntity(Entity entity);
-
-    void AddEntityFromFactory<TFactory>()
-            where TFactory : IEntityFactory;
 
     void AddResource<T>(T resource)
         where T : IBlackboardResource;

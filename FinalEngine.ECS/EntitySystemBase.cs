@@ -7,7 +7,6 @@ namespace FinalEngine.ECS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 public abstract class EntitySystemBase
 {
@@ -25,7 +24,7 @@ public abstract class EntitySystemBase
 
     public void Process()
     {
-        this.Process(this.entities.ToList());
+        this.Process([.. this.entities]);
     }
 
     internal void AddOrRemoveByAspect(Entity entity, bool forceRemove = false)

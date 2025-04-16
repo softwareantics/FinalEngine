@@ -6,7 +6,6 @@ namespace FinalEngine.ECS;
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using FinalEngine.ECS.Attributes;
 using FinalEngine.ECS.Blackboard;
@@ -15,9 +14,7 @@ using FinalEngine.ECS.Resolving;
 
 internal sealed class EntityWorld : IEntityWorld
 {
-    private readonly ObservableCollection<Entity> entities;
-
-    private readonly IEntityFactoryResolver factoryResolver;
+    private readonly List<Entity> entities;
 
     private readonly IEntitySystemResolver systemResolver;
 
@@ -25,10 +22,9 @@ internal sealed class EntityWorld : IEntityWorld
 
     private readonly Dictionary<Type, IBlackboardResource> typeToResourceMap;
 
-    public EntityWorld(IEntitySystemResolver systemResolver, IEntityFactoryResolver factoryResolver)
+    public EntityWorld(IEntitySystemResolver systemResolver)
     {
         this.systemResolver = systemResolver ?? throw new ArgumentNullException(nameof(systemResolver));
-        this.factoryResolver = factoryResolver ?? throw new ArgumentNullException(nameof(factoryResolver));
         this.typeToResourceMap = [];
 
         this.entities = [];
@@ -57,12 +53,6 @@ internal sealed class EntityWorld : IEntityWorld
         }
 
         this.entities.Add(entity);
-    }
-
-    public void AddEntityFromFactory<TFactory>()
-        where TFactory : IEntityFactory
-    {
-        this.AddEntity(this.factoryResolver.GetEntityFactory<TFactory>().CreateEntity());
     }
 
     public void AddResource<T>(T resource)

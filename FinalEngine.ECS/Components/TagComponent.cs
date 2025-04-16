@@ -7,31 +7,42 @@ namespace FinalEngine.ECS.Components;
 using System.ComponentModel;
 
 /// <summary>
-/// Represents a tag for an <see cref="Entity"/>.
+///   Represents a tag for an <see cref="Entity"/>.
 /// </summary>
-///
 /// <remarks>
-/// An <see cref="Entity"/> can be associated with a tag for identification. However, an <see cref="Entity"/> also has a unique identifier - see <see cref="Entity.UniqueIdentifier"/>.
+///   An <see cref="Entity"/> can be associated with a tag for identification. However, an <see cref="Entity"/> also has a unique identifier - see <see cref="Entity.UniqueIdentifier"/>.
 /// </remarks>
-///
-/// <seealso cref="IEntityComponent" />
-/// <seealso cref="INotifyPropertyChanged" />
+/// <seealso cref="IEntityComponent"/>
+/// <seealso cref="INotifyPropertyChanged"/>
 [Category("Core")]
 public sealed class TagComponent : IEntityComponent, INotifyPropertyChanged
 {
+    /// <summary>
+    ///   The name (or tag).
+    /// </summary>
     private string? name;
 
     /// <summary>
-    /// Occurs when a property value changes.
+    ///   Initializes a new instance of the <see cref="TagComponent"/> class.
+    /// </summary>
+    /// <param name="name">
+    ///   The name (or tag) associated with the <see cref="Entity"/>.
+    /// </param>
+    public TagComponent(string? name = null)
+    {
+        this.name = name;
+    }
+
+    /// <summary>
+    ///   Occurs when a property value changes.
     /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
     /// <summary>
-    /// Gets or sets the name (or tag).
+    ///   Gets or sets the name (or tag).
     /// </summary>
-    ///
     /// <value>
-    /// The name (or tag).
+    ///   The name (or tag).
     /// </value>
     public string? Name
     {
