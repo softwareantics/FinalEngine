@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
@@ -12,3 +13,4 @@ using System.Runtime.Versioning;
 [assembly: AssemblyDescription("A runtime library containing classes required to run a Final Engine game on Windows.")]
 [assembly: Guid("E7B0CB3B-8B4A-44BA-A412-7C43AF5F2889")]
 [assembly: SupportedOSPlatform("windows")]
+[assembly: InternalsVisibleTo("FinalEngine.Tests")]

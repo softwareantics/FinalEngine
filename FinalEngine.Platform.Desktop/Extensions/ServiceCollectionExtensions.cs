@@ -4,11 +4,14 @@
 
 namespace FinalEngine.Platform.Desktop.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
+using FinalEngine.Platform.Desktop.Invocation;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 ///   Provides extension methods for configuring an <see cref="IServiceCollection"/> with Windows Forms platform services.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Extension methods are not covered by unit tests.")]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -30,6 +33,8 @@ public static class ServiceCollectionExtensions
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
+
+        services.AddTransient<IFormInvoker, FormInvoker>();
 
         return services.AddSingleton<IWindow, WinFormsWindow>();
     }

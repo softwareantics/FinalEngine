@@ -11,6 +11,8 @@ var services = new ServiceCollection()
 
 var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
 
+// Swap these two lines around to see the visual artifact dissapear.
+window.IsVisible = true;
 window.State = WindowState.Fullscreen;
 
 while (!window.IsClosing)

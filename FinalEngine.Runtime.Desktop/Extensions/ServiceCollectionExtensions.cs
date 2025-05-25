@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Runtime.Desktop.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
 using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform.Desktop.Extensions;
 using FinalEngine.Runtime.Desktop.Mappings.Profiles;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 ///   Provides extension methods for configuring an <see cref="IServiceCollection"/> with Windows runtime services.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Extension methods are not covered by unit tests.")]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
