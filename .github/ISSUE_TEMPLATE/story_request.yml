@@ -1,0 +1,81 @@
+name: 🧩 User Story
+description: A structured user story template
+title: "🧩 User Story"
+projects: ["softwareantics/1"]
+assignees:
+  - softwareantics
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing a user story! Please complete the following structured template.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please complete the following before submitting."
+      options:
+        - label: "I have not removed the 🧩 emoji from the title."
+          required: false
+        - label: "I have checked for existing issues that may cover this story."
+          required: false
+        - label: "For maintainers: I have updated the relevant project boards or milestones."
+          required: false
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: "Objective"
+      description: "Summarize what this user story is intended to achieve."
+      placeholder: "Describe the outcome or goal of this story."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Context"
+      description: "Explain any relevant background or user needs this story addresses."
+      placeholder: "Provide the context or reasoning behind the story."
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: "Scope"
+      description: "Define what is included in this story and what is explicitly out of scope."
+      placeholder: |
+        **Included:**  
+        - Feature A
+        - User Interaction X
+        
+        **Not included:**  
+        - Backend optimizations
+        - Analytics logging
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: "Success Criteria"
+      description: "List measurable outcomes or conditions that define the successful implementation of this story."
+      placeholder: |
+        - The user can perform X without errors.
+        - Y is displayed after condition Z is met.
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks-dependencies
+    attributes:
+      label: "Risks and Dependencies"
+      description: "List potential risks and any dependencies that must be addressed or resolved."
+      placeholder: |
+        - Risk: Integration with API X may fail due to instability.
+        - Dependency: Feature Y must be completed first.
+    validations:
+      required: false
