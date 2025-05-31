@@ -24,9 +24,9 @@ https://www.softwareantics.com.au
 
 <p align="center">
   <a href="#-key-features">Key Features</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="#download">Download</a> •
-  <a href="#contributing">Contributing</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-download">Download</a> •
+  <a href="#-contributing">Contributing</a> •
   <a href="#-license">License</a>
 </p>
 
