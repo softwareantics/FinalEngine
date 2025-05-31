@@ -95,4 +95,4 @@ We welcome contributions! Please read our [contribution guidelines](./github/CON
 
 Licensed under the **GNU AGPL-3.0** with a special exception allowing proprietary games built using the engine.
 
-See [LICENSE](./LICENSE.md) for full terms.
+See [LICENSE](./LICENSE) for full terms.
