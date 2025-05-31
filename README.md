@@ -87,7 +87,7 @@ Release builds will be available via:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our [contribution guidelines](./github/CONTRIBUTING.md) to get started.
+We welcome contributions! Please read our [contribution guidelines](./.github/CONTRIBUTING.md) to get started.
 
 ---
 
