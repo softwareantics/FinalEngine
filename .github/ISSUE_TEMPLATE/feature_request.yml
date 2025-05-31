@@ -1,0 +1,80 @@
+name: ✨ Feature Request
+description: Suggest an idea for a new project feature
+title: "✨ New Feature"
+labels: ["✨ Feature"]
+projects: ["softwareantics/2"]
+assignees:
+  - softwareantics
+  
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to submit a feature request!
+  
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please complete the following checklist before submitting your feature request."
+      options:
+        - label: "I have not removed the ✨ emoji from the title."
+          required: true
+        - label: "I have searched to ensure that no existing issue covers this feature request."
+          required: true
+        - label: "For maintainers: I have updated the projects and milestones if needed."
+          required: false
+  
+  - type: textarea
+    id: description
+    attributes: 
+      label: "Description"
+      description: "Briefly describe the proposed feature."
+      placeholder: "Provide a concise description of the new feature you'd like to see."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: justification
+    attributes:
+      label: "Justification"
+      description: "Explain the significance and benefits of adding this feature."
+      placeholder: "Share why you believe this feature should be implemented."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: approach
+    attributes:
+      label: "Implementation Approach"
+      description: "Outline a suggested approach for implementing the feature, including relevant API changes or pseudocode if applicable."
+      placeholder: "If possible, describe how you envision this feature being implemented."
+    validations:
+      required: false
+  
+  - type: textarea
+    id: requirements
+    attributes:
+      label: "Requirements"
+      description: "List any prerequisites for developing this feature, such as external libraries or dependencies on other issues."
+      placeholder: "Provide any specific requirements that must be met before implementing this feature."
+    validations:
+      required: false
+  
+  - type: textarea
+    id: challenges
+    attributes:
+      label: "Potential Challenges"
+      description: "Highlight any foreseeable challenges or difficulties that might be encountered during the implementation of this feature."
+      placeholder: "If you anticipate any challenges during development, please describe them."
+    validations:
+      required: false
+  
+  - type: textarea
+    id: context
+    attributes:
+      label: "Additional Context"
+      description: "Provide any extra context, user scenarios, or visuals that might help understand the feature request better."
+      placeholder: "Share any additional information that could facilitate development."
+    validations:
+      required: false
