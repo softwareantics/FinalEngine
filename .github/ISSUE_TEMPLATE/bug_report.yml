@@ -1,0 +1,82 @@
+name: 🐛 Bug Report
+description: A break in functionality.
+title: "🐛 Bug Report"
+labels: ["🐛 Bug"]
+projects: ["softwareantics/2"]
+assignees:
+  - softwareantics
+  
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to submit a feature request!
+  
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please complete the following checklist before submitting your feature request."
+      options:
+        - label: "I have not removed the 🐛 emoji from the title."
+          required: true
+        - label: "I have ensured that this issue has not been previously filed."
+          required: true
+        - label: "I have checked the documentation and found no solution."
+          required: true
+        - label: "For maintainers: I have updated the projects and milestones if needed."
+          required: false
+  
+  - type: textarea
+    id: current
+    attributes: 
+      label: "Current Behaviour"
+      description: "A clear and concise description of what is currently happening."
+      placeholder: "Explain what is happening."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected Behaviour"
+      description: "A clear and concise description of what you expected to happen."
+      placeholder: "Explain what should have happened."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: context
+    attributes:
+      label: "Context"
+      description: "Any relevant information about your setup (e.g., operating system, hardware, toolchain) that might help reproduce or diagnose the issue under specific conditions."
+      placeholder: "Operating system, hardware, toolchain, etc."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Failure Logs and Screenshots"
+      description: "If applicable, include any relevant log snippets, error messages, or screenshots that can provide insight into the issue."
+      placeholder: "Provide logs, messages, screenshots, etc."
+    validations:
+      required: false
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: "Additional Information"
+      description: "Any additional context, observations, or details that you think might be helpful for diagnosing the issue."
+      placeholder: "Anything else you'd like to say?"
+    validations:
+      required: false
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Related Issues"
+      description: "If this issue is related to or duplicates any existing issues, please reference them here."
+      placeholder: "Please reference the issues in a list format."
+    validations:
+      required: false
