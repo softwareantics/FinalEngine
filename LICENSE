@@ -660,20 +660,23 @@ if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
 
-## Additional Permission: Engine Linking Exception
+Additional Permission: Engine Linking Exception
 
 You are granted a special exception to the terms of the GNU Affero General Public License v3.0.
-
-You may develop, use, distribute, and sublicense your own games or applications that use this engine (the "Software"), even if they link to, embed, or otherwise depend on it, **without** being subject to the copyleft terms of the AGPL for your own game/application.
+You may develop, use, distribute, and sublicense your own games or applications that use this
+engine (the "Software"), even if they link to, embed, or otherwise depend on it, without
+being subject to the copyleft terms of the AGPL for your own game/application.
 
 Specifically:
 
-- You may release your game under any license of your choice.
-- You are not required to disclose the source code of your game or application.
-- This exception applies regardless of whether you use the unmodified engine or a modified version of it, provided the engine itself remains licensed under the AGPL and satisfies all its requirements.
+1. You may release your game under any license of your choice.
+2. You are not required to disclose the source code of your game or application.
+3. This exception applies regardless of whether you use the unmodified engine or a modified version of it, provided the engine itself remains licensed under the AGPL and satisfies all its requirements.
 
 However:
 
-- Any modifications to the engine itself (i.e., this Software), including forks or internal changes, **must be licensed under the AGPL** and satisfy all original license obligations, including disclosing source code and prominent notices of modification.
+- Any modifications to the engine itself (i.e., this Software), including forks or internal changes,
+must be licensed under the AGPL and satisfy all original license obligations, including disclosing
+source code and prominent notices of modification.
 
 This exception is granted solely for games and interactive media developed using the engine, and does not extend to other types of software.
