@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 ///   Provides extension methods for configuring an <see cref="IServiceCollection"/> with Windows runtime services.
 /// </summary>
-[ExcludeFromCodeCoverage(Justification = "Extension methods are not covered by unit tests.")]
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
     /// <summary>

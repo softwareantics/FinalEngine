@@ -9,9 +9,8 @@ using System.Runtime.Versioning;
 
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("FinalEngine.Platform.Desktop")]
-[assembly: AssemblyDescription("A desktop implementation of the FinalEngine.Platform abstractions used to handle desktop platform specific requirements.")]
-[assembly: Guid("5BEC039B-EF35-4439-B852-7464C0030BB9")]
+[assembly: AssemblyTitle("FinalEngine.Tests")]
+[assembly: AssemblyDescription("The unit testing library for Final Engine.")]
+[assembly: Guid("E13CC2CD-3120-4B57-A778-663F2CB98C5B")]
 [assembly: SupportedOSPlatform("windows")]
 [assembly: InternalsVisibleTo("FinalEngine.Tests")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

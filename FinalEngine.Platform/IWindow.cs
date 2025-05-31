@@ -17,17 +17,17 @@ public enum WindowState
     Normal,
 
     /// <summary>
-    ///   The window is minimized, typically represented by an icon in the taskbar.
+    ///   The window is minimized, typically represented by an icon in the task-bar.
     /// </summary>
     Minimized,
 
     /// <summary>
-    ///   The window is maximized, filling the entire screen except for the taskbar.
+    ///   The window is maximized, filling the entire screen except for the task-bar.
     /// </summary>
     Maximized,
 
     /// <summary>
-    ///   The window is in fullscreen mode, occupying the entire screen and hiding the taskbar and other windows.
+    ///   The window is in full-screen mode, occupying the entire screen and hiding the task-bar and other windows.
     /// </summary>
     Fullscreen,
 }
@@ -91,12 +91,12 @@ public interface IWindow : IDisposable
     ///   Gets or sets a value indicating whether this <see cref="IWindow"/> can be resized manually by the user.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this <see cref="IWindow"/> is user resizable; otherwise, <c>false</c>.
+    ///   <c>true</c> if this <see cref="IWindow"/> is user re-sizable; otherwise, <c>false</c>.
     /// </value>
     /// <remarks>
     ///   The value of this property determines whether the user can change the size of the window by dragging its edges or corners. If set to <c>false</c>, the window will maintain a fixed size and cannot be resized by the user.
     /// </remarks>
-    bool IsUserResizable { get; set; }
+    bool IsUserReSizable { get; set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this <see cref="IWindow"/> is visible.
@@ -107,21 +107,21 @@ public interface IWindow : IDisposable
     bool IsVisible { get; set; }
 
     /// <summary>
-    ///   Gets or sets the state of the window (e.g., normal, minimized, maximized, fullscreen).
+    ///   Gets or sets the state of the window (e.g., normal, minimized, maximized, full-screen).
     /// </summary>
     /// <value>
-    ///   The state of the window (e.g., normal, minimized, maximized, fullscreen).
+    ///   The state of the window (e.g., normal, minimized, maximized, full-screen).
     /// </value>
     /// <remarks>
-    ///   When set to <see cref="WindowState.Fullscreen"/>, the window should occupy the entire screen, hiding the taskbar and other windows. When set to <see cref="WindowState.Maximized"/>, the window should fill the screen except for the taskbar. The <see cref="WindowState.Normal"/> state indicates that the window is in its default size and position, while <see cref="WindowState.Minimized"/> indicates that the window is minimized to an icon in the taskbar. When the user changes the window from <see cref="WindowState.Fullscreen"/> to <see cref="WindowState.Normal"/> the desired behaviour is not to resize the client area of the display. This functionality is not outside the scope of <see cref="IWindow"/>.
+    ///   When set to <see cref="WindowState.Fullscreen"/>, the window should occupy the entire screen, hiding the task-bar and other windows. When set to <see cref="WindowState.Maximized"/>, the window should fill the screen except for the task-bar. The <see cref="WindowState.Normal"/> state indicates that the window is in its default size and position, while <see cref="WindowState.Minimized"/> indicates that the window is minimized to an icon in the task-bar. When the user changes the window from <see cref="WindowState.Fullscreen"/> to <see cref="WindowState.Normal"/> the desired behavior is not to resize the client area of the display. This functionality is not outside the scope of <see cref="IWindow"/>.
     /// </remarks>
     WindowState State { get; set; }
 
     /// <summary>
-    ///   Gets or sets the style of the window (e.g., fixed, resizable, borderless).
+    ///   Gets or sets the style of the window (e.g., fixed, re-sizable, border-less).
     /// </summary>
     /// <value>
-    ///   The style of the window (e.g., fixed, resizable, borderless).
+    ///   The style of the window (e.g., fixed, re-sizable, border-less).
     /// </value>
     /// <remarks>
     ///   When set to <see cref="WindowStyle.Fixed"/>, the window cannot be resized by the user, and should include a title bar and system buttons. When set to <see cref="WindowStyle.Resizable"/>, the user can change the size of the window by dragging its edges or corners. The <see cref="WindowStyle.Borderless"/> style indicates that the window has no borders or title bar, allowing for a clean, unobtrusive appearance. This style is often used for applications that require a custom border interface or when the window's appearance should not distract from the content.
@@ -135,7 +135,7 @@ public interface IWindow : IDisposable
     ///   The title of the <see cref="IWindow"/>.
     /// </value>
     /// <remarks>
-    ///   The title is typically displayed in the title bar of the window. If developing for other platforms such as mobile this would be the name of the application as it appears in the app switcher or task manager.
+    ///   The title is typically displayed in the title bar of the window. If developing for other platforms such as mobile this would be the name of the application as it appears in the application switcher or task manager.
     /// </remarks>
     string Title { get; set; }
 

@@ -1,3 +1,7 @@
+// <copyright file="WinFormsProfileTests.cs" company="Software Antics">
+//     Copyright (c) Software Antics. All rights reserved.
+// </copyright>
+
 namespace FinalEngine.Tests.Runtime.Desktop.Mappings.Profiles;
 
 using AutoMapper;
@@ -7,7 +11,7 @@ using NUnit.Framework;
 using System.Windows.Forms;
 
 [TestFixture]
-public class WinFormsProfileTests
+internal sealed class WinFormsProfileTests
 {
     private IMapper mapper;
 
@@ -53,7 +57,7 @@ public class WinFormsProfileTests
     [TestCase(WindowStyle.Fixed, FormBorderStyle.FixedSingle)]
     [TestCase(WindowStyle.Resizable, FormBorderStyle.Sizable)]
     [TestCase(WindowStyle.Borderless, FormBorderStyle.None)]
-    public void WindowStyleToFormBorderStyleshouldMapCorrectly(WindowStyle actual, FormBorderStyle expected)
+    public void WindowStyleToFormBorderStyleShouldMapCorrectly(WindowStyle actual, FormBorderStyle expected)
     {
         var result = this.mapper.Map<FormBorderStyle>(actual);
         Assert.That(result, Is.EqualTo(expected));

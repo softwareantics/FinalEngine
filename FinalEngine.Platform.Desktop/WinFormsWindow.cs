@@ -5,6 +5,7 @@
 namespace FinalEngine.Platform.Desktop;
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using FinalEngine.Platform.Desktop.Invocation;
 
@@ -26,7 +27,7 @@ internal sealed class WinFormsWindow : IWindow
     /// <summary>
     ///   The form invoker instance used for invoking form-related operations.
     /// </summary>
-    private IFormInvoker? form;
+    private IFormAdapter? form;
 
     /// <summary>
     ///   Indicates whether this instance has been disposed of and its resources released.
@@ -45,7 +46,7 @@ internal sealed class WinFormsWindow : IWindow
     /// <exception cref="ArgumentNullException">
     ///   Thrown when the <paramref name="form"/> or <paramref name="mapper"/> parameter is null.
     /// </exception>
-    public WinFormsWindow(IFormInvoker form, IMapper mapper)
+    public WinFormsWindow(IFormAdapter form, IMapper mapper)
     {
         this.form = form ?? throw new ArgumentNullException(nameof(form));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -55,13 +56,14 @@ internal sealed class WinFormsWindow : IWindow
         this.Title = "Final Engine";
 
         this.form.StartPosition = FormStartPosition.CenterScreen;
-        this.IsUserResizable = false;
+        this.IsUserReSizable = false;
         this.ClientSize = new Size(1280, 720);
     }
 
     /// <summary>
     ///   Finalizes an instance of the <see cref="WinFormsWindow"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     ~WinFormsWindow()
     {
         this.Dispose(false);
@@ -105,7 +107,7 @@ internal sealed class WinFormsWindow : IWindow
     ///   Gets or sets a value indicating whether this <see cref="WinFormsWindow"/> can be resized manually by the user.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is user resizable; otherwise, <c>false</c>.
+    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is user re-sizable; otherwise, <c>false</c>.
     /// </value>
     /// <exception cref="ObjectDisposedException">
     ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
@@ -115,7 +117,7 @@ internal sealed class WinFormsWindow : IWindow
     /// </remarks>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool IsUserResizable
+    public bool IsUserReSizable
     {
         get
         {
@@ -157,16 +159,16 @@ internal sealed class WinFormsWindow : IWindow
     }
 
     /// <summary>
-    ///   Gets or sets the state of the window (e.g., normal, minimized, maximized, fullscreen).
+    ///   Gets or sets the state of the window (e.g., normal, minimized, maximized, full-screen).
     /// </summary>
     /// <value>
-    ///   The state of the window (e.g., normal, minimized, maximized, fullscreen).
+    ///   The state of the window (e.g., normal, minimized, maximized, full-screen).
     /// </value>
     /// <exception cref="ObjectDisposedException">
     ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
     /// </exception>
     /// <remarks>
-    ///   When set to <see cref="WindowState.Fullscreen"/>, the window should occupy the entire screen, hiding the taskbar and other windows. When set to <see cref="WindowState.Maximized"/>, the window should fill the screen except for the taskbar. The <see cref="WindowState.Normal"/> state indicates that the window is in its default size and position, while <see cref="WindowState.Minimized"/> indicates that the window is minimized to an icon in the taskbar. When the user changes the window from <see cref="WindowState.Fullscreen"/> to <see cref="WindowState.Normal"/> the desired behaviour is not to resize the client area of the display. This functionality is not outside the scope of <see cref="WinFormsWindow"/>.
+    ///   When set to <see cref="WindowState.Fullscreen"/>, the window should occupy the entire screen, hiding the task-bar and other windows. When set to <see cref="WindowState.Maximized"/>, the window should fill the screen except for the task-bar. The <see cref="WindowState.Normal"/> state indicates that the window is in its default size and position, while <see cref="WindowState.Minimized"/> indicates that the window is minimized to an icon in the task-bar. When the user changes the window from <see cref="WindowState.Fullscreen"/> to <see cref="WindowState.Normal"/> the desired behavior is not to resize the client area of the display. This functionality is not outside the scope of <see cref="WinFormsWindow"/>.
     /// </remarks>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -182,7 +184,7 @@ internal sealed class WinFormsWindow : IWindow
         {
             ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
 
-            // Windows has an issue where the task bar will remain shown when switching to fullscreen mode if the FormBorderStyle is not set to borderless first.
+            // Windows has an issue where the task bar will remain shown when switching to full-screen mode if the FormBorderStyle is not set to border-less first.
             if (value == WindowState.Fullscreen)
             {
                 this.Style = WindowStyle.Borderless;
@@ -193,10 +195,10 @@ internal sealed class WinFormsWindow : IWindow
     }
 
     /// <summary>
-    ///   Gets or sets the style of the window (e.g., fixed, resizable, borderless).
+    ///   Gets or sets the style of the window (e.g., fixed, re-sizable, border-less).
     /// </summary>
     /// <value>
-    ///   The style of the window (e.g., fixed, resizable, borderless).
+    ///   The style of the window (e.g., fixed, re-sizable, border-less).
     /// </value>
     /// <exception cref="ObjectDisposedException">
     ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
@@ -231,7 +233,7 @@ internal sealed class WinFormsWindow : IWindow
     ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
     /// </exception>
     /// <remarks>
-    ///   The title is typically displayed in the title bar of the window. If developing for other platforms such as mobile this would be the name of the application as it appears in the app switcher or task manager.
+    ///   The title is typically displayed in the title bar of the window. If developing for other platforms such as mobile this would be the name of the application as it appears in the application switcher or task manager.
     /// </remarks>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -313,9 +315,5 @@ internal sealed class WinFormsWindow : IWindow
     {
         ArgumentNullException.ThrowIfNull(e);
         this.IsClosing = !e.Cancel;
-    }
-
-    private void Form_Load(object? sender, EventArgs e)
-    {
     }
 }

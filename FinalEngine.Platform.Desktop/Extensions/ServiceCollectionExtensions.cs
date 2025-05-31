@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 ///   Provides extension methods for configuring an <see cref="IServiceCollection"/> with Windows Forms platform services.
 /// </summary>
-[ExcludeFromCodeCoverage(Justification = "Extension methods are not covered by unit tests.")]
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -34,8 +34,9 @@ public static class ServiceCollectionExtensions
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
-        services.AddTransient<IFormInvoker, FormInvoker>();
+        services.AddTransient<IFormAdapter, FormAdapter>();
+        services.AddSingleton<IWindow, WinFormsWindow>();
 
-        return services.AddSingleton<IWindow, WinFormsWindow>();
+        return services;
     }
 }

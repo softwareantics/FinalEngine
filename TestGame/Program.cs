@@ -2,22 +2,34 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
+namespace TestGame;
+
 using FinalEngine.Platform;
 using FinalEngine.Runtime.Desktop.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-var services = new ServiceCollection()
-    .AddWindowsRuntime();
-
-var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
-
-// Swap these two lines around to see the visual artifact dissapear.
-window.IsVisible = true;
-window.State = WindowState.Fullscreen;
-
-while (!window.IsClosing)
+/// <summary>
+///   The main game entry point.
+/// </summary>
+internal static class Program
 {
-    Application.DoEvents();
-}
+    /// <summary>
+    ///   Defines the entry point of the application.
+    /// </summary>
+    private static void Main()
+    {
+        var services = new ServiceCollection()
+            .AddWindowsRuntime();
 
-window.Dispose();
+        var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
+
+        window.IsVisible = true;
+
+        while (!window.IsClosing)
+        {
+            Application.DoEvents();
+        }
+
+        window.Dispose();
+    }
+}
