@@ -9,15 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using FinalEngine.Platform.Desktop.Invocation;
 using FinalEngine.Platform.Desktop.Invocation.Native;
-using FinalEngine.Platform.Desktop.Native;
 
 /// <summary>
 ///   Provides a Windows Forms implementation of the <see cref="IWindow"/> interface, enabling window management and customization for desktop applications.
 /// </summary>
-/// <remarks>
-///   This class inherits from <see cref="Form"/> and implements the <see cref="IWindow"/> interface, providing properties and methods to manage the window's state, style, visibility, and title. It uses <see cref="IMapper"/> for converting between enumeration types related to window states and styles.
-/// </remarks>
-/// <seealso cref="Form"/>
 /// <seealso cref="IWindow"/>
 internal sealed class WinFormsWindow : IWindow
 {
@@ -25,6 +20,11 @@ internal sealed class WinFormsWindow : IWindow
     ///   The mapper instance used for converting between enumeration types.
     /// </summary>
     private readonly IMapper mapper;
+
+    /// <summary>
+    ///   The native adapter used for invoking native operations, such as posting quit messages.
+    /// </summary>
+    private readonly INativeAdapter nativeAdapter;
 
     /// <summary>
     ///   The form invoker instance used for invoking form-related operations.
@@ -36,17 +36,28 @@ internal sealed class WinFormsWindow : IWindow
     /// </summary>
     private bool isDisposed;
 
-    private IPInvokeAdapter nativeAdapter;
-
-    /// <summary> Initializes a new instance of the <see cref="WinFormsWindow"/> class. </summary> <param name="form"> The form invoker instance used for invoking form-related operations. </param> <param name="nativeAdapter"> The native adapter instance used for invoking native operations, such as posting quit messages. </param> <param name="mapper"> The mapper instance used for converting between enumeration types. </param> <exception cref="ArgumentNullException"> Thrown when the <paramref name="form"/>, <paramref name="nativeAdapter"/> or <paramref name="mapper"/> parameter is null. </exception> </exception>
-    public WinFormsWindow(IFormAdapter form, IPInvokeAdapter nativeAdapter, IMapper mapper)
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="WinFormsWindow"/> class.
+    /// </summary>
+    /// <param name="form">
+    ///   The form adapter that represents the Windows Forms window.
+    /// </param>
+    /// <param name="nativeAdapter">
+    ///   The native adapter used for invoking native operations, such as posting quit messages.
+    /// </param>
+    /// <param name="mapper">
+    ///   The mapper used for converting between enumeration types related to window states and styles.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///   The specified <paramref name="form"/>, <paramref name="nativeAdapter"/> or <paramref name="mapper"/> parameter is null.
+    /// </exception>
+    public WinFormsWindow(IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
     {
         this.form = form ?? throw new ArgumentNullException(nameof(form));
         this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         this.form.FormClosed += this.Form_FormClosed;
-        ;
 
         this.Title = "Final Engine";
 
@@ -273,19 +284,28 @@ internal sealed class WinFormsWindow : IWindow
             return;
         }
 
-        if (disposing)
+        if (disposing && this.form != null)
         {
-            if (this.form != null)
-            {
-                this.form.FormClosed -= this.Form_FormClosed;
-                this.form.Dispose();
-                this.form = null;
-            }
+            this.form.FormClosed -= this.Form_FormClosed;
+            this.form.Dispose();
+            this.form = null;
         }
 
         this.isDisposed = true;
     }
 
+    /// <summary>
+    ///   Occurs when the form has closed.
+    /// </summary>
+    /// <param name="sender">
+    ///   The sender.
+    /// </param>
+    /// <param name="e">
+    ///   The <see cref="FormClosedEventArgs"/> instance containing the event data.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///   The specified <paramref name="e"/> parameter is null.
+    /// </exception>
     private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);

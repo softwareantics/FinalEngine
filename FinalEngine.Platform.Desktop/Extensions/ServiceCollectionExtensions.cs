@@ -44,7 +44,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddTransient<IFormAdapter, FormAdapter>();
-        services.AddTransient<IPInvokeAdapter, PInvokeAdapter>();
+        services.AddTransient<INativeAdapter, NativeAdapter>();
 
         services.AddSingleton<IWindow, WinFormsWindow>();
         services.AddSingleton<IEventsProcessor, WinFormsEventsProcessor>();

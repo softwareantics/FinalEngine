@@ -4,21 +4,56 @@
 
 namespace FinalEngine.Platform.Desktop.Native.Messaging;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-public enum NativeMessageCode : uint
+/// <summary>
+///   Enumerates the available native message codes.
+/// </summary>
+internal enum NativeMessageCode : uint
 {
+    /// <summary>
+    ///   The message code for a window closed event.
+    /// </summary>
     Close = 0x0010,
 }
 
+/// <summary>
+///   Represents a native message structure used for interop with the Windows API.
+/// </summary>
+[ExcludeFromCodeCoverage]
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeMessage
 {
+    /// <summary>
+    ///   Gets or sets the handle.
+    /// </summary>
+    /// <value>
+    ///   The handle.
+    /// </value>
     internal IntPtr Handle { get; set; }
 
+    /// <summary>
+    ///   Gets or sets the message code.
+    /// </summary>
+    /// <value>
+    ///   The message code.
+    /// </value>
     internal NativeMessageCode MessageCode { get; set; }
 
+    /// <summary>
+    ///   Gets or sets the W parameter.
+    /// </summary>
+    /// <value>
+    ///   The W parameter.
+    /// </value>
     internal IntPtr WParam { get; set; }
 
+    /// <summary>
+    ///   Gets or sets the L parameter.
+    /// </summary>
+    /// <value>
+    ///   The L parameter.
+    /// </value>
     internal IntPtr LParam { get; set; }
 }

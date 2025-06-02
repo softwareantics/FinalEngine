@@ -1,17 +1,18 @@
-// <copyright file="PInvoke.cs" company="Software Antics">
+// <copyright file="Native.cs" company="Software Antics">
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop.Native;
 
 using FinalEngine.Platform.Desktop.Native.Messaging;
-
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 /// <summary>
 ///   Provides managed wrappers for selected functions from the user32.dll library related to message handling in Windows.
 /// </summary>
-internal static partial class PInvoke
+[ExcludeFromCodeCoverage]
+internal static partial class Native
 {
     /// <summary>
     ///   Dispatches a message to a window procedure.
