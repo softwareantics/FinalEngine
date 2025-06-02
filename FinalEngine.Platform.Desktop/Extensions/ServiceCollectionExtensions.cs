@@ -7,6 +7,7 @@ namespace FinalEngine.Platform.Desktop.Extensions;
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform.Desktop.Mappings.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,7 +44,10 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddTransient<IFormAdapter, FormAdapter>();
+        services.AddTransient<IPInvokeAdapter, PInvokeAdapter>();
+
         services.AddSingleton<IWindow, WinFormsWindow>();
+        services.AddSingleton<IEventsProcessor, WinFormsEventsProcessor>();
 
         return services;
     }

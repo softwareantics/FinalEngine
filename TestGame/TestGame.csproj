@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\GlobalSuppressions.cs" Link="Properties\GlobalSuppressions.cs" />
     <Compile Include="..\Shared\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
 

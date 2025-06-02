@@ -21,11 +21,17 @@ internal static class Program
         var services = new ServiceCollection()
             .AddWindows();
 
-        var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
+        var provider = services.BuildServiceProvider();
+
+        var window = provider.GetRequiredService<IWindow>();
+
+        window.State = WindowState.Fullscreen;
+
+        var eventsProcessor = provider.GetRequiredService<IEventsProcessor>();
 
         while (!window.IsClosing)
         {
-            Application.DoEvents();
+            eventsProcessor.ProcessEvents();
         }
 
         window.Dispose();
