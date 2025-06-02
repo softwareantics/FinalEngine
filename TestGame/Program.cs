@@ -28,6 +28,6 @@ internal static class Program
         var provider = services.BuildServiceProvider();
         var driver = provider.GetRequiredService<IEngineDriver>();
 
-        driver.Run();
+        driver.Start();
     }
 }

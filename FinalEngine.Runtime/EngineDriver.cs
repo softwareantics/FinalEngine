@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Runtime;
 
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Platform;
 
 /// <summary>
@@ -55,6 +56,7 @@ internal sealed class EngineDriver : IEngineDriver
     /// <summary>
     ///   Finalizes an instance of the <see cref="EngineDriver"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     ~EngineDriver()
     {
         this.Dispose(false);
@@ -72,27 +74,31 @@ internal sealed class EngineDriver : IEngineDriver
     /// <summary>
     ///   Runs the engine.
     /// </summary>
-    /// <exception cref="ObjectDisposedException">
-    ///   Thrown when the <see cref="EngineDriver"/> has already been disposed.
-    /// </exception>
     /// <remarks>
-    ///   This method starts the engine and processes events in the message queue until there are no more events to process. It will continue to run until the <see cref="IEventsProcessor.CanProcessEvents"/> property returns <c>false</c>. The engine will not run if it has already been disposed or if it is already running.
+    ///   The implementation should start the engine and processes events in the message queue until there are no more events to process. It should continue to run until the <see cref="IEventsProcessor.CanProcessEvents"/> property returns <c>false</c>. The engine will not run if it has already been disposed or if it is already running.
     /// </remarks>
-    public void Run()
+    public void Start()
     {
-        ObjectDisposedException.ThrowIf(this.isRunning, nameof(EngineDriver));
+        ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
 
         if (this.isRunning)
         {
             return;
         }
 
-        this.isRunning = true;
+        this.RunGameLoop();
+    }
 
-        while (this.eventsProcessor.CanProcessEvents)
-        {
-            this.eventsProcessor.ProcessEvents();
-        }
+    /// <summary>
+    ///   Stops the engine.
+    /// </summary>
+    /// <remarks>
+    ///   The implementation should stop the engine and clean up any resources used by the engine. It should also ensure that no further events are processed after this method is called. The engine will not stop if it has already been disposed or if it is not currently running.
+    /// </remarks>
+    public void Stop()
+    {
+        ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
+        this.isRunning = false;
     }
 
     /// <summary>
@@ -115,5 +121,18 @@ internal sealed class EngineDriver : IEngineDriver
         }
 
         this.isDisposed = true;
+    }
+
+    /// <summary>
+    ///   Runs the engine.
+    /// </summary>
+    private void RunGameLoop()
+    {
+        this.isRunning = true;
+
+        while (this.eventsProcessor.CanProcessEvents)
+        {
+            this.eventsProcessor.ProcessEvents();
+        }
     }
 }
