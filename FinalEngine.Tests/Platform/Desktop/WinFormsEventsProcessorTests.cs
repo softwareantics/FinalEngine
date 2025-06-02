@@ -7,7 +7,7 @@ namespace FinalEngine.Tests.Platform.Desktop;
 using System;
 using System.Windows.Forms;
 using FinalEngine.Platform.Desktop;
-using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform.Desktop.Native.Messaging;
 using NSubstitute;

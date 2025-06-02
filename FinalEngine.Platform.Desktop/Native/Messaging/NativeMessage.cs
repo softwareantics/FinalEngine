@@ -31,7 +31,7 @@ internal struct NativeMessage
     /// <value>
     ///   The handle.
     /// </value>
-    internal IntPtr Handle { get; set; }
+    public IntPtr Handle { get; set; }
 
     /// <summary>
     ///   Gets or sets the message code.
@@ -39,7 +39,7 @@ internal struct NativeMessage
     /// <value>
     ///   The message code.
     /// </value>
-    internal NativeMessageCode MessageCode { get; set; }
+    public NativeMessageCode MessageCode { get; set; }
 
     /// <summary>
     ///   Gets or sets the W parameter.
@@ -47,7 +47,7 @@ internal struct NativeMessage
     /// <value>
     ///   The W parameter.
     /// </value>
-    internal IntPtr WParam { get; set; }
+    public IntPtr WParam { get; set; }
 
     /// <summary>
     ///   Gets or sets the L parameter.
@@ -55,5 +55,5 @@ internal struct NativeMessage
     /// <value>
     ///   The L parameter.
     /// </value>
-    internal IntPtr LParam { get; set; }
+    public IntPtr LParam { get; set; }
 }

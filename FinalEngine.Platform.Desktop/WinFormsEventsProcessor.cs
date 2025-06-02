@@ -5,7 +5,7 @@
 namespace FinalEngine.Platform.Desktop;
 
 using System.Runtime.InteropServices;
-using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 
 /// <summary>

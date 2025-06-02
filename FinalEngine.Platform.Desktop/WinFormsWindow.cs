@@ -7,7 +7,7 @@ namespace FinalEngine.Platform.Desktop;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
-using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 
 /// <summary>

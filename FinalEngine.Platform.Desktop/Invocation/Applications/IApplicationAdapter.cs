@@ -2,10 +2,10 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Platform.Desktop.Invocation;
+namespace FinalEngine.Platform.Desktop.Invocation.Applications;
 
 /// <summary>
-///   Defines an interface that represents an <see cref="Application"/> adapter.
+///   Defines an interface that represents an <see cref="Applications"/> adapter.
 /// </summary>
 internal interface IApplicationAdapter
 {

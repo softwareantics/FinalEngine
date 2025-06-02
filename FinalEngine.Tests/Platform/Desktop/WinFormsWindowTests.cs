@@ -5,7 +5,6 @@
 namespace FinalEngine.Tests.Platform.Desktop;
 
 using AutoMapper;
-using FinalEngine.Platform.Desktop.Invocation;
 using FinalEngine.Platform.Desktop;
 using FinalEngine.Platform;
 using NSubstitute;
@@ -13,6 +12,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform.Desktop.Invocation.Forms;
 
 [TestFixture]
 internal sealed class WinFormsWindowTests

@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Platform.Desktop.Invocation;
+namespace FinalEngine.Platform.Desktop.Invocation.Forms;
 
 /// <summary>
 ///   Defines an interface that represents an adapter for a <see cref="Form"/>.
