@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Platform.Desktop.Invocation;
+namespace FinalEngine.Platform.Desktop.Invocation.Forms;
 
 /// <summary>
 ///   Defines an interface that represents an adapter for a <see cref="Form"/>.
@@ -10,8 +10,8 @@ namespace FinalEngine.Platform.Desktop.Invocation;
 /// <seealso cref="IDisposable"/>
 internal interface IFormAdapter : IDisposable
 {
-    /// <inheritdoc cref="Form.FormClosing"/>
-    event FormClosingEventHandler? FormClosing;
+    /// <inheritdoc cref="Form.FormClosed"/>
+    event FormClosedEventHandler? FormClosed;
 
     /// <inheritdoc cref="Form.ClientSize"/>
     /// /&gt;

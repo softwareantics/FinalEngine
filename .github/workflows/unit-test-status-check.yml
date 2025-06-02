@@ -1,0 +1,26 @@
+name: 🧪 Unit Tests Status Check
+run-name: 🧪 Unit Tests Status Check (${{ github.base_ref }} branch)
+
+on:
+    push:
+      branches: [ "final" ]
+    pull_request:
+      branches: [ "final" ]
+
+jobs:
+  run_tests:
+    name: Tests
+    runs-on: windows-latest
+
+    steps:
+
+    # Setup .NET
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 9.0.x
+
+    # Unit Tests
+    - name: Test
+      run: dotnet test --verbosity normal

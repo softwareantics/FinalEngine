@@ -7,15 +7,12 @@ namespace FinalEngine.Platform.Desktop;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
-using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Forms;
+using FinalEngine.Platform.Desktop.Invocation.Native;
 
 /// <summary>
 ///   Provides a Windows Forms implementation of the <see cref="IWindow"/> interface, enabling window management and customization for desktop applications.
 /// </summary>
-/// <remarks>
-///   This class inherits from <see cref="Form"/> and implements the <see cref="IWindow"/> interface, providing properties and methods to manage the window's state, style, visibility, and title. It uses <see cref="IMapper"/> for converting between enumeration types related to window states and styles.
-/// </remarks>
-/// <seealso cref="Form"/>
 /// <seealso cref="IWindow"/>
 internal sealed class WinFormsWindow : IWindow
 {
@@ -23,6 +20,11 @@ internal sealed class WinFormsWindow : IWindow
     ///   The mapper instance used for converting between enumeration types.
     /// </summary>
     private readonly IMapper mapper;
+
+    /// <summary>
+    ///   The native adapter used for invoking native operations, such as posting quit messages.
+    /// </summary>
+    private readonly INativeAdapter nativeAdapter;
 
     /// <summary>
     ///   The form invoker instance used for invoking form-related operations.
@@ -38,26 +40,32 @@ internal sealed class WinFormsWindow : IWindow
     ///   Initializes a new instance of the <see cref="WinFormsWindow"/> class.
     /// </summary>
     /// <param name="form">
-    ///   The form invoker instance used for invoking form-related operations.
+    ///   The form adapter that represents the Windows Forms window.
+    /// </param>
+    /// <param name="nativeAdapter">
+    ///   The native adapter used for invoking native operations, such as posting quit messages.
     /// </param>
     /// <param name="mapper">
-    ///   The mapper instance used for converting between enumeration types.
+    ///   The mapper used for converting between enumeration types related to window states and styles.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   Thrown when the <paramref name="form"/> or <paramref name="mapper"/> parameter is null.
+    ///   The specified <paramref name="form"/>, <paramref name="nativeAdapter"/> or <paramref name="mapper"/> parameter is null.
     /// </exception>
-    public WinFormsWindow(IFormAdapter form, IMapper mapper)
+    public WinFormsWindow(IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
     {
         this.form = form ?? throw new ArgumentNullException(nameof(form));
+        this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-        this.form.FormClosing += this.Form_FormClosing;
+        this.form.FormClosed += this.Form_FormClosed;
 
         this.Title = "Final Engine";
 
         this.form.StartPosition = FormStartPosition.CenterScreen;
         this.IsUserReSizable = false;
         this.ClientSize = new Size(1280, 720);
+
+        this.IsVisible = true;
     }
 
     /// <summary>
@@ -92,16 +100,6 @@ internal sealed class WinFormsWindow : IWindow
             this.form!.ClientSize = value;
         }
     }
-
-    /// <summary>
-    ///   Gets a value indicating whether this <see cref="WinFormsWindow"/> is closing.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is closing; otherwise, <c>false</c>.
-    /// </value>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool IsClosing { get; private set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this <see cref="WinFormsWindow"/> can be resized manually by the user.
@@ -286,34 +284,31 @@ internal sealed class WinFormsWindow : IWindow
             return;
         }
 
-        if (disposing)
+        if (disposing && this.form != null)
         {
-            if (this.form != null)
-            {
-                this.form.FormClosing -= this.Form_FormClosing;
-                this.form.Dispose();
-                this.form = null;
-            }
+            this.form.FormClosed -= this.Form_FormClosed;
+            this.form.Dispose();
+            this.form = null;
         }
 
         this.isDisposed = true;
     }
 
     /// <summary>
-    ///   Occurs when the form is closing, allowing for cleanup or state management before the form is closed.
+    ///   Occurs when the form has closed.
     /// </summary>
     /// <param name="sender">
     ///   The sender.
     /// </param>
     /// <param name="e">
-    ///   The <see cref="FormClosingEventArgs"/> instance containing the event data.
+    ///   The <see cref="FormClosedEventArgs"/> instance containing the event data.
     /// </param>
     /// <exception cref="ArgumentNullException">
-    ///   Thrown when the <paramref name="e"/> parameter is null.
+    ///   The specified <paramref name="e"/> parameter is null.
     /// </exception>
-    private void Form_FormClosing(object? sender, FormClosingEventArgs e)
+    private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);
-        this.IsClosing = !e.Cancel;
+        this.nativeAdapter.PostQuitMessage(0);
     }
 }

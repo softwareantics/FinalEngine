@@ -1,0 +1,63 @@
+name: ✅ Build Status Check
+run-name: ✅ Build Status Check (${{ github.base_ref }} branch)
+
+on:
+    push:
+      branches: [ "final" ]
+    pull_request:
+      branches: [ "final" ]
+
+jobs:
+  # FinalEngine.Platform
+  build_platform:
+    name: Platform
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Platform dependencies
+        run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
+
+      - name: Build FinalEngine.Platform
+        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore
+
+  # FinalEngine.Platform.Desktop
+  build_platform_desktop:
+    name: Windows Platform
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Platform.Desktop dependencies
+        run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
+
+      - name: Build FinalEngine.Platform
+        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore
+
+  # FinalEngine.Runtime
+  build_runtime:
+    name: Runtime
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Runtime dependencies
+        run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
+
+      - name: Build FinalEngine.Platform
+        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore

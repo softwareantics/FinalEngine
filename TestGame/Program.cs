@@ -5,7 +5,9 @@
 namespace TestGame;
 
 using FinalEngine.Platform;
-using FinalEngine.Runtime.Desktop.Extensions;
+using FinalEngine.Platform.Desktop.Extensions;
+using FinalEngine.Runtime;
+using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -16,20 +18,16 @@ internal static class Program
     /// <summary>
     ///   Defines the entry point of the application.
     /// </summary>
+    [STAThread]
     private static void Main()
     {
         var services = new ServiceCollection()
-            .AddWindowsRuntime();
+            .AddWindows()
+            .AddRuntime();
 
-        var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
+        var provider = services.BuildServiceProvider();
+        var driver = provider.GetRequiredService<IEngineDriver>();
 
-        window.IsVisible = true;
-
-        while (!window.IsClosing)
-        {
-            Application.DoEvents();
-        }
-
-        window.Dispose();
+        driver.Start();
     }
 }

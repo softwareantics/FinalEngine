@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime.Desktop.Mappings.Profiles;
+namespace FinalEngine.Platform.Desktop.Mappings.Profiles;
 
 using AutoMapper;
 using AutoMapper.Extensions.EnumMapping;

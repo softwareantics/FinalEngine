@@ -10,6 +10,7 @@
     <AnalysisMode>All</AnalysisMode>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Platforms>x64</Platforms>
+    <NoWarn>SA0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,7 +44,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.Runtime.Desktop\FinalEngine.Runtime.Desktop.csproj" />
+    <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
+    <ProjectReference Include="..\FinalEngine.Runtime\FinalEngine.Runtime.csproj" />
   </ItemGroup>
 
   <ItemGroup>

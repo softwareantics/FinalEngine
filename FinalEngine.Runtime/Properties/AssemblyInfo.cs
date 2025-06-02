@@ -3,10 +3,13 @@
 // </copyright>
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 [assembly: AssemblyTitle("FinalEngine.Runtime")]
-[assembly: AssemblyDescription("A runtime library containing classes required to run a Final Engine game on a particular platform.")]
-[assembly: Guid("317C7F6C-2BC4-4243-8739-D1718717D2F1")]
+[assembly: AssemblyDescription("A runtime library for Final Engine games.")]
+[assembly: Guid("02A91A7D-08A7-4F2A-8C95-2C5004D3BCBA")]
+[assembly: InternalsVisibleTo("FinalEngine.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

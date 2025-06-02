@@ -2,13 +2,13 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Tests.Runtime.Desktop.Mappings.Profiles;
+namespace FinalEngine.Tests.Platform.Desktop.Mappings.Profiles;
 
+using System.Windows.Forms;
 using AutoMapper;
 using FinalEngine.Platform;
-using FinalEngine.Runtime.Desktop.Mappings.Profiles;
+using FinalEngine.Platform.Desktop.Mappings.Profiles;
 using NUnit.Framework;
-using System.Windows.Forms;
 
 [TestFixture]
 internal sealed class WinFormsProfileTests

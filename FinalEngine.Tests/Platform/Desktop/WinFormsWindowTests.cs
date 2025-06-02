@@ -5,13 +5,14 @@
 namespace FinalEngine.Tests.Platform.Desktop;
 
 using AutoMapper;
-using FinalEngine.Platform.Desktop.Invocation;
 using FinalEngine.Platform.Desktop;
 using FinalEngine.Platform;
 using NSubstitute;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform.Desktop.Invocation.Forms;
 
 [TestFixture]
 internal sealed class WinFormsWindowTests
@@ -19,6 +20,8 @@ internal sealed class WinFormsWindowTests
     private IFormAdapter form;
 
     private IMapper mapper;
+
+    private INativeAdapter nativeAdapter;
 
     private WinFormsWindow window;
 
@@ -46,7 +49,7 @@ internal sealed class WinFormsWindowTests
         this.window.ClientSize = newSize;
 
         // Assert
-        this.form.Received().ClientSize = newSize;
+        this.form.Received(1).ClientSize = newSize;
     }
 
     [Test]
@@ -70,7 +73,7 @@ internal sealed class WinFormsWindowTests
         this.window.Close();
 
         // Assert
-        this.form.Received().Close();
+        this.form.Received(1).Close();
     }
 
     [Test]
@@ -86,23 +89,40 @@ internal sealed class WinFormsWindowTests
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenFormIsNull()
     {
-        // Arrange & Act & Assert
+        // Arrange & Act
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsWindow(null!, this.mapper);
+            new WinFormsWindow(null!, this.nativeAdapter, this.mapper);
         });
+
+        // Assert
         Assert.That(ex.ParamName, Is.EqualTo("form"));
     }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
     {
-        // Arrange & Act & Assert
+        // Arrange & Act
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsWindow(this.form, null!);
+            new WinFormsWindow(this.form, this.nativeAdapter, null!);
         });
+
+        // Assert
         Assert.That(ex.ParamName, Is.EqualTo("mapper"));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenNativeAdapterIsNull()
+    {
+        // Arrange & Act
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+        {
+            new WinFormsWindow(this.form, null!, this.mapper);
+        });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("nativeAdapter"));
     }
 
     [Test]
@@ -123,47 +143,33 @@ internal sealed class WinFormsWindowTests
         this.window.Dispose();
 
         // Assert
-        this.form.Received().Dispose();
+        this.form.Received(1).Dispose();
     }
 
     [Test]
-    public void FormClosingShouldSetIsClosingFalseWhenCanceled()
+    public void FormClosedShouldThrowArgumentNullExceptionWhenArgsNull()
     {
-        // Arrange
-        var args = new FormClosingEventArgs(CloseReason.UserClosing, true);
-
         // Act
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
-        method!.Invoke(this.window, [null, args]);
-
-        // Assert
-        Assert.That(this.window.IsClosing, Is.False);
-    }
-
-    [Test]
-    public void FormClosingShouldSetIsClosingTrueWhenNotCanceled()
-    {
-        // Arrange
-        var args = new FormClosingEventArgs(CloseReason.UserClosing, false);
-
-        // Act
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
-        method!.Invoke(this.window, [null, args]);
-
-        // Assert
-        Assert.That(this.window.IsClosing, Is.True);
-    }
-
-    [Test]
-    public void FormClosingShouldThrowArgumentNullExceptionWhenArgsNull()
-    {
-        // Act & Assert
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
+        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosed", BindingFlags.NonPublic | BindingFlags.Instance);
         var ex = Assert.Throws<TargetInvocationException>(() =>
         {
             method!.Invoke(this.window, [null, null]);
         });
+
+        // Assert
         Assert.That(ex!.InnerException, Is.TypeOf<ArgumentNullException>());
+    }
+
+    [Test]
+    public void FormClosedShouldThrowInvokePostQuitMessageWhenInvoked()
+    {
+        // Arrange & Act
+        this.form.FormClosed += Raise.Event<FormClosedEventHandler>(
+            this.form,
+            new FormClosedEventArgs(CloseReason.UserClosing));
+
+        // Assert
+        this.nativeAdapter.Received(1).PostQuitMessage(0);
     }
 
     [Test]
@@ -186,7 +192,7 @@ internal sealed class WinFormsWindowTests
         this.window.IsUserReSizable = true;
 
         // Assert
-        this.form.Received().MaximizeBox = true;
+        this.form.Received(1).MaximizeBox = true;
     }
 
     [Test]
@@ -223,7 +229,7 @@ internal sealed class WinFormsWindowTests
         this.window.IsVisible = false;
 
         // Assert
-        this.form.Received().Visible = false;
+        this.form.Received(1).Visible = false;
     }
 
     [Test]
@@ -244,6 +250,7 @@ internal sealed class WinFormsWindowTests
     public void SetUp()
     {
         this.form = Substitute.For<IFormAdapter>();
+        this.nativeAdapter = Substitute.For<INativeAdapter>();
         this.mapper = Substitute.For<IMapper>();
 
         this.form.ClientSize.Returns(new Size(1280, 720));
@@ -258,7 +265,7 @@ internal sealed class WinFormsWindowTests
         this.mapper.Map<WindowStyle>(Arg.Any<FormBorderStyle>()).Returns(WindowStyle.Resizable);
         this.mapper.Map<FormBorderStyle>(Arg.Any<WindowStyle>()).Returns(FormBorderStyle.Sizable);
 
-        this.window = new WinFormsWindow(this.form, this.mapper);
+        this.window = new WinFormsWindow(this.form, this.nativeAdapter, this.mapper);
     }
 
     [Test]
@@ -285,7 +292,7 @@ internal sealed class WinFormsWindowTests
         this.window.State = WindowState.Minimized;
 
         // Assert
-        this.form.Received().WindowState = FormWindowState.Minimized;
+        this.form.Received(1).WindowState = FormWindowState.Minimized;
     }
 
     [Test]
@@ -299,8 +306,8 @@ internal sealed class WinFormsWindowTests
         this.window.State = WindowState.Fullscreen;
 
         // Assert
-        this.form.Received().FormBorderStyle = FormBorderStyle.None;
-        this.form.Received().WindowState = FormWindowState.Maximized;
+        this.form.Received(1).FormBorderStyle = FormBorderStyle.None;
+        this.form.Received(1).WindowState = FormWindowState.Maximized;
     }
 
     [Test]
@@ -341,7 +348,7 @@ internal sealed class WinFormsWindowTests
         this.window.Style = WindowStyle.Fixed;
 
         // Assert
-        this.form.Received().FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.form.Received(1).FormBorderStyle = FormBorderStyle.FixedDialog;
     }
 
     [Test]
@@ -385,7 +392,7 @@ internal sealed class WinFormsWindowTests
         this.window.Title = "New Title";
 
         // Assert
-        this.form.Received().Text = "New Title";
+        this.form.Received(1).Text = "New Title";
     }
 
     [Test]

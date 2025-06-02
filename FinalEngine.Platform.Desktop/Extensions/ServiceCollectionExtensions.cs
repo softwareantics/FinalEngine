@@ -5,7 +5,11 @@
 namespace FinalEngine.Platform.Desktop.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
-using FinalEngine.Platform.Desktop.Invocation;
+using AutoMapper.Extensions.EnumMapping;
+using FinalEngine.Platform.Desktop.Invocation.Applications;
+using FinalEngine.Platform.Desktop.Invocation.Forms;
+using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform.Desktop.Mappings.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -34,8 +38,18 @@ public static class ServiceCollectionExtensions
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
+        services.AddAutoMapper(x =>
+        {
+            x.EnableEnumMappingValidation();
+            x.AddProfile<WinFormsProfile>();
+        });
+
         services.AddTransient<IFormAdapter, FormAdapter>();
+        services.AddTransient<INativeAdapter, NativeAdapter>();
+        services.AddTransient<IApplicationAdapter, ApplicationAdapter>();
+
         services.AddSingleton<IWindow, WinFormsWindow>();
+        services.AddSingleton<IEventsProcessor, WinFormsEventsProcessor>();
 
         return services;
     }
