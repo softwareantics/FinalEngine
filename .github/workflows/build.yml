@@ -55,7 +55,7 @@ jobs:
             /o:"software-antics" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.host.url="https://sonarcloud.io" `
-            /d:sonar.cs.opencover.reportsPaths="TestResults/coverage.xml"
+            /d:sonar.cs.opencover.reportsPaths="$(pwd)\TestResults\coverage.xml"
 
       - name: Build solution
         shell: powershell
@@ -67,7 +67,11 @@ jobs:
           dotnet test FinalEngine.Tests/FinalEngine.Tests.csproj `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=cobertura `
-            /p:CoverletOutput=TestResults/coverage.xml
+            /p:CoverletOutput="$(pwd)\TestResults\coverage.xml"
+
+      - name: Debug coverage file
+        shell: powershell
+        run: Get-ChildItem -Recurse TestResults
 
       - name: SonarQube end
         env:
