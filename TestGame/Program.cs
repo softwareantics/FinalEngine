@@ -5,7 +5,7 @@
 namespace TestGame;
 
 using FinalEngine.Platform;
-using FinalEngine.Runtime.Desktop.Extensions;
+using FinalEngine.Platform.Desktop.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -19,11 +19,9 @@ internal static class Program
     private static void Main()
     {
         var services = new ServiceCollection()
-            .AddWindowsRuntime();
+            .AddWindows();
 
         var window = services.BuildServiceProvider().GetRequiredService<IWindow>();
-
-        window.IsVisible = true;
 
         while (!window.IsClosing)
         {

@@ -58,6 +58,8 @@ internal sealed class WinFormsWindow : IWindow
         this.form.StartPosition = FormStartPosition.CenterScreen;
         this.IsUserReSizable = false;
         this.ClientSize = new Size(1280, 720);
+
+        this.IsVisible = true;
     }
 
     /// <summary>

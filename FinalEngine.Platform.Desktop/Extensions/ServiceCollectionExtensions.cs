@@ -5,7 +5,9 @@
 namespace FinalEngine.Platform.Desktop.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
+using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Mappings.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -33,6 +35,12 @@ public static class ServiceCollectionExtensions
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
+
+        services.AddAutoMapper(x =>
+        {
+            x.EnableEnumMappingValidation();
+            x.AddProfile<WinFormsProfile>();
+        });
 
         services.AddTransient<IFormAdapter, FormAdapter>();
         services.AddSingleton<IWindow, WinFormsWindow>();
