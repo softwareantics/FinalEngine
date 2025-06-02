@@ -6,6 +6,8 @@ namespace TestGame;
 
 using FinalEngine.Platform;
 using FinalEngine.Platform.Desktop.Extensions;
+using FinalEngine.Runtime;
+using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -16,24 +18,16 @@ internal static class Program
     /// <summary>
     ///   Defines the entry point of the application.
     /// </summary>
+    [STAThread]
     private static void Main()
     {
         var services = new ServiceCollection()
-            .AddWindows();
+            .AddWindows()
+            .AddRuntime();
 
         var provider = services.BuildServiceProvider();
+        var driver = provider.GetRequiredService<IEngineDriver>();
 
-        var window = provider.GetRequiredService<IWindow>();
-
-        window.State = WindowState.Fullscreen;
-
-        var eventsProcessor = provider.GetRequiredService<IEventsProcessor>();
-
-        while (!window.IsClosing)
-        {
-            eventsProcessor.ProcessEvents();
-        }
-
-        window.Dispose();
+        driver.Run();
     }
 }

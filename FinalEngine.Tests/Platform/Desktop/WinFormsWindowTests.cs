@@ -127,38 +127,10 @@ internal sealed class WinFormsWindowTests
     }
 
     [Test]
-    public void FormClosingShouldSetIsClosingFalseWhenCanceled()
-    {
-        // Arrange
-        var args = new FormClosingEventArgs(CloseReason.UserClosing, true);
-
-        // Act
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
-        method!.Invoke(this.window, [null, args]);
-
-        // Assert
-        Assert.That(this.window.IsClosing, Is.False);
-    }
-
-    [Test]
-    public void FormClosingShouldSetIsClosingTrueWhenNotCanceled()
-    {
-        // Arrange
-        var args = new FormClosingEventArgs(CloseReason.UserClosing, false);
-
-        // Act
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
-        method!.Invoke(this.window, [null, args]);
-
-        // Assert
-        Assert.That(this.window.IsClosing, Is.True);
-    }
-
-    [Test]
-    public void FormClosingShouldThrowArgumentNullExceptionWhenArgsNull()
+    public void FormClosedShouldThrowArgumentNullExceptionWhenArgsNull()
     {
         // Act & Assert
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosing", BindingFlags.NonPublic | BindingFlags.Instance);
+        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosed", BindingFlags.NonPublic | BindingFlags.Instance);
         var ex = Assert.Throws<TargetInvocationException>(() =>
         {
             method!.Invoke(this.window, [null, null]);

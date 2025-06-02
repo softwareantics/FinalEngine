@@ -24,6 +24,11 @@ internal sealed class PInvokeAdapter : IPInvokeAdapter
         return PInvoke.PeekMessage(out lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax, wRemoveMsg);
     }
 
+    public void PostQuitMessage(int exitCode)
+    {
+        PInvoke.PostQuitMessage(exitCode);
+    }
+
     public int TranslateMessage(ref NativeMessage lpMsg)
     {
         return PInvoke.TranslateMessage(ref lpMsg);

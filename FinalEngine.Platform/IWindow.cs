@@ -80,14 +80,6 @@ public interface IWindow : IDisposable
     Size ClientSize { get; set; }
 
     /// <summary>
-    ///   Gets a value indicating whether this <see cref="IWindow"/> is closing.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="IWindow"/> is closing; otherwise, <c>false</c>.
-    /// </value>
-    bool IsClosing { get; }
-
-    /// <summary>
     ///   Gets or sets a value indicating whether this <see cref="IWindow"/> can be resized manually by the user.
     /// </summary>
     /// <value>

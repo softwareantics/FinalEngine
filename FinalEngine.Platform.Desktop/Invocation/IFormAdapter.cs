@@ -10,8 +10,8 @@ namespace FinalEngine.Platform.Desktop.Invocation;
 /// <seealso cref="IDisposable"/>
 internal interface IFormAdapter : IDisposable
 {
-    /// <inheritdoc cref="Form.FormClosing"/>
-    event FormClosingEventHandler? FormClosing;
+    /// <inheritdoc cref="Form.FormClosed"/>
+    event FormClosedEventHandler? FormClosed;
 
     /// <inheritdoc cref="Form.ClientSize"/>
     /// /&gt;

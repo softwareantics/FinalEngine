@@ -23,5 +23,7 @@ internal interface IPInvokeAdapter
         int wMsgFilterMax,
         int wRemoveMsg);
 
+    void PostQuitMessage(int exitCode);
+
     int TranslateMessage(ref NativeMessage lpMsg);
 }

@@ -6,5 +6,7 @@ namespace FinalEngine.Platform;
 
 public interface IEventsProcessor
 {
+    bool CanProcessEvents { get; }
+
     void ProcessEvents();
 }

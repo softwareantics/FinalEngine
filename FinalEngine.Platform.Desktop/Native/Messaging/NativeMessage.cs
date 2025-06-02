@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 public enum NativeMessageCode : uint
 {
-    NCDestroy = 130,
+    Close = 0x0010,
 }
 
 [StructLayout(LayoutKind.Sequential)]

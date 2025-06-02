@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30517CC4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Tests", "FinalEngine.Tests\FinalEngine.Tests.csproj", "{9EC9F5A4-352C-3D9A-6F16-55C4B1C6CC16}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runtime", "Runtime", "{40A9B4B9-5095-48A8-B4AF-C5237829BCA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Runtime", "FinalEngine.Runtime\FinalEngine.Runtime.csproj", "{EB497DEB-0822-434F-9815-5103E14D85F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,6 +40,9 @@ Global
 		{9EC9F5A4-352C-3D9A-6F16-55C4B1C6CC16}.Debug|x64.ActiveCfg = Debug|x64
 		{9EC9F5A4-352C-3D9A-6F16-55C4B1C6CC16}.Debug|x64.Build.0 = Debug|x64
 		{9EC9F5A4-352C-3D9A-6F16-55C4B1C6CC16}.Release|x64.ActiveCfg = Release|x64
+		{EB497DEB-0822-434F-9815-5103E14D85F6}.Debug|x64.ActiveCfg = Debug|x64
+		{EB497DEB-0822-434F-9815-5103E14D85F6}.Debug|x64.Build.0 = Debug|x64
+		{EB497DEB-0822-434F-9815-5103E14D85F6}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +51,7 @@ Global
 		{B5B5540F-2AA0-4735-9E08-7FD578BCBDA7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5801209D-0EE1-49AD-A38E-133296EEBD3E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9EC9F5A4-352C-3D9A-6F16-55C4B1C6CC16} = {30517CC4-56F4-466D-998B-D2B2050C4935}
+		{EB497DEB-0822-434F-9815-5103E14D85F6} = {40A9B4B9-5095-48A8-B4AF-C5237829BCA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72EB2B58-57F1-44FF-8653-8234E41F1E83}

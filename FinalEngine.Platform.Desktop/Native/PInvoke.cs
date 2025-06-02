@@ -83,6 +83,16 @@ internal static partial class PInvoke
         int wRemoveMsg);
 
     /// <summary>
+    ///   Indicates to the system that a thread has made a request to terminate (post a quit message to the message queue).
+    /// </summary>
+    /// <param name="exitCode">
+    ///   The application exit code to be used by the process and provided to the system.
+    /// </param>
+    [LibraryImport("user32.dll", EntryPoint = "PostQuitMessage")]
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+    public static partial void PostQuitMessage(int exitCode);
+
+    /// <summary>
     ///   Translates virtual-key messages into character messages.
     /// </summary>
     /// <param name="lpMsg">

@@ -12,31 +12,33 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
 {
     private readonly IPInvokeAdapter nativeAdapter;
 
-    private bool canProcessEvents;
-
     public WinFormsEventsProcessor(IPInvokeAdapter nativeAdapter)
     {
         this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
-        this.canProcessEvents = true;
+        this.CanProcessEvents = true;
     }
+
+    public bool CanProcessEvents { get; private set; }
 
     public void ProcessEvents()
     {
-        if (!this.canProcessEvents)
+        if (!this.CanProcessEvents)
         {
             return;
         }
 
         while (this.nativeAdapter.PeekMessage(out var message, IntPtr.Zero, 0, 0, 0) != 0)
         {
-            if (this.nativeAdapter.GetMessage(out message, IntPtr.Zero, 0, 0) == -1)
+            int result = this.nativeAdapter.GetMessage(out message, IntPtr.Zero, 0, 0);
+
+            if (result == -1)
             {
                 throw new InvalidOperationException($"An error happened in messaging loop while processing windows messages. Error: {Marshal.GetLastWin32Error()}");
             }
-
-            if (message.MessageCode == NativeMessageCode.NCDestroy)
+            else if (result == 0)
             {
-                this.canProcessEvents = false;
+                this.CanProcessEvents = false;
+                return;
             }
 
             var appMessage = new Message()

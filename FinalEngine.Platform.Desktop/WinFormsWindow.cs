@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using FinalEngine.Platform.Desktop.Invocation;
+using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform.Desktop.Native;
 
 /// <summary>
 ///   Provides a Windows Forms implementation of the <see cref="IWindow"/> interface, enabling window management and customization for desktop applications.
@@ -34,24 +36,17 @@ internal sealed class WinFormsWindow : IWindow
     /// </summary>
     private bool isDisposed;
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="WinFormsWindow"/> class.
-    /// </summary>
-    /// <param name="form">
-    ///   The form invoker instance used for invoking form-related operations.
-    /// </param>
-    /// <param name="mapper">
-    ///   The mapper instance used for converting between enumeration types.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   Thrown when the <paramref name="form"/> or <paramref name="mapper"/> parameter is null.
-    /// </exception>
-    public WinFormsWindow(IFormAdapter form, IMapper mapper)
+    private IPInvokeAdapter nativeAdapter;
+
+    /// <summary> Initializes a new instance of the <see cref="WinFormsWindow"/> class. </summary> <param name="form"> The form invoker instance used for invoking form-related operations. </param> <param name="nativeAdapter"> The native adapter instance used for invoking native operations, such as posting quit messages. </param> <param name="mapper"> The mapper instance used for converting between enumeration types. </param> <exception cref="ArgumentNullException"> Thrown when the <paramref name="form"/>, <paramref name="nativeAdapter"/> or <paramref name="mapper"/> parameter is null. </exception> </exception>
+    public WinFormsWindow(IFormAdapter form, IPInvokeAdapter nativeAdapter, IMapper mapper)
     {
         this.form = form ?? throw new ArgumentNullException(nameof(form));
+        this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-        this.form.FormClosing += this.Form_FormClosing;
+        this.form.FormClosed += this.Form_FormClosed;
+        ;
 
         this.Title = "Final Engine";
 
@@ -94,16 +89,6 @@ internal sealed class WinFormsWindow : IWindow
             this.form!.ClientSize = value;
         }
     }
-
-    /// <summary>
-    ///   Gets a value indicating whether this <see cref="WinFormsWindow"/> is closing.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is closing; otherwise, <c>false</c>.
-    /// </value>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool IsClosing { get; private set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this <see cref="WinFormsWindow"/> can be resized manually by the user.
@@ -292,7 +277,7 @@ internal sealed class WinFormsWindow : IWindow
         {
             if (this.form != null)
             {
-                this.form.FormClosing -= this.Form_FormClosing;
+                this.form.FormClosed -= this.Form_FormClosed;
                 this.form.Dispose();
                 this.form = null;
             }
@@ -301,21 +286,9 @@ internal sealed class WinFormsWindow : IWindow
         this.isDisposed = true;
     }
 
-    /// <summary>
-    ///   Occurs when the form is closing, allowing for cleanup or state management before the form is closed.
-    /// </summary>
-    /// <param name="sender">
-    ///   The sender.
-    /// </param>
-    /// <param name="e">
-    ///   The <see cref="FormClosingEventArgs"/> instance containing the event data.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    ///   Thrown when the <paramref name="e"/> parameter is null.
-    /// </exception>
-    private void Form_FormClosing(object? sender, FormClosingEventArgs e)
+    private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);
-        this.IsClosing = !e.Cancel;
+        this.nativeAdapter.PostQuitMessage(0);
     }
 }
