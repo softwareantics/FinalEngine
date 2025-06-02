@@ -10,6 +10,7 @@ on:
 jobs:
   # FinalEngine.Platform
   build_platform:
+    name: Platform
     runs-on: ubuntu-latest
     
     steps:
@@ -27,6 +28,7 @@ jobs:
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
+    name: Windows Platform
     runs-on: windows-latest
 
     steps:
@@ -44,6 +46,7 @@ jobs:
 
   # FinalEngine.Runtime
   build_runtime:
+    name: Runtime
     runs-on: ubuntu-latest
 
     steps:
