@@ -55,11 +55,15 @@ jobs:
             /o:"software-antics" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.host.url="https://sonarcloud.io" `
-            /d:sonar.cs.opencover.reportsPaths="$(pwd)\TestResults\coverage.xml"
+            /d:sonar.cs.opencover.reportsPaths="$(pwd)\coverage\coverage.xml"
 
       - name: Build solution
         shell: powershell
         run: dotnet build FinalEngine.sln
+
+      - name: Create coverage directory
+        shell: powershell
+        run: New-Item -ItemType Directory -Path coverage -Force
 
       - name: Run tests with coverage
         shell: powershell
@@ -67,7 +71,7 @@ jobs:
           dotnet test FinalEngine.Tests/FinalEngine.Tests.csproj `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=cobertura `
-            /p:CoverletOutput="$(pwd)\TestResults\coverage.xml"
+            /p:CoverletOutput="$(pwd)\coverage\coverage.xml"
 
       - name: Debug coverage file
         shell: powershell
