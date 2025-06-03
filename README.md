@@ -4,8 +4,6 @@
 
 <div align="center">
   
-  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=softwareantics_FinalEngine&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=softwareantics_FinalEngine) 
-  
   <strong>Final Engine</strong> is an open-source game engine developed in C# using .NET 9.0. 
   What began as a hobby project has rapidly evolved into a tool we're committed to actively developing and maintaining. 
   The core objective of Final Engine is to offer a feature-rich environment that prioritizes simplicity, accessibility, and full creative freedom.
