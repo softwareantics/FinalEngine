@@ -3,6 +3,9 @@
 
 
 <div align="center">
+
+  [![✅ Build Status Check](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml/badge.svg?branch=final)](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml)
+  [![🧪 Unit Tests Status Check](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml/badge.svg)](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml)
   
   <strong>Final Engine</strong> is an open-source game engine developed in C# using .NET 9.0. 
   What began as a hobby project has rapidly evolved into a tool we're committed to actively developing and maintaining. 
