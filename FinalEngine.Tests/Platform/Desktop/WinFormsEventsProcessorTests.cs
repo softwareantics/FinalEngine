@@ -57,7 +57,7 @@ internal sealed class WinFormsEventsProcessorTests
         });
 
         // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("applicationAdapter"));
+        Assert.That(ex.ParamName, Is.EqualTo("application"));
     }
 
     [Test]
@@ -83,7 +83,7 @@ internal sealed class WinFormsEventsProcessorTests
         });
 
         // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("nativeAdapter"));
+        Assert.That(ex.ParamName, Is.EqualTo("native"));
     }
 
     [Test]

@@ -138,7 +138,7 @@ internal sealed class WinFormsWindowTests
         });
 
         // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("nativeAdapter"));
+        Assert.That(ex.ParamName, Is.EqualTo("native"));
     }
 
     [Test]

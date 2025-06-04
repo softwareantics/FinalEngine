@@ -25,7 +25,7 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// <summary>
     /// Specifies the <see cref="IApplicationAdapter"/> instance used to filter messages before they are processed.
     /// </summary>
-    private readonly IApplicationAdapter applicationAdapter;
+    private readonly IApplicationAdapter application;
 
     /// <summary>
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
@@ -35,7 +35,7 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// <summary>
     /// Specifies the <see cref="INativeAdapter"/> instance used to interact with the Windows API for message processing.
     /// </summary>
-    private readonly INativeAdapter nativeAdapter;
+    private readonly INativeAdapter native;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WinFormsEventsProcessor"/> class.
@@ -45,11 +45,11 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
     /// </param>
     ///
-    /// <param name="nativeAdapter">
+    /// <param name="native">
     /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls for message retrieval and dispatching.
     /// </param>
     ///
-    /// <param name="applicationAdapter">
+    /// <param name="application">
     /// Specifies an <see cref="IApplicationAdapter"/> that is used to filter messages before processing.
     /// </param>
     ///
@@ -60,18 +60,21 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     ///         <paramref name="logger"/>
     ///     </item>
     ///     <item>
-    ///         <paramref name="nativeAdapter"/>
+    ///         <paramref name="native"/>
     ///     </item>
     ///     <item>
-    ///         <paramref name="applicationAdapter"/>
+    ///         <paramref name="application"/>
     ///     </item>
     /// </list>
     /// </exception>
-    public WinFormsEventsProcessor(ILogger<WinFormsEventsProcessor> logger, INativeAdapter nativeAdapter, IApplicationAdapter applicationAdapter)
+    public WinFormsEventsProcessor(
+        ILogger<WinFormsEventsProcessor> logger,
+        INativeAdapter native,
+        IApplicationAdapter application)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
-        this.applicationAdapter = applicationAdapter ?? throw new ArgumentNullException(nameof(applicationAdapter));
+        this.native = native ?? throw new ArgumentNullException(nameof(native));
+        this.application = application ?? throw new ArgumentNullException(nameof(application));
 
         this.CanProcessEvents = true;
 
@@ -90,7 +93,7 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// </remarks>
     ///
     /// <exception cref="InvalidOperationException">
-    /// Thrown if a critical error occurs during message retrieval from the Windows message queue.
+    /// Thrown when a critical error occurs during message retrieval from the Windows message queue.
     /// </exception>
     public void ProcessEvents()
     {
@@ -100,9 +103,9 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
             return;
         }
 
-        while (this.nativeAdapter.PeekMessage(out var message, IntPtr.Zero, 0, 0, 0) != 0)
+        while (this.native.PeekMessage(out var message, IntPtr.Zero, 0, 0, 0) != 0)
         {
-            int result = this.nativeAdapter.GetMessage(out message, IntPtr.Zero, 0, 0);
+            int result = this.native.GetMessage(out message, IntPtr.Zero, 0, 0);
 
             if (result == -1)
             {
@@ -125,10 +128,10 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
                 WParam = message.WParam,
             };
 
-            if (!this.applicationAdapter.FilterMessage(ref appMessage))
+            if (!this.application.FilterMessage(ref appMessage))
             {
-                this.nativeAdapter.TranslateMessage(ref message);
-                this.nativeAdapter.DispatchMessage(ref message);
+                this.native.TranslateMessage(ref message);
+                this.native.DispatchMessage(ref message);
             }
         }
     }

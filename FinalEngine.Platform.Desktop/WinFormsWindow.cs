@@ -45,7 +45,7 @@ internal sealed class WinFormsWindow : IWindow
     /// <summary>
     /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls related to window management.
     /// </summary>
-    private readonly INativeAdapter nativeAdapter;
+    private readonly INativeAdapter native;
 
     /// <summary>
     /// Specifies an <see cref="IFormAdapter"/> that represents the underlying Windows Forms window.
@@ -69,7 +69,7 @@ internal sealed class WinFormsWindow : IWindow
     /// Specifies an <see cref="IFormAdapter"/> that represents the underlying window.
     /// </param>
     ///
-    /// <param name="nativeAdapter">
+    /// <param name="native">
     /// Specifies an <see cref="INativeAdapter"/> that represents an adapter for Windows API calls.
     /// </param>
     ///
@@ -87,18 +87,22 @@ internal sealed class WinFormsWindow : IWindow
     ///         <paramref name="form"/>
     ///     </item>
     ///     <item>
-    ///         <paramref name="nativeAdapter"/>
+    ///         <paramref name="native"/>
     ///     </item>
     ///     <item>
     ///         <paramref name="mapper"/>
     ///     </item>
     /// </list>
     /// </exception>
-    public WinFormsWindow(ILogger<WinFormsWindow> logger, IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
+    public WinFormsWindow(
+        ILogger<WinFormsWindow> logger,
+        IFormAdapter form,
+        INativeAdapter native,
+        IMapper mapper)
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.form = form ?? throw new ArgumentNullException(nameof(form));
-        this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
+        this.native = native ?? throw new ArgumentNullException(nameof(native));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         this.form.FormClosed += this.Form_FormClosed;
@@ -324,6 +328,6 @@ internal sealed class WinFormsWindow : IWindow
     {
         ArgumentNullException.ThrowIfNull(e);
         this.logger.LogDebug("Form closed. Posting quit message to end message loop.");
-        this.nativeAdapter.PostQuitMessage(0);
+        this.native.PostQuitMessage(0);
     }
 }

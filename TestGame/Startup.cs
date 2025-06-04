@@ -8,7 +8,6 @@ using FinalEngine.Platform.Desktop.Extensions;
 using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 internal sealed class Startup
 {
@@ -23,24 +22,7 @@ internal sealed class Startup
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddSingleton<IConfiguration>(this.Configuration);
-
-        services.AddLogging(x =>
-        {
-            x.ClearProviders();
-            x.AddConsole();
-            x.AddDebug();
-            x.AddEventSourceLogger();
-
-            if (OperatingSystem.IsWindows())
-            {
-                x.AddEventLog();
-            }
-
-            x.AddConfiguration(this.Configuration.GetSection("Logging"));
-        });
-
         services.AddWindows();
-        services.AddRuntime();
+        services.AddRuntime(this.Configuration);
     }
 }
