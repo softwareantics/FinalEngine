@@ -7,6 +7,7 @@ namespace FinalEngine.Platform.Desktop.Mappings.Profiles;
 using AutoMapper;
 using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides profiles for mapping between Windows Forms types and Final Engine platform types.

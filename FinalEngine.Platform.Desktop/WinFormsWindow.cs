@@ -9,6 +9,7 @@ using FinalEngine.Platform.Desktop.Invocation.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a Windows Forms implementation of the <see cref="IWindow"/> interface for managing a window on desktop platforms.
@@ -20,6 +21,11 @@ using System.Diagnostics.CodeAnalysis;
 /// <inheritdoc cref="IWindow" />
 internal sealed class WinFormsWindow : IWindow
 {
+    /// <summary>
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </summary>
+    private readonly ILogger<WinFormsWindow> logger;
+
     /// <summary>
     /// Specifies an <see cref="IMapper"/> that is used to translate between platform-specific and engine-specific types.
     /// </summary>
@@ -44,6 +50,10 @@ internal sealed class WinFormsWindow : IWindow
     /// Initializes a new instance of the <see cref="WinFormsWindow"/> class.
     /// </summary>
     ///
+    /// <param name="logger">
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </param>
+    ///
     /// <param name="form">
     /// Specifies an <see cref="IFormAdapter"/> that represents the underlying window.
     /// </param>
@@ -60,6 +70,9 @@ internal sealed class WinFormsWindow : IWindow
     /// Thrown when the one of the following parameters are null:
     /// <list type="bullet">
     ///     <item>
+    ///         <paramref name="logger"/>
+    ///     </item>
+    ///     <item>
     ///         <paramref name="form"/>
     ///     </item>
     ///     <item>
@@ -70,8 +83,9 @@ internal sealed class WinFormsWindow : IWindow
     ///     </item>
     /// </list>
     /// </exception>
-    public WinFormsWindow(IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
+    public WinFormsWindow(ILogger<WinFormsWindow> logger, IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.form = form ?? throw new ArgumentNullException(nameof(form));
         this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
         this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -85,6 +99,8 @@ internal sealed class WinFormsWindow : IWindow
         this.ClientSize = new Size(1280, 720);
 
         this.IsVisible = true;
+
+        this.logger.LogInformation("Window initialized: Size={Size}, Title='{Title}'", this.ClientSize, this.Title);
     }
 
     /// <summary>
@@ -173,16 +189,21 @@ internal sealed class WinFormsWindow : IWindow
         {
             ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
 
+            this.logger.LogDebug("Setting window state to {State}.", value);
+
             if (value == WindowState.Fullscreen)
             {
+                this.logger.LogInformation("Switching to Fullscreen mode, applying Borderless style.");
                 this.Style = WindowStyle.Borderless;
             }
             else if (value == WindowState.Normal)
             {
+                this.logger.LogInformation("Switching to Normal mode, applying Fixed style.");
                 this.Style = WindowStyle.Fixed;
             }
 
             this.form!.WindowState = this.mapper.Map<FormWindowState>(value);
+            this.logger.LogDebug("{WindowState} changed to {State}", nameof(WindowState), value);
         }
     }
 
@@ -201,6 +222,7 @@ internal sealed class WinFormsWindow : IWindow
         set
         {
             ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
+            this.logger.LogDebug("Changing window style to {Style}.", value);
             this.form!.FormBorderStyle = this.mapper.Map<FormBorderStyle>(value);
         }
     }
@@ -231,6 +253,8 @@ internal sealed class WinFormsWindow : IWindow
     public void Close()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
+
+        this.logger.LogInformation("Closing window...");
         this.form!.Close();
     }
 
@@ -257,6 +281,8 @@ internal sealed class WinFormsWindow : IWindow
 
         if (disposing && this.form != null)
         {
+            this.logger.LogTrace("Disposing form and removing event handlers.");
+
             this.form.FormClosed -= this.Form_FormClosed;
             this.form.Dispose();
             this.form = null;
@@ -283,6 +309,7 @@ internal sealed class WinFormsWindow : IWindow
     private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);
+        this.logger.LogDebug("Form closed. Posting quit message to end message loop.");
         this.nativeAdapter.PostQuitMessage(0);
     }
 }

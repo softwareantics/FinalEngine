@@ -10,6 +10,7 @@ using FinalEngine.Platform.Desktop;
 using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform.Desktop.Native.Messaging;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -19,6 +20,8 @@ internal sealed class WinFormsEventsProcessorTests
     private IApplicationAdapter applicationAdapter;
 
     private WinFormsEventsProcessor eventsProcessor;
+
+    private ILogger<WinFormsEventsProcessor> logger;
 
     private INativeAdapter nativeAdapter;
 
@@ -50,11 +53,24 @@ internal sealed class WinFormsEventsProcessorTests
         // Act & Assert
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsEventsProcessor(this.nativeAdapter, null);
+            new WinFormsEventsProcessor(this.logger, this.nativeAdapter, null);
         });
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("applicationAdapter"));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+        {
+            new WinFormsEventsProcessor(null, this.nativeAdapter, this.applicationAdapter);
+        });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("logger"));
     }
 
     [Test]
@@ -63,7 +79,7 @@ internal sealed class WinFormsEventsProcessorTests
         // Act & Assert
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsEventsProcessor(null, this.applicationAdapter);
+            new WinFormsEventsProcessor(this.logger, null, this.applicationAdapter);
         });
 
         // Assert
@@ -168,6 +184,7 @@ internal sealed class WinFormsEventsProcessorTests
     {
         this.nativeAdapter = Substitute.For<INativeAdapter>();
         this.applicationAdapter = Substitute.For<IApplicationAdapter>();
-        this.eventsProcessor = new WinFormsEventsProcessor(this.nativeAdapter, this.applicationAdapter);
+        this.logger = Substitute.For<ILogger<WinFormsEventsProcessor>>();
+        this.eventsProcessor = new WinFormsEventsProcessor(this.logger, this.nativeAdapter, this.applicationAdapter);
     }
 }

@@ -8,6 +8,7 @@ using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a Windows Forms-based implementation of the <see cref="IEventsProcessor"/> interface for processing Windows messages.
@@ -26,6 +27,11 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     private readonly IApplicationAdapter applicationAdapter;
 
     /// <summary>
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </summary>
+    private readonly ILogger<WinFormsEventsProcessor> logger;
+
+    /// <summary>
     /// Specifies the <see cref="INativeAdapter"/> instance used to interact with the Windows API for message processing.
     /// </summary>
     private readonly INativeAdapter nativeAdapter;
@@ -33,6 +39,10 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// <summary>
     /// Initializes a new instance of the <see cref="WinFormsEventsProcessor"/> class.
     /// </summary>
+    ///
+    /// <param name="logger">
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </param>
     ///
     /// <param name="nativeAdapter">
     /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls for message retrieval and dispatching.
@@ -46,6 +56,9 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     /// Thrown when one of the following parameters is null:
     /// <list type="bullet">
     ///     <item>
+    ///         <paramref name="logger"/>
+    ///     </item>
+    ///     <item>
     ///         <paramref name="nativeAdapter"/>
     ///     </item>
     ///     <item>
@@ -53,12 +66,15 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     ///     </item>
     /// </list>
     /// </exception>
-    public WinFormsEventsProcessor(INativeAdapter nativeAdapter, IApplicationAdapter applicationAdapter)
+    public WinFormsEventsProcessor(ILogger<WinFormsEventsProcessor> logger, INativeAdapter nativeAdapter, IApplicationAdapter applicationAdapter)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.nativeAdapter = nativeAdapter ?? throw new ArgumentNullException(nameof(nativeAdapter));
         this.applicationAdapter = applicationAdapter ?? throw new ArgumentNullException(nameof(applicationAdapter));
 
         this.CanProcessEvents = true;
+
+        this.logger.LogInformation("Events processor initialized and ready to process events.");
     }
 
     /// <inheritdoc/>
@@ -79,6 +95,7 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     {
         if (!this.CanProcessEvents)
         {
+            this.logger.LogWarning("Events processor is not in a state to process events. Exiting the processing loop.");
             return;
         }
 
@@ -88,12 +105,14 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
 
             if (result == -1)
             {
+                this.logger.LogError("An error occurred while retrieving a message from the Windows message queue. Error: {Error}", Marshal.GetLastWin32Error());
                 throw new InvalidOperationException($"An error happened in the messaging loop while processing windows messages. Error: {Marshal.GetLastWin32Error()}");
             }
 
             if (result == 0)
             {
                 this.CanProcessEvents = false;
+                this.logger.LogDebug("No more messages to process in the queue. Exiting the processing loop.");
                 return;
             }
 

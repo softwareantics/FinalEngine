@@ -9,6 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using FinalEngine.Platform;
 using FinalEngine.Runtime;
+using Microsoft.Extensions.Logging;
 
 [TestFixture]
 internal sealed class EngineDriverTests
@@ -17,26 +18,47 @@ internal sealed class EngineDriverTests
 
     private IEventsProcessor eventsProcessor;
 
+    private ILogger<EngineDriver> logger;
+
     private IWindow window;
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenEventsProcessorIsNull()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() =>
+        var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new EngineDriver(this.window, null);
+            new EngineDriver(this.logger, this.window, null);
         });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("eventsProcessor"));
+    }
+
+    [Test]
+    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+        {
+            new EngineDriver(null, this.window, this.eventsProcessor);
+        });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("logger"));
     }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenWindowIsNull()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() =>
+        var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new EngineDriver(null, this.eventsProcessor);
+            new EngineDriver(this.logger, null, this.eventsProcessor);
         });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("window"));
     }
 
     [Test]
@@ -93,10 +115,11 @@ internal sealed class EngineDriverTests
     [SetUp]
     public void Setup()
     {
-        // Arrange
+        this.logger = Substitute.For<ILogger<EngineDriver>>();
         this.window = Substitute.For<IWindow>();
         this.eventsProcessor = Substitute.For<IEventsProcessor>();
-        this.engineDriver = new EngineDriver(this.window, this.eventsProcessor);
+
+        this.engineDriver = new EngineDriver(this.logger, this.window, this.eventsProcessor);
     }
 
     [Test]

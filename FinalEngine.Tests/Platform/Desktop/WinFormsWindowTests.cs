@@ -13,11 +13,14 @@ using System.Reflection;
 using System.Windows.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
 using FinalEngine.Platform.Desktop.Invocation.Forms;
+using Microsoft.Extensions.Logging;
 
 [TestFixture]
 internal sealed class WinFormsWindowTests
 {
     private IFormAdapter form;
+
+    private ILogger<WinFormsWindow> logger;
 
     private IMapper mapper;
 
@@ -87,12 +90,25 @@ internal sealed class WinFormsWindowTests
     }
 
     [Test]
+    public void ConstructorShouldNotThrowArgumentNullExceptionWhenLoggerIsNull()
+    {
+        // Arrange & Act
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+        {
+            new WinFormsWindow(null, this.form, this.nativeAdapter, null);
+        });
+
+        // Assert
+        Assert.That(ex.ParamName, Is.EqualTo("logger"));
+    }
+
+    [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenFormIsNull()
     {
         // Arrange & Act
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsWindow(null!, this.nativeAdapter, this.mapper);
+            new WinFormsWindow(this.logger, null, this.nativeAdapter, this.mapper);
         });
 
         // Assert
@@ -105,7 +121,7 @@ internal sealed class WinFormsWindowTests
         // Arrange & Act
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsWindow(this.form, this.nativeAdapter, null!);
+            new WinFormsWindow(this.logger, this.form, this.nativeAdapter, null);
         });
 
         // Assert
@@ -118,7 +134,7 @@ internal sealed class WinFormsWindowTests
         // Arrange & Act
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new WinFormsWindow(this.form, null!, this.mapper);
+            new WinFormsWindow(this.logger, this.form, null, this.mapper);
         });
 
         // Assert
@@ -249,6 +265,7 @@ internal sealed class WinFormsWindowTests
     [SetUp]
     public void SetUp()
     {
+        this.logger = Substitute.For<ILogger<WinFormsWindow>>();
         this.form = Substitute.For<IFormAdapter>();
         this.nativeAdapter = Substitute.For<INativeAdapter>();
         this.mapper = Substitute.For<IMapper>();
@@ -265,7 +282,7 @@ internal sealed class WinFormsWindowTests
         this.mapper.Map<WindowStyle>(Arg.Any<FormBorderStyle>()).Returns(WindowStyle.Resizable);
         this.mapper.Map<FormBorderStyle>(Arg.Any<WindowStyle>()).Returns(FormBorderStyle.Sizable);
 
-        this.window = new WinFormsWindow(this.form, this.nativeAdapter, this.mapper);
+        this.window = new WinFormsWindow(this.logger, this.form, this.nativeAdapter, this.mapper);
     }
 
     [Test]
@@ -308,6 +325,21 @@ internal sealed class WinFormsWindowTests
         // Assert
         this.form.Received(1).FormBorderStyle = FormBorderStyle.None;
         this.form.Received(1).WindowState = FormWindowState.Maximized;
+    }
+
+    [Test]
+    public void StateShouldSetStyleToFixedWhenNormal()
+    {
+        // Arrange
+        this.mapper.Map<FormWindowState>(WindowState.Normal).Returns(FormWindowState.Normal);
+        this.mapper.Map<FormBorderStyle>(WindowStyle.Fixed).Returns(FormBorderStyle.FixedDialog);
+
+        // Act
+        this.window.State = WindowState.Normal;
+
+        // Assert
+        this.form.Received(1).FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.form.Received(1).WindowState = FormWindowState.Normal;
     }
 
     [Test]

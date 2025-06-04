@@ -4,9 +4,9 @@
 
 namespace FinalEngine.Runtime;
 
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Platform;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEngineDriver"/> that manages the engine/game life-cycle.
@@ -19,6 +19,11 @@ internal sealed class EngineDriver : IEngineDriver
     /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
     /// </summary>
     private readonly IEventsProcessor eventsProcessor;
+
+    /// <summary>
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </summary>
+    private readonly ILogger<EngineDriver> logger;
 
     /// <summary>
     /// Indicates whether the <see cref="EngineDriver"/> has been disposed.
@@ -39,6 +44,10 @@ internal sealed class EngineDriver : IEngineDriver
     /// Initializes a new instance of the <see cref="EngineDriver"/> class.
     /// </summary>
     ///
+    /// <param name="logger">
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </param>
+    ///
     /// <param name="window">
     /// The window to be used by the engine driver.
     /// </param>
@@ -51,6 +60,9 @@ internal sealed class EngineDriver : IEngineDriver
     /// Thrown when one of the following parameters is null:
     /// <list type="bullet">
     ///     <item>
+    ///         <paramref name="logger"/>
+    ///     </item>
+    ///     <item>
     ///         <paramref name="window"/>
     ///     </item>
     ///     <item>
@@ -59,9 +71,11 @@ internal sealed class EngineDriver : IEngineDriver
     /// </list>
     /// </exception>
     public EngineDriver(
+        ILogger<EngineDriver> logger,
         IWindow window,
         IEventsProcessor eventsProcessor)
     {
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.window = window ?? throw new ArgumentNullException(nameof(window));
         this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
     }
@@ -94,8 +108,11 @@ internal sealed class EngineDriver : IEngineDriver
 
         if (this.isRunning)
         {
+            this.logger.LogWarning("The engine driver is already running.");
             return;
         }
+
+        this.logger.LogInformation("Starting the engine driver...");
 
         this.RunGameLoop();
     }
@@ -107,6 +124,7 @@ internal sealed class EngineDriver : IEngineDriver
     public void Stop()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
+        this.logger.LogInformation("Stopping the engine driver...");
         this.isRunning = false;
     }
 
@@ -122,6 +140,8 @@ internal sealed class EngineDriver : IEngineDriver
         {
             return;
         }
+
+        this.logger.LogTrace("Disposing the engine driver...");
 
         if (disposing && this.window != null)
         {
@@ -139,9 +159,13 @@ internal sealed class EngineDriver : IEngineDriver
     {
         this.isRunning = true;
 
+        this.logger.LogInformation("Entering the game loop...");
+
         while (this.eventsProcessor.CanProcessEvents)
         {
             this.eventsProcessor.ProcessEvents();
         }
+
+        this.logger.LogInformation("Exited the game loop.");
     }
 }
