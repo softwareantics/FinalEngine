@@ -34,7 +34,7 @@ public static class ConfigurationBuilderExtensions
 
         return builder
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile("appsettings.Development.json", optional: true)
             .AddEnvironmentVariables(prefix: "DOTNET_")
             .Build();
