@@ -4,11 +4,9 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("TestGame")]
-[assembly: AssemblyDescription("A test Final Engine game.")]
-[assembly: Guid("A61A2D09-D141-45D7-9C15-372D740F8DCC")]
-[assembly: SupportedOSPlatform("windows")]
+[assembly: AssemblyTitle("FinalEngine.Utilities")]
+[assembly: AssemblyDescription("A common utility library for Final Engine games.")]
+[assembly: Guid("71D61E25-BE5C-4A77-BD33-5D22212B71DB")]

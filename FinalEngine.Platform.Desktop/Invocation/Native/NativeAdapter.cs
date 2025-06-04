@@ -1,5 +1,5 @@
 // <copyright file="NativeAdapter.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+//   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop.Invocation.Native;
@@ -9,8 +9,9 @@ using FinalEngine.Platform.Desktop.Native;
 using FinalEngine.Platform.Desktop.Native.Messaging;
 
 /// <summary>
-///   Provides a standard implementation of an <see cref="INativeAdapter"/>.
+/// Provides a standard implementation of an <see cref="INativeAdapter"/>.
 /// </summary>
+///
 /// <seealso cref="INativeAdapter"/>
 [ExcludeFromCodeCoverage]
 internal sealed class NativeAdapter : INativeAdapter

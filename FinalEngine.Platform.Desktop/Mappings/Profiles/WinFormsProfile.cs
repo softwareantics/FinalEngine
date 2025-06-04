@@ -1,5 +1,5 @@
 // <copyright file="WinFormsProfile.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+//   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop.Mappings.Profiles;
@@ -7,15 +7,17 @@ namespace FinalEngine.Platform.Desktop.Mappings.Profiles;
 using AutoMapper;
 using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
-///   Provides profiles for mapping between Windows Forms types and Final Engine platform types.
+/// Provides profiles for mapping between Windows Forms types and Final Engine platform types.
 /// </summary>
+///
 /// <seealso cref="Profile"/>
 internal sealed class WinFormsProfile : Profile
 {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WinFormsProfile"/> class.
+    /// Initializes a new instance of the <see cref="WinFormsProfile"/> class.
     /// </summary>
     public WinFormsProfile()
     {
