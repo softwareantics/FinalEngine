@@ -1,43 +1,57 @@
 // <copyright file="WinFormsEventsProcessor.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+// Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop;
 
-using System.Runtime.InteropServices;
 using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform;
+using System.Runtime.InteropServices;
 
 /// <summary>
-///   Provides a Windows Forms implementation of the <see cref="IEventsProcessor"/> interface for processing Windows messages.
+/// Provides a Windows Forms-based implementation of the <see cref="IEventsProcessor"/> interface for processing Windows messages.
 /// </summary>
+///
 /// <remarks>
-///   This class is designed to process Windows messages in a manner similar to a Windows Forms application, allowing for message filtering and processing. It uses native interop to interact with the Windows API for message retrieval and dispatching. The implementation is suitable for use in a game engine context where fast and reliable message processing is required for input handling and other events.
+/// This implementation mimics the message loop behavior of a Windows Forms application, enabling message filtering and dispatching through native interop. It is designed for game engine use cases where high-performance, reliable message handling is required for input and other system-level events.
 /// </remarks>
+///
 /// <seealso cref="IEventsProcessor"/>
 internal sealed class WinFormsEventsProcessor : IEventsProcessor
 {
     /// <summary>
-    ///   The application adapter used to filter messages before they are processed.
+    /// Specifies the <see cref="IApplicationAdapter"/> instance used to filter messages before they are processed.
     /// </summary>
     private readonly IApplicationAdapter applicationAdapter;
 
     /// <summary>
-    ///   The native adapter used to interact with the Windows API for message processing.
+    /// Specifies the <see cref="INativeAdapter"/> instance used to interact with the Windows API for message processing.
     /// </summary>
     private readonly INativeAdapter nativeAdapter;
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WinFormsEventsProcessor"/> class.
+    /// Initializes a new instance of the <see cref="WinFormsEventsProcessor"/> class.
     /// </summary>
+    ///
     /// <param name="nativeAdapter">
-    ///   The native adapter used to interact with the Windows API for message processing.
+    /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls for message retrieval and dispatching.
     /// </param>
+    ///
     /// <param name="applicationAdapter">
-    ///   The application adapter used to filter messages before they are processed.
+    /// Specifies an <see cref="IApplicationAdapter"/> that is used to filter messages before processing.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="nativeAdapter"/> parameter is null.
+    /// Thrown when one of the following parameters is null:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <paramref name="nativeAdapter"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="applicationAdapter"/>
+    ///     </item>
+    /// </list>
     /// </exception>
     public WinFormsEventsProcessor(INativeAdapter nativeAdapter, IApplicationAdapter applicationAdapter)
     {
@@ -51,14 +65,16 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
     public bool CanProcessEvents { get; private set; }
 
     /// <summary>
-    ///   Processes the events that are currently in the message queue.
+    /// Processes all pending Windows messages from the message queue.
     /// </summary>
-    /// <exception cref="InvalidOperationException">
-    ///   An error happened in the messaging loop while processing windows messages.
-    /// </exception>
+    ///
     /// <remarks>
-    ///   This method retrieves messages from the message queue and dispatches them to the appropriate window procedure. It will continue to process messages until there are no more messages available or until the <see cref="CanProcessEvents"/> property is set to <c>false</c>. If an error occurs while retrieving or dispatching messages, an <see cref="InvalidOperationException"/> will be thrown with the last Win32 error code. This implementation attempts to mimic the behavior of a typical Windows Forms application message loop, allowing for message filtering and processing similar to what is done in a WinForms application whilst still being suitable for use in a game engine context where fast and reliable message processing is required for input handling and other events.
+    /// This method continuously retrieves and dispatches Windows messages until the queue is empty or <see cref="CanProcessEvents"/> is set to <c>false</c>. If <c>PeekMessage</c> or <c>GetMessage</c> returns an error, an exception is thrown with the last Win32 error. Messages are optionally filtered through the configured <see cref="IApplicationAdapter"/> before being passed to the Windows message system via <c>TranslateMessage</c> and <c>DispatchMessage</c>.
     /// </remarks>
+    ///
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if a critical error occurs during message retrieval from the Windows message queue.
+    /// </exception>
     public void ProcessEvents()
     {
         if (!this.CanProcessEvents)

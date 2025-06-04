@@ -5,7 +5,7 @@
 namespace FinalEngine.Platform.Desktop.Invocation.Applications;
 
 /// <summary>
-///   Defines an interface that represents an <see cref="Applications"/> adapter.
+/// Defines an interface that represents an <see cref="Application"/> adapter.
 /// </summary>
 internal interface IApplicationAdapter
 {

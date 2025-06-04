@@ -9,41 +9,48 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 /// <summary>
-///   Provides managed wrappers for selected functions from the user32.dll library related to message handling in Windows.
+/// Provides managed wrappers for selected functions from the user32.dll library related to message handling in Windows.
 /// </summary>
 [ExcludeFromCodeCoverage]
 internal static partial class Native
 {
     /// <summary>
-    ///   Dispatches a message to a window procedure.
+    /// Dispatches a message to a window procedure.
     /// </summary>
+    ///
     /// <param name="lpMsg">
-    ///   A pointer to a structure that contains the message.
+    /// Specifies a <see cref="NativeMessage"/> structure that represents the message to be dispatched.
     /// </param>
+    ///
     /// <returns>
-    ///   The result of the message processing; typically, it is the result value of the window procedure.
+    /// Returns an <see cref="int"/> that represents the result of the message processing, typically the return value from the window procedure.
     /// </returns>
     [LibraryImport("user32.dll", EntryPoint = "DispatchMessageA")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static partial int DispatchMessage(ref NativeMessage lpMsg);
 
     /// <summary>
-    ///   Retrieves a message from the calling thread's message queue.
+    /// Retrieves a message from the calling thread's message queue.
     /// </summary>
+    ///
     /// <param name="lpMsg">
-    ///   A pointer to a structure that receives message information.
+    /// Specifies an output <see cref="NativeMessage"/> structure that receives message information.
     /// </param>
+    ///
     /// <param name="hWnd">
-    ///   A handle to the window whose messages are to be retrieved.
+    /// Specifies an <see cref="IntPtr"/> that represents the handle to the window whose messages are to be retrieved.
     /// </param>
+    ///
     /// <param name="wMsgFilterMin">
-    ///   The value of the first message in the range of messages to be examined.
+    /// Specifies an <see cref="int"/> that represents the minimum value in the range of message codes to be retrieved.
     /// </param>
+    ///
     /// <param name="wMsgFilterMax">
-    ///   The value of the last message in the range of messages to be examined.
+    /// Specifies an <see cref="int"/> that represents the maximum value in the range of message codes to be retrieved.
     /// </param>
+    ///
     /// <returns>
-    ///   Non-zero if a message was retrieved, zero if no messages are available.
+    /// Returns a non-zero <see cref="int"/> if a message was retrieved; otherwise, returns zero.
     /// </returns>
     [LibraryImport("user32.dll", EntryPoint = "GetMessageA")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
@@ -54,25 +61,31 @@ internal static partial class Native
         int wMsgFilterMax);
 
     /// <summary>
-    ///   Retrieves a message from the calling thread's message queue without removing it.
+    /// Retrieves a message from the calling thread's message queue without removing it.
     /// </summary>
+    ///
     /// <param name="lpMsg">
-    ///   A pointer to a structure that receives message information.
+    /// Specifies an output <see cref="NativeMessage"/> structure that receives message information.
     /// </param>
+    ///
     /// <param name="hWnd">
-    ///   A handle to the window whose messages are to be retrieved.
+    /// Specifies an <see cref="IntPtr"/> that represents the handle to the window whose messages are to be retrieved.
     /// </param>
+    ///
     /// <param name="wMsgFilterMin">
-    ///   The value of the first message in the range of messages to be examined.
+    /// Specifies an <see cref="int"/> that represents the minimum value in the range of message codes to be retrieved.
     /// </param>
+    ///
     /// <param name="wMsgFilterMax">
-    ///   The value of the last message in the range of messages to be examined.
+    /// Specifies an <see cref="int"/> that represents the maximum value in the range of message codes to be retrieved.
     /// </param>
+    ///
     /// <param name="wRemoveMsg">
-    ///   Specifies how messages are to be handled.
+    /// Specifies an <see cref="int"/> that determines how messages are to be handled.
     /// </param>
+    ///
     /// <returns>
-    ///   Non-zero if a message was retrieved, zero if no messages are available.
+    /// Returns a non-zero <see cref="int"/> if a message was retrieved; otherwise, returns zero.
     /// </returns>
     [LibraryImport("user32.dll", EntryPoint = "PeekMessageA")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
@@ -84,23 +97,26 @@ internal static partial class Native
         int wRemoveMsg);
 
     /// <summary>
-    ///   Indicates to the system that a thread has made a request to terminate (post a quit message to the message queue).
+    /// Indicates to the system that a thread has made a request to terminate by posting a quit message to the message queue.
     /// </summary>
+    ///
     /// <param name="exitCode">
-    ///   The application exit code to be used by the process and provided to the system.
+    /// Specifies an <see cref="int"/> that represents the application exit code to be used by the process and returned to the system.
     /// </param>
     [LibraryImport("user32.dll", EntryPoint = "PostQuitMessage")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     public static partial void PostQuitMessage(int exitCode);
 
     /// <summary>
-    ///   Translates virtual-key messages into character messages.
+    /// Translates virtual-key messages into character messages.
     /// </summary>
+    ///
     /// <param name="lpMsg">
-    ///   A pointer to a structure that contains the message.
+    /// Specifies a <see cref="NativeMessage"/> structure that represents the message to be translated.
     /// </param>
+    ///
     /// <returns>
-    ///   Non-zero if the message has been translated and posted to the message queue, zero otherwise.
+    /// Returns a non-zero <see cref="int"/> if the message was translated and posted to the message queue; otherwise, returns zero.
     /// </returns>
     [LibraryImport("user32.dll", EntryPoint = "TranslateMessage")]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]

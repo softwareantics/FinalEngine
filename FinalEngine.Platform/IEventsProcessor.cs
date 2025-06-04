@@ -5,20 +5,21 @@
 namespace FinalEngine.Platform;
 
 /// <summary>
-///   Defines an interface that represents a processor for handling events in a message queue.
+/// Defines an interface that represents a processor for handling events from a message queue.
 /// </summary>
 public interface IEventsProcessor
 {
     /// <summary>
-    ///   Gets a value indicating whether this <see cref="IEventsProcessor"/> can process events.
+    /// Gets a value indicating whether this <see cref="IEventsProcessor"/> can process events.
     /// </summary>
+    ///
     /// <value>
-    ///   <c>true</c> if this <see cref="IEventsProcessor"/> can process events; otherwise, <c>false</c>.
+    /// <c>true</c> if this <see cref="IEventsProcessor"/> can process events; otherwise, <c>false</c>.
     /// </value>
     bool CanProcessEvents { get; }
 
     /// <summary>
-    ///   Processes the events that are currently in the message queue.
+    /// Processes all events currently present in the message queue.
     /// </summary>
     void ProcessEvents();
 }

@@ -1,55 +1,74 @@
 // <copyright file="WinFormsWindow.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+// Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop;
 
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using FinalEngine.Platform.Desktop.Invocation.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
+using FinalEngine.Platform;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
-///   Provides a Windows Forms implementation of the <see cref="IWindow"/> interface, enabling window management and customization for desktop applications.
+/// Provides a Windows Forms implementation of the <see cref="IWindow"/> interface for managing a window on desktop platforms.
 /// </summary>
-/// <seealso cref="IWindow"/>
+///
+/// <remarks>
+/// This class wraps a Windows Forms <see cref="IFormAdapter"/> to implement the <see cref="IWindow"/> contract, allowing control over window properties such as size, style, state, visibility, and title. It handles platform-specific behaviors such as switching to fullscreen by changing the window style to borderless to prevent taskbar display issues. The class also manages resource cleanup and disposal of the underlying form.
+/// </remarks>
+/// <inheritdoc cref="IWindow" />
 internal sealed class WinFormsWindow : IWindow
 {
     /// <summary>
-    ///   The mapper instance used for converting between enumeration types.
+    /// Specifies an <see cref="IMapper"/> that is used to translate between platform-specific and engine-specific types.
     /// </summary>
     private readonly IMapper mapper;
 
     /// <summary>
-    ///   The native adapter used for invoking native operations, such as posting quit messages.
+    /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls related to window management.
     /// </summary>
     private readonly INativeAdapter nativeAdapter;
 
     /// <summary>
-    ///   The form invoker instance used for invoking form-related operations.
+    /// Specifies an <see cref="IFormAdapter"/> that represents the underlying Windows Forms window.
     /// </summary>
     private IFormAdapter? form;
 
     /// <summary>
-    ///   Indicates whether this instance has been disposed of and its resources released.
+    /// Indicates whether the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </summary>
     private bool isDisposed;
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WinFormsWindow"/> class.
+    /// Initializes a new instance of the <see cref="WinFormsWindow"/> class.
     /// </summary>
+    ///
     /// <param name="form">
-    ///   The form adapter that represents the Windows Forms window.
+    /// Specifies an <see cref="IFormAdapter"/> that represents the underlying window.
     /// </param>
+    ///
     /// <param name="nativeAdapter">
-    ///   The native adapter used for invoking native operations, such as posting quit messages.
+    /// Specifies an <see cref="INativeAdapter"/> that represents an adapter for Windows API calls.
     /// </param>
+    ///
     /// <param name="mapper">
-    ///   The mapper used for converting between enumeration types related to window states and styles.
+    /// Specifies an <see cref="IMapper"/> that represents the mapper used to translate between platform and engine types.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="form"/>, <paramref name="nativeAdapter"/> or <paramref name="mapper"/> parameter is null.
+    /// Thrown when the one of the following parameters are null:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <paramref name="form"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="nativeAdapter"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="mapper"/>
+    ///     </item>
+    /// </list>
     /// </exception>
     public WinFormsWindow(IFormAdapter form, INativeAdapter nativeAdapter, IMapper mapper)
     {
@@ -69,7 +88,7 @@ internal sealed class WinFormsWindow : IWindow
     }
 
     /// <summary>
-    ///   Finalizes an instance of the <see cref="WinFormsWindow"/> class.
+    /// Finalizes an instance of the <see cref="WinFormsWindow"/> class.
     /// </summary>
     [ExcludeFromCodeCoverage]
     ~WinFormsWindow()
@@ -77,14 +96,9 @@ internal sealed class WinFormsWindow : IWindow
         this.Dispose(false);
     }
 
-    /// <summary>
-    ///   Gets or sets the size of the client (the area inside the window excluding borders and title bar).
-    /// </summary>
-    /// <value>
-    ///   The size of the client (the area inside the window excluding the borders and title bar).
-    /// </value>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
     public Size ClientSize
     {
@@ -101,20 +115,10 @@ internal sealed class WinFormsWindow : IWindow
         }
     }
 
-    /// <summary>
-    ///   Gets or sets a value indicating whether this <see cref="WinFormsWindow"/> can be resized manually by the user.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is user re-sizable; otherwise, <c>false</c>.
-    /// </value>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
-    /// <remarks>
-    ///   The value of this property determines whether the user can change the size of the window by dragging its edges or corners. If set to <c>false</c>, the window will maintain a fixed size and cannot be resized by the user.
-    /// </remarks>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool IsUserReSizable
     {
         get
@@ -130,17 +134,10 @@ internal sealed class WinFormsWindow : IWindow
         }
     }
 
-    /// <summary>
-    ///   Gets or sets a value indicating whether this <see cref="WinFormsWindow"/> is visible.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this <see cref="WinFormsWindow"/> is visible; otherwise, <c>false</c>.
-    /// </value>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool IsVisible
     {
         get
@@ -156,20 +153,14 @@ internal sealed class WinFormsWindow : IWindow
         }
     }
 
-    /// <summary>
-    ///   Gets or sets the state of the window (e.g., normal, minimized, maximized, full-screen).
-    /// </summary>
-    /// <value>
-    ///   The state of the window (e.g., normal, minimized, maximized, full-screen).
-    /// </value>
-    /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
-    /// </exception>
+    /// <inheritdoc />
     /// <remarks>
-    ///   When set to <see cref="WindowState.Fullscreen"/>, the window should occupy the entire screen, hiding the task-bar and other windows. When set to <see cref="WindowState.Maximized"/>, the window should fill the screen except for the task-bar. The <see cref="WindowState.Normal"/> state indicates that the window is in its default size and position, while <see cref="WindowState.Minimized"/> indicates that the window is minimized to an icon in the task-bar. When the user changes the window from <see cref="WindowState.Fullscreen"/> to <see cref="WindowState.Normal"/> the desired behavior is not to resize the client area of the display. This functionality is not outside the scope of <see cref="WinFormsWindow"/>.
+    /// When switching to <see cref="WindowState.Fullscreen"/>, this implementation sets the window style to <see cref="WindowStyle.Borderless"/> first to address an issue where the Windows taskbar remains visible otherwise.
     /// </remarks>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    ///
+    /// <exception cref="ObjectDisposedException">
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
+    /// </exception>
     public WindowState State
     {
         get
@@ -182,30 +173,23 @@ internal sealed class WinFormsWindow : IWindow
         {
             ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
 
-            // Windows has an issue where the task bar will remain shown when switching to full-screen mode if the FormBorderStyle is not set to border-less first.
             if (value == WindowState.Fullscreen)
             {
                 this.Style = WindowStyle.Borderless;
+            }
+            else if (value == WindowState.Normal)
+            {
+                this.Style = WindowStyle.Fixed;
             }
 
             this.form!.WindowState = this.mapper.Map<FormWindowState>(value);
         }
     }
 
-    /// <summary>
-    ///   Gets or sets the style of the window (e.g., fixed, re-sizable, border-less).
-    /// </summary>
-    /// <value>
-    ///   The style of the window (e.g., fixed, re-sizable, border-less).
-    /// </value>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
-    /// <remarks>
-    ///   When set to <see cref="WindowStyle.Fixed"/>, the window cannot be resized by the user, and should include a title bar and system buttons. When set to <see cref="WindowStyle.Resizable"/>, the user can change the size of the window by dragging its edges or corners. The <see cref="WindowStyle.Borderless"/> style indicates that the window has no borders or title bar, allowing for a clean, unobtrusive appearance. This style is often used for applications that require a custom border interface or when the window's appearance should not distract from the content.
-    /// </remarks>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public WindowStyle Style
     {
         get
@@ -221,20 +205,10 @@ internal sealed class WinFormsWindow : IWindow
         }
     }
 
-    /// <summary>
-    ///   Gets or sets the title of the <see cref="WinFormsWindow"/>.
-    /// </summary>
-    /// <value>
-    ///   The title of the <see cref="WinFormsWindow"/>.
-    /// </value>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
-    /// <remarks>
-    ///   The title is typically displayed in the title bar of the window. If developing for other platforms such as mobile this would be the name of the application as it appears in the application switcher or task manager.
-    /// </remarks>
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string Title
     {
         get
@@ -250,11 +224,9 @@ internal sealed class WinFormsWindow : IWindow
         }
     }
 
-    /// <summary>
-    ///   Closes this <see cref="WinFormsWindow"/> and releases any resources associated with it.
-    /// </summary>
+    /// <inheritdoc />
     /// <exception cref="ObjectDisposedException">
-    ///   Thrown when this <see cref="WinFormsWindow"/> has already been disposed of and its resources have been released.
+    /// Thrown when the <see cref="WinFormsWindow"/> instance has been disposed.
     /// </exception>
     public void Close()
     {
@@ -262,9 +234,7 @@ internal sealed class WinFormsWindow : IWindow
         this.form!.Close();
     }
 
-    /// <summary>
-    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    /// </summary>
+    /// <inheritdoc />
     public void Dispose()
     {
         this.Dispose(true);
@@ -272,10 +242,11 @@ internal sealed class WinFormsWindow : IWindow
     }
 
     /// <summary>
-    ///   Releases unmanaged and - optionally - managed resources.
+    /// Releases unmanaged and - optionally - managed resources.
     /// </summary>
+    ///
     /// <param name="disposing">
-    ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
     /// </param>
     private void Dispose(bool disposing)
     {
@@ -295,16 +266,19 @@ internal sealed class WinFormsWindow : IWindow
     }
 
     /// <summary>
-    ///   Occurs when the form has closed.
+    /// Occurs when the form has closed.
     /// </summary>
+    ///
     /// <param name="sender">
-    ///   The sender.
+    /// The sender.
     /// </param>
+    ///
     /// <param name="e">
-    ///   The <see cref="FormClosedEventArgs"/> instance containing the event data.
+    /// Specifies a <see cref="FormClosedEventArgs"/> instance containing the event data.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="e"/> parameter is null.
+    /// Thrown when the specified <paramref name="e"/> parameter is null.
     /// </exception>
     private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {

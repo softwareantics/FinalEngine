@@ -8,52 +8,56 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 /// <summary>
-///   Enumerates the available native message codes.
+/// Enumerates the available native message codes.
 /// </summary>
 internal enum NativeMessageCode : uint
 {
     /// <summary>
-    ///   The message code for a window closed event.
+    /// The message code for a window closed event.
     /// </summary>
     Close = 0x0010,
 }
 
 /// <summary>
-///   Represents a native message structure used for interop with the Windows API.
+/// Provides a structure that represents a native message used for interop with the Windows API.
 /// </summary>
 [ExcludeFromCodeCoverage]
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeMessage
 {
     /// <summary>
-    ///   Gets or sets the handle.
+    /// Gets or sets an <see cref="IntPtr"/> that represents the handle associated with the native message.
     /// </summary>
+    ///
     /// <value>
-    ///   The handle.
+    /// Returns an <see cref="IntPtr"/> that represents the handle associated with the native message.
     /// </value>
     public IntPtr Handle { get; set; }
 
     /// <summary>
-    ///   Gets or sets the message code.
+    /// Gets or sets a <see cref="NativeMessageCode"/> that represents the message code.
     /// </summary>
+    ///
     /// <value>
-    ///   The message code.
+    /// Returns a <see cref="NativeMessageCode"/> that represents the message code.
     /// </value>
     public NativeMessageCode MessageCode { get; set; }
 
     /// <summary>
-    ///   Gets or sets the W parameter.
+    /// Gets or sets an <see cref="IntPtr"/> that represents the W parameter of the native message.
     /// </summary>
+    ///
     /// <value>
-    ///   The W parameter.
+    /// Returns an <see cref="IntPtr"/> that represents the W parameter of the native message.
     /// </value>
     public IntPtr WParam { get; set; }
 
     /// <summary>
-    ///   Gets or sets the L parameter.
+    /// Gets or sets an <see cref="IntPtr"/> that represents the L parameter of the native message.
     /// </summary>
+    ///
     /// <value>
-    ///   The L parameter.
+    /// Returns an <see cref="IntPtr"/> that represents the L parameter of the native message.
     /// </value>
     public IntPtr LParam { get; set; }
 }

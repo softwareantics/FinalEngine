@@ -9,8 +9,9 @@ using FinalEngine.Platform.Desktop.Native;
 using FinalEngine.Platform.Desktop.Native.Messaging;
 
 /// <summary>
-///   Provides a standard implementation of an <see cref="INativeAdapter"/>.
+/// Provides a standard implementation of an <see cref="INativeAdapter"/>.
 /// </summary>
+///
 /// <seealso cref="INativeAdapter"/>
 [ExcludeFromCodeCoverage]
 internal sealed class NativeAdapter : INativeAdapter

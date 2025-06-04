@@ -9,13 +9,14 @@ using AutoMapper.Extensions.EnumMapping;
 using FinalEngine.Platform;
 
 /// <summary>
-///   Provides profiles for mapping between Windows Forms types and Final Engine platform types.
+/// Provides profiles for mapping between Windows Forms types and Final Engine platform types.
 /// </summary>
+///
 /// <seealso cref="Profile"/>
 internal sealed class WinFormsProfile : Profile
 {
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WinFormsProfile"/> class.
+    /// Initializes a new instance of the <see cref="WinFormsProfile"/> class.
     /// </summary>
     public WinFormsProfile()
     {

@@ -4,46 +4,59 @@
 
 namespace FinalEngine.Runtime;
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Platform;
 
 /// <summary>
-///   Provides a standard implementation of an <see cref="IEngineDriver"/> that manages the engine/game life-cycle.
+/// Provides a standard implementation of an <see cref="IEngineDriver"/> that manages the engine/game life-cycle.
 /// </summary>
+///
 /// <seealso cref="IEngineDriver"/>
 internal sealed class EngineDriver : IEngineDriver
 {
     /// <summary>
-    ///   The events processor used to handle events in the message queue.
+    /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
     /// </summary>
     private readonly IEventsProcessor eventsProcessor;
 
     /// <summary>
-    ///   Indicates whether the <see cref="EngineDriver"/> has been disposed.
+    /// Indicates whether the <see cref="EngineDriver"/> has been disposed.
     /// </summary>
     private bool isDisposed;
 
     /// <summary>
-    ///   Indicates whether the <see cref="EngineDriver"/> is currently running.
+    /// Indicates whether the <see cref="EngineDriver"/> is currently running.
     /// </summary>
     private bool isRunning;
 
     /// <summary>
-    ///   The game window.
+    /// Specifies an <see cref="IWindow"/> that represents the window to be used by the engine driver.
     /// </summary>
     private IWindow? window;
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="EngineDriver"/> class.
+    /// Initializes a new instance of the <see cref="EngineDriver"/> class.
     /// </summary>
+    ///
     /// <param name="window">
-    ///   The window to be used by the engine driver.
+    /// The window to be used by the engine driver.
     /// </param>
+    ///
     /// <param name="eventsProcessor">
-    ///   The events processor to handle events in the message queue.
+    /// The events processor to handle events in the message queue.
     /// </param>
+    ///
     /// <exception cref="ArgumentNullException">
-    ///   The specified <paramref name="window"/> or <paramref name="eventsProcessor"/> parameter is null.
+    /// Thrown when one of the following parameters is null:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <paramref name="window"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="eventsProcessor"/>
+    ///     </item>
+    /// </list>
     /// </exception>
     public EngineDriver(
         IWindow window,
@@ -54,7 +67,7 @@ internal sealed class EngineDriver : IEngineDriver
     }
 
     /// <summary>
-    ///   Finalizes an instance of the <see cref="EngineDriver"/> class.
+    /// Finalizes an instance of the <see cref="EngineDriver"/> class.
     /// </summary>
     [ExcludeFromCodeCoverage]
     ~EngineDriver()
@@ -63,7 +76,7 @@ internal sealed class EngineDriver : IEngineDriver
     }
 
     /// <summary>
-    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     public void Dispose()
     {
@@ -71,12 +84,10 @@ internal sealed class EngineDriver : IEngineDriver
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    ///   Runs the engine.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation should start the engine and processes events in the message queue until there are no more events to process. It should continue to run until the <see cref="IEventsProcessor.CanProcessEvents"/> property returns <c>false</c>. The engine will not run if it has already been disposed or if it is already running.
-    /// </remarks>
+    /// <inheritdoc/>
+    /// <exception cref="ObjectDisposedException">
+    /// Thrown when the <see cref="EngineDriver"/> has already been disposed.
+    /// </exception>
     public void Start()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
@@ -89,12 +100,10 @@ internal sealed class EngineDriver : IEngineDriver
         this.RunGameLoop();
     }
 
-    /// <summary>
-    ///   Stops the engine.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation should stop the engine and clean up any resources used by the engine. It should also ensure that no further events are processed after this method is called. The engine will not stop if it has already been disposed or if it is not currently running.
-    /// </remarks>
+    /// <inheritdoc/>
+    /// <exception cref="ObjectDisposedException">
+    /// Thrown when the <see cref="EngineDriver"/> has already been disposed.
+    /// </exception>
     public void Stop()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
@@ -102,10 +111,10 @@ internal sealed class EngineDriver : IEngineDriver
     }
 
     /// <summary>
-    ///   Releases unmanaged and - optionally - managed resources.
+    /// Releases unmanaged and - optionally - managed resources.
     /// </summary>
     /// <param name="disposing">
-    ///   <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
     /// </param>
     private void Dispose(bool disposing)
     {
@@ -124,7 +133,7 @@ internal sealed class EngineDriver : IEngineDriver
     }
 
     /// <summary>
-    ///   Runs the engine.
+    /// Runs the main game loop.
     /// </summary>
     private void RunGameLoop()
     {

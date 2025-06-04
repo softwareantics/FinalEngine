@@ -8,7 +8,7 @@ using FinalEngine.Platform.Desktop.Native;
 using FinalEngine.Platform.Desktop.Native.Messaging;
 
 /// <summary>
-///   Defines an interface that represents an adapter for the functions defined in <see cref="Native"/>.
+/// Defines an interface that represents an adapter for the functions defined in <see cref="Native"/>.
 /// </summary>
 internal interface INativeAdapter
 {
