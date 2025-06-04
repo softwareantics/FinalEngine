@@ -1,12 +1,13 @@
 // <copyright file="Native.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+//   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Platform.Desktop.Native;
 
-using FinalEngine.Platform.Desktop.Native.Messaging;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+
+using FinalEngine.Platform.Desktop.Native.Messaging;
 
 /// <summary>
 /// Provides managed wrappers for selected functions from the user32.dll library related to message handling in Windows.

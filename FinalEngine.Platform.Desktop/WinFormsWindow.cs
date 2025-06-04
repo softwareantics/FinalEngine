@@ -4,11 +4,12 @@
 
 namespace FinalEngine.Platform.Desktop;
 
+using System.Diagnostics.CodeAnalysis;
+
 using AutoMapper;
+using FinalEngine.Platform;
 using FinalEngine.Platform.Desktop.Invocation.Forms;
 using FinalEngine.Platform.Desktop.Invocation.Native;
-using FinalEngine.Platform;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

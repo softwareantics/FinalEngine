@@ -1,15 +1,16 @@
 // <copyright file="EngineDriverTests.cs" company="Software Antics">
-//     Copyright (c) Software Antics. All rights reserved.
+//   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Runtime;
 
 using System;
-using NSubstitute;
-using NUnit.Framework;
 using FinalEngine.Platform;
 using FinalEngine.Runtime;
 using Microsoft.Extensions.Logging;
+
+using NSubstitute;
+using NUnit.Framework;
 
 [TestFixture]
 internal sealed class EngineDriverTests

@@ -4,10 +4,11 @@
 
 namespace FinalEngine.Platform.Desktop;
 
+using System.Runtime.InteropServices;
+using FinalEngine.Platform;
+
 using FinalEngine.Platform.Desktop.Invocation.Applications;
 using FinalEngine.Platform.Desktop.Invocation.Native;
-using FinalEngine.Platform;
-using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
