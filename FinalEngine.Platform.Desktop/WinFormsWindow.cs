@@ -204,11 +204,14 @@ internal sealed class WinFormsWindow : IWindow
 
             if (value == WindowState.Fullscreen)
             {
+                // Switch to Borderless style to ensure the taskbar is hidden.
                 this.logger.LogInformation("Switching to Fullscreen mode, applying Borderless style.");
                 this.Style = WindowStyle.Borderless;
             }
             else if (value == WindowState.Normal)
             {
+                // Switch back to Fixed style when returning to Normal state.
+                // At the moment we can assume that the Fixed style is the default style for normal windows.
                 this.logger.LogInformation("Switching to Normal mode, applying Fixed style.");
                 this.Style = WindowStyle.Fixed;
             }
