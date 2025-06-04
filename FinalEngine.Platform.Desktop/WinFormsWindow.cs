@@ -22,6 +22,16 @@ using Microsoft.Extensions.Logging;
 internal sealed class WinFormsWindow : IWindow
 {
     /// <summary>
+    /// Specifies an <see cref="int"/> that represents the default client height of the window.
+    /// </summary>
+    private const int DefaultClientHeight = 720;
+
+    /// <summary>
+    /// Specifies an <see cref="int"/> that represents the default client width of the window.
+    /// </summary>
+    private const int DefaultClientWidth = 1280;
+
+    /// <summary>
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
     /// </summary>
     private readonly ILogger<WinFormsWindow> logger;
@@ -96,7 +106,7 @@ internal sealed class WinFormsWindow : IWindow
 
         this.form.StartPosition = FormStartPosition.CenterScreen;
         this.IsUserReSizable = false;
-        this.ClientSize = new Size(1280, 720);
+        this.ClientSize = new Size(DefaultClientWidth, DefaultClientHeight);
 
         this.IsVisible = true;
 
