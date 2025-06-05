@@ -1,4 +1,4 @@
-name: 🚀 Release
+name: 🚀 ${{ github.ref_name }} Release 
 
 on:
   push:
@@ -146,24 +146,17 @@ jobs:
           zip -r FinalEngine.Runtime.zip FinalEngine.Runtime
           zip -r FinalEngine.Utilities.zip FinalEngine.Utilities
 
-      - name: Generate release notes
-        id: changelog
-        run: |
-          VERSION="${GITHUB_REF#refs/tags/}"
-          awk -v version="$VERSION" '
-            $0 ~ "^## \\[" version "\\]" { show=1; next }
-            $0 ~ "^## \\[" version "\\][[:space:]]*-" { show=1; next }
-            show && $0 ~ "^## \\[" { exit }
-            show { print }
-          ' CHANGELOG.md > RELEASE_NOTES.md
-
-
+      - name: Extract version
+        id: kacl
+        uses: zogot/kacl-parser@1.0.0
+        with:
+          version: ${{ github.ref_name }}
         
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           prerelease: true
-          body_path: RELEASE_NOTES.md
+          body: ${{ steps.kacl.outputs.release }}
           files: |
             artifacts/FinalEngine.Platform.zip
             artifacts/FinalEngine.Platform.Desktop.zip
