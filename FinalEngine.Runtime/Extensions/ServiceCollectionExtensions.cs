@@ -5,6 +5,7 @@
 namespace FinalEngine.Runtime.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
+using FinalEngine.Runtime.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -40,8 +41,29 @@ public static class ServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(configuration);
 
         services.AddSingleton<IConfiguration>(configuration);
+        services.AddLogging(ConfigureLogging(configuration));
 
-        services.AddLogging(x =>
+        services.AddSingleton<IEngineDriver, EngineDriver>();
+
+        var options = new EngineOptions(services);
+
+        using (var factory = LoggerFactory.Create(ConfigureLogging(configuration)))
+        {
+            var scanner = new ModuleScanner(factory.CreateLogger<ModuleScanner>());
+            var modules = scanner.Scan();
+
+            foreach (var module in modules)
+            {
+                module.Load(options);
+            }
+        }
+
+        return services;
+    }
+
+    private static Action<ILoggingBuilder> ConfigureLogging(IConfiguration configuration)
+    {
+        return x =>
         {
             x.ClearProviders();
             x.AddConsole();
@@ -54,10 +76,6 @@ public static class ServiceCollectionExtensions
             }
 
             x.AddConfiguration(configuration.GetSection("Logging"));
-        });
-
-        services.AddSingleton<IEngineDriver, EngineDriver>();
-
-        return services;
+        };
     }
 }

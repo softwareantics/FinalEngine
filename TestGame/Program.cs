@@ -30,9 +30,9 @@ internal static class Program
 
         var provider = services.BuildServiceProvider(true);
 
-        using (var engine = provider.GetRequiredService<IEngineDriver>())
+        using (var driver = provider.GetRequiredService<IEngineDriver>())
         {
-            engine.Start();
+            driver.Start();
         }
     }
 }
