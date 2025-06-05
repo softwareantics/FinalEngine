@@ -25,7 +25,16 @@ jobs:
       - name: Build
         run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
 
-      - name: Upload
+      - name: Pack
+        run: dotnet pack FinalEngine.Platform/FinalEngine.Platform.csproj --no-build --configuration Release --output ./nupkgs
+
+      - name: Upload Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Platform.nupkg
+          path: ./nupkgs/*.nupkg
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform
@@ -156,7 +165,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          prerelease: true
           body: ${{ steps.kacl.outputs.release }}
           files: |
             artifacts/FinalEngine.Platform.zip
@@ -165,3 +173,17 @@ jobs:
             artifacts/FinalEngine.Utilities.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download NuGet packages
+        uses: actions/download-artifact@v4
+        with:
+          path: nupkgs
+      
+      - name: Push to NuGet
+        run: |
+          mkdir -p ./temp-feed
+          for file in nupkgs/**/*.nupkg; do
+            dotnet nuget push "$file" --api-key ${{ secrets.NUGET_API_KEY }} --source ./temp-feed
+          done
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
