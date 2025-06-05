@@ -194,7 +194,7 @@ jobs:
         run: |
           for file in nupkgs/**/*.nupkg; do
             echo "Verifying $file"
-            dotnet nuget verify "$file" --no-signature
+            dotnet nuget verify "$file"
           done
 
       - name: Push to NuGet
