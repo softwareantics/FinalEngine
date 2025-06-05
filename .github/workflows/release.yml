@@ -138,21 +138,29 @@ jobs:
           name: FinalEngine.Utilities Binaries
           path: artifacts/FinalEngine.Utilities
 
+      - name: Zip binaries
+        run: |
+          cd artifacts
+          zip -r FinalEngine.Platform.zip FinalEngine.Platform
+          zip -r FinalEngine.Platform.Desktop.zip FinalEngine.Platform.Desktop
+          zip -r FinalEngine.Runtime.zip FinalEngine.Runtime
+          zip -r FinalEngine.Utilities.zip FinalEngine.Utilities
+
       - name: Generate release notes from CHANGELOG.md
         id: changelog
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           awk "/## \[$VERSION\]/,/## \[/" .github/CHANGELOG.md | sed '1d;$d' > RELEASE_NOTES.md
-
+  
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           prerelease: true
           body_path: RELEASE_NOTES.md
           files: |
-            artifacts/FinalEngine.Platform/**/*.*
-            artifacts/FinalEngine.Platform.Desktop/**/*.*
-            artifacts/FinalEngine.Runtime/**/*.*
-            artifacts/FinalEngine.Utilities/**/*.*
+            artifacts/FinalEngine.Platform.zip
+            artifacts/FinalEngine.Platform.Desktop.zip
+            artifacts/FinalEngine.Runtime.zip
+            artifacts/FinalEngine.Utilities.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
