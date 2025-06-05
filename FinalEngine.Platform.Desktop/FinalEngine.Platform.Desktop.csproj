@@ -58,10 +58,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Composition.AttributedModel" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
+    <ProjectReference Include="..\FinalEngine.Utilities\FinalEngine.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

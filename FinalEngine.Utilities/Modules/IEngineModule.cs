@@ -6,5 +6,5 @@ namespace FinalEngine.Utilities.Modules;
 
 public interface IEngineModule
 {
-    void Load();
+    void Load(IEngineOptions options);
 }
