@@ -8,7 +8,7 @@ on:
 jobs:
   # FinalEngine.Platform
   build_platform:
-    name: Platform
+    name: Build and Upload FinalEngine.Platform
     runs-on: ubuntu-latest
     
     steps:
@@ -18,13 +18,13 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Platform dependencies
+      - name: Restore
         run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
 
-      - name: Build FinalEngine.Platform
+      - name: Build
         run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
 
-      - name: Upload FinalEngine.Platform binaries
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform Binaries
@@ -32,7 +32,7 @@ jobs:
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
-    name: Windows Platform
+    name: Build and Upload FinalEngine.Platform.Desktop
     runs-on: windows-latest
 
     steps:
@@ -42,13 +42,13 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Platform.Desktop dependencies
+      - name: Restore
         run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
 
-      - name: Build FinalEngine.Platform.Desktop
+      - name: Build
         run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Release
 
-      - name: Upload FinalEngine.Platform.Desktop binaries
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform.Desktop Binaries
@@ -56,7 +56,7 @@ jobs:
 
   # FinalEngine.Runtime
   build_runtime:
-    name: Runtime
+    name: Build and Upload FinalEngine.Runtime
     runs-on: ubuntu-latest
 
     steps:
@@ -66,13 +66,13 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Runtime dependencies
+      - name: Restore
         run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
 
-      - name: Build FinalEngine.Runtime
+      - name: Build
         run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Release
 
-      - name: Upload FinalEngine.Runtime binaries
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Runtime Binaries
@@ -80,7 +80,7 @@ jobs:
 
   # FinalEngine.Utilities
   build_utilities:
-    name: Utilities
+    name: Build and Upload FinalEngine.Utilities
     runs-on: ubuntu-latest
 
     steps:
@@ -90,13 +90,13 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Utilities dependencies
+      - name: Restore
         run: dotnet restore FinalEngine.Utilities/FinalEngine.Utilities.csproj
 
-      - name: Build FinalEngine.Utilities
+      - name: Build
         run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Release
 
-      - name: Upload FinalEngine.Utilities binaries
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Utilities Binaries
@@ -114,31 +114,31 @@ jobs:
         with:
           fetch-depth: 1 
 
-      - name: Download Platform binaries
+      - name: Download FinalEngine.Platform artificats
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Platform Binaries
+          name: FinalEngine.Platform
           path: artifacts/FinalEngine.Platform
 
-      - name: Download Platform Desktop binaries
+      - name: Download FinalEngine.Platform.Desktop artifacts
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Platform.Desktop Binaries
+          name: FinalEngine.Platform.Desktop
           path: artifacts/FinalEngine.Platform.Desktop
 
-      - name: Download Runtime binaries
+      - name: Download FinalEngine.Runtime artifacts
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Runtime Binaries
+          name: FinalEngine.Runtime
           path: artifacts/FinalEngine.Runtime
 
-      - name: Download Utilities binaries
+      - name: Download FinalEngine.Utilities artifacts
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Utilities Binaries
+          name: FinalEngine.Utilities
           path: artifacts/FinalEngine.Utilities
 
-      - name: Zip binaries
+      - name: Zip artifacts
         run: |
           cd artifacts
           zip -r FinalEngine.Platform.zip FinalEngine.Platform
@@ -146,12 +146,16 @@ jobs:
           zip -r FinalEngine.Runtime.zip FinalEngine.Runtime
           zip -r FinalEngine.Utilities.zip FinalEngine.Utilities
 
-      - name: Generate release notes from CHANGELOG.md
+      - name: Generate release notes
         id: changelog
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
-          awk "/^## \\[\$VERSION\\]/ { show=1; next } /^## \\[/ && show { exit } show" .github/CHANGELOG.md > RELEASE_NOTES.md
-  
+          awk -v version="$VERSION" '
+            $0 ~ "^## \\[" version { show=1; next }
+            show && $0 ~ "^## \\[" { exit }
+            show
+          ' CHANGELOG.md > RELEASE_NOTES.md
+        
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
