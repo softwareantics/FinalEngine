@@ -1,0 +1,58 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download Platform binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Platform Binaries
+          path: artifacts/FinalEngine.Platform
+
+      - name: Download Platform Desktop binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Platform.Desktop Binaries
+          path: artifacts/FinalEngine.Platform.Desktop
+
+      - name: Download Runtime binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Runtime Binaries
+          path: artifacts/FinalEngine.Runtime
+
+      - name: Download Utilities binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Utilities Binaries
+          path: artifacts/FinalEngine.Utilities
+
+      - name: Generate release notes from CHANGELOG.md
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          awk "/## \[$VERSION\]/,/## \[/" .github/CHANGELOG.md | sed '1d;$d' > RELEASE_NOTES.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          body_path: RELEASE_NOTES.md
+          files: |
+            artifacts/FinalEngine.Platform/**/*.*
+            artifacts/FinalEngine.Platform.Desktop/**/*.*
+            artifacts/FinalEngine.Runtime/**/*.*
+            artifacts/FinalEngine.Utilities/**/*.*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
