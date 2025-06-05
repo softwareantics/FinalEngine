@@ -152,9 +152,11 @@ jobs:
           VERSION="${GITHUB_REF#refs/tags/}"
           awk -v version="$VERSION" '
             $0 ~ "^## \\[" version "\\]" { show=1; next }
+            $0 ~ "^## \\[" version "\\][[:space:]]*-" { show=1; next }
             show && $0 ~ "^## \\[" { exit }
             show { print }
           ' CHANGELOG.md > RELEASE_NOTES.md
+
 
         
       - name: Create GitHub Release
