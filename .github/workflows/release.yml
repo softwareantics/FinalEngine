@@ -154,7 +154,7 @@ jobs:
             $0 ~ "^## \\[" version { show=1; next }
             show && $0 ~ "^## \\[" { exit }
             show
-          ' CHANGELOG.md > RELEASE_NOTES.md
+          ' ./github/CHANGELOG.md > RELEASE_NOTES.md
         
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
