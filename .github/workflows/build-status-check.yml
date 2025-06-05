@@ -24,13 +24,7 @@ jobs:
         run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
 
       - name: Build FinalEngine.Platform
-        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
-
-      - name: Upload FinalEngine.Platform binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Platform Binaries
-          path: FinalEngine.Platform/bin/x64/Release/net9.0/
+        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Debug
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
@@ -48,13 +42,7 @@ jobs:
         run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
 
       - name: Build FinalEngine.Platform.Desktop
-        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Release
-
-      - name: Upload FinalEngine.Platform.Desktop binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Platform.Desktop Binaries
-          path: FinalEngine.Platform.Desktop/bin/x64/Release/net9.0/
+        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Debug
 
   # FinalEngine.Runtime
   build_runtime:
@@ -72,13 +60,7 @@ jobs:
         run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
 
       - name: Build FinalEngine.Runtime
-        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Release
-
-      - name: Upload FinalEngine.Runtime binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Runtime Binaries
-          path: FinalEngine.Runtime/bin/x64/Release/net9.0/
+        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Debug
 
   # FinalEngine.Utilities
   build_utilities:
@@ -96,10 +78,4 @@ jobs:
         run: dotnet restore FinalEngine.Utilities/FinalEngine.Utilities.csproj
 
       - name: Build FinalEngine.Utilities
-        run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Release
-
-      - name: Upload FinalEngine.Utilities binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Utilities Binaries
-          path: FinalEngine.Utilities/bin/x64/Release/net9.0/
+        run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Debug
