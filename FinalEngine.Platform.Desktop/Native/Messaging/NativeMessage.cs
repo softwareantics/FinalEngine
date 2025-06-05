@@ -8,56 +8,54 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// Enumerates the available native message codes.
+/// Enumerates the available Windows message codes.
 /// </summary>
 internal enum NativeMessageCode : uint
 {
     /// <summary>
-    /// The message code for a window closed event.
+    /// The WM_CLOSE message is sent as a signal that a window or an application should terminate.
     /// </summary>
     Close = 0x0010,
 }
 
 /// <summary>
-/// Provides a structure that represents a native message used for interop with the Windows API.
+/// Represents a Windows message structure (MSG) used by the Windows API to store message information retrieved from a thread's message queue.
 /// </summary>
+/// <remarks>
+/// Corresponds to the native MSG structure defined in the Windows API.
+/// </remarks>
 [ExcludeFromCodeCoverage]
 [StructLayout(LayoutKind.Sequential)]
+[SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Required for interop")]
 internal struct NativeMessage
 {
     /// <summary>
-    /// Gets or sets an <see cref="IntPtr"/> that represents the handle associated with the native message.
+    /// Handle to the window to which the message is directed.
     /// </summary>
-    ///
-    /// <value>
-    /// Returns an <see cref="IntPtr"/> that represents the handle associated with the native message.
-    /// </value>
-    public IntPtr Handle { get; set; }
+    public IntPtr Handle;
 
     /// <summary>
-    /// Gets or sets a <see cref="NativeMessageCode"/> that represents the message code.
+    /// Specifies the message identifier.
     /// </summary>
-    ///
-    /// <value>
-    /// Returns a <see cref="NativeMessageCode"/> that represents the message code.
-    /// </value>
-    public NativeMessageCode MessageCode { get; set; }
+    public NativeMessageCode MessageCode;
 
     /// <summary>
-    /// Gets or sets an <see cref="IntPtr"/> that represents the W parameter of the native message.
+    /// Additional message information. The contents depend on the value of the <see cref="MessageCode"/> member.
     /// </summary>
-    ///
-    /// <value>
-    /// Returns an <see cref="IntPtr"/> that represents the W parameter of the native message.
-    /// </value>
-    public IntPtr WParam { get; set; }
+    public IntPtr WParam;
 
     /// <summary>
-    /// Gets or sets an <see cref="IntPtr"/> that represents the L parameter of the native message.
+    /// Additional message information. The contents depend on the value of the <see cref="MessageCode"/> member.
     /// </summary>
-    ///
-    /// <value>
-    /// Returns an <see cref="IntPtr"/> that represents the L parameter of the native message.
-    /// </value>
-    public IntPtr LParam { get; set; }
+    public IntPtr LParam;
+
+    /// <summary>
+    /// The time at which the message was posted. This value is retrieved from the system tick count.
+    /// </summary>
+    public uint Time;
+
+    /// <summary>
+    /// The cursor position, in screen coordinates, when the message was posted.
+    /// </summary>
+    public Point Point;
 }
