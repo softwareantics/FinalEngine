@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform.Desktop Binaries
-          path: FinalEngine.Platform.Desktop/bin/Release/net9.0/
+          path: FinalEngine.Platform.Desktop/bin/Release/net9.0-windows/
 
   # FinalEngine.Runtime
   build_runtime:
