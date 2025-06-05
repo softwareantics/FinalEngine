@@ -24,7 +24,7 @@ jobs:
         run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
 
       - name: Build FinalEngine.Platform
-        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore
+        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
@@ -42,7 +42,7 @@ jobs:
         run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
 
       - name: Build FinalEngine.Platform
-        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore
+        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Release
 
   # FinalEngine.Runtime
   build_runtime:
@@ -60,4 +60,4 @@ jobs:
         run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
 
       - name: Build FinalEngine.Platform
-        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore
+        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Release
