@@ -64,6 +64,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.csproj" />
+    <ProjectReference Include="..\FinalEngine.Utilities\FinalEngine.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
