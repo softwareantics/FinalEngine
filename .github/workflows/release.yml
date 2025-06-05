@@ -150,7 +150,7 @@ jobs:
         id: changelog
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
-          awk "/## \[$VERSION\]/,/## \[/" .github/CHANGELOG.md | sed '1d;$d' > RELEASE_NOTES.md
+          awk "/^## \\[\$VERSION\\]/ { show=1; next } /^## \\[/ && show { exit } show" .github/CHANGELOG.md > RELEASE_NOTES.md
   
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
