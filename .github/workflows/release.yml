@@ -6,13 +6,113 @@ on:
       - 'v*'
 
 jobs:
+  # FinalEngine.Platform
+  build_platform:
+    name: Platform
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Platform dependencies
+        run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
+
+      - name: Build FinalEngine.Platform
+        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
+
+      - name: Upload FinalEngine.Platform binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Platform Binaries
+          path: FinalEngine.Platform/bin/x64/Release/net9.0/
+
+  # FinalEngine.Platform.Desktop
+  build_platform_desktop:
+    name: Windows Platform
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Platform.Desktop dependencies
+        run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
+
+      - name: Build FinalEngine.Platform.Desktop
+        run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Release
+
+      - name: Upload FinalEngine.Platform.Desktop binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Platform.Desktop Binaries
+          path: FinalEngine.Platform.Desktop/bin/x64/Release/net9.0/
+
+  # FinalEngine.Runtime
+  build_runtime:
+    name: Runtime
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Runtime dependencies
+        run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
+
+      - name: Build FinalEngine.Runtime
+        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Release
+
+      - name: Upload FinalEngine.Runtime binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Runtime Binaries
+          path: FinalEngine.Runtime/bin/x64/Release/net9.0/
+
+  # FinalEngine.Utilities
+  build_utilities:
+    name: Utilities
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore FinalEngine.Utilities dependencies
+        run: dotnet restore FinalEngine.Utilities/FinalEngine.Utilities.csproj
+
+      - name: Build FinalEngine.Utilities
+        run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Release
+
+      - name: Upload FinalEngine.Utilities binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Utilities Binaries
+          path: FinalEngine.Utilities/bin/x64/Release/net9.0/
+
+  # Release
   release:
     name: Create GitHub Release
+    needs: [build_platform, build_platform_desktop, build_runtime, build_utilities]
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 1 
 
       - name: Download Platform binaries
         uses: actions/download-artifact@v4
