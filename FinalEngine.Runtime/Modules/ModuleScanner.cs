@@ -6,6 +6,7 @@ namespace FinalEngine.Runtime.Modules;
 
 using System.Collections.Generic;
 using System.Composition.Hosting;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using FinalEngine.Utilities.Modules;
@@ -58,9 +59,16 @@ internal sealed class ModuleScanner : IModuleScanner
 
         foreach (string filePath in Directory.GetFiles(directory, "*.dll", SearchOption.TopDirectoryOnly))
         {
-            this.logger.LogTrace("Found DLL on disk: {File}", filePath);
-
             string fullPath = Path.GetFullPath(filePath);
+            string fileName = Path.GetFileName(fullPath);
+
+            if (fileName.StartsWith("Microsoft", StringComparison.OrdinalIgnoreCase) ||
+                fileName.StartsWith("System", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            this.logger.LogTrace("Found DLL on disk: {File}", filePath);
 
             if (!this.TryLoadAssembly(fullPath, out var assembly))
             {
