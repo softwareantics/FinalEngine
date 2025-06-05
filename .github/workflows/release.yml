@@ -27,7 +27,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Platform Binaries
+          name: FinalEngine.Platform
           path: FinalEngine.Platform/bin/Release/net9.0/
 
   # FinalEngine.Platform.Desktop
@@ -51,7 +51,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Platform.Desktop Binaries
+          name: FinalEngine.Platform.Desktop
           path: FinalEngine.Platform.Desktop/bin/Release/net9.0-windows/
 
   # FinalEngine.Runtime
@@ -75,7 +75,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Runtime Binaries
+          name: FinalEngine.Runtime
           path: FinalEngine.Runtime/bin/Release/net9.0/
 
   # FinalEngine.Utilities
@@ -99,7 +99,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Utilities Binaries
+          name: FinalEngine.Utilities
           path: FinalEngine.Utilities/bin/Release/net9.0/
 
   # Release
