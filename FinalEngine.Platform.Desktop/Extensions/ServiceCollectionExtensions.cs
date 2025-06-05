@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// Provides extension methods for configuring an <see cref="IServiceCollection"/> with Windows Forms platform services.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Adds the Windows Forms platform services to the specified <see cref="IServiceCollection"/>.
