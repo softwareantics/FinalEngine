@@ -23,6 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C24589A3-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Utilities", "FinalEngine.Utilities\FinalEngine.Utilities.csproj", "{37A2E468-7E02-4F6D-861F-0AD27CD087A4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,9 +52,11 @@ Global
 		{EB497DEB-0822-434F-9815-5103E14D85F6}.Debug|x64.ActiveCfg = Debug|x64
 		{EB497DEB-0822-434F-9815-5103E14D85F6}.Debug|x64.Build.0 = Debug|x64
 		{EB497DEB-0822-434F-9815-5103E14D85F6}.Release|x64.ActiveCfg = Release|x64
+		{EB497DEB-0822-434F-9815-5103E14D85F6}.Release|x64.Build.0 = Release|x64
 		{37A2E468-7E02-4F6D-861F-0AD27CD087A4}.Debug|x64.ActiveCfg = Debug|x64
 		{37A2E468-7E02-4F6D-861F-0AD27CD087A4}.Debug|x64.Build.0 = Debug|x64
 		{37A2E468-7E02-4F6D-861F-0AD27CD087A4}.Release|x64.ActiveCfg = Release|x64
+		{37A2E468-7E02-4F6D-861F-0AD27CD087A4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

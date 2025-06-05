@@ -4,7 +4,6 @@
 
 namespace TestGame;
 
-using FinalEngine.Platform.Desktop.Extensions;
 using FinalEngine.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +20,6 @@ internal sealed class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
-
-        services.AddWindows();
         services.AddRuntime(this.Configuration);
     }
 }
