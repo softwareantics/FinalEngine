@@ -39,6 +39,7 @@ Please list any possible issues that may arise from the merge of this PR.
 
 ## Checklist:
 
+- [ ] I have updated the CHANGELOG to reflect my changes
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code in hard-to-understand areas
