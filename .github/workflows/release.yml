@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform Binaries
-          path: FinalEngine.Platform/bin/x64/Release/net9.0/
+          path: FinalEngine.Platform/bin/Release/net9.0/
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Platform.Desktop Binaries
-          path: FinalEngine.Platform.Desktop/bin/x64/Release/net9.0/
+          path: FinalEngine.Platform.Desktop/bin/Release/net9.0/
 
   # FinalEngine.Runtime
   build_runtime:
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Runtime Binaries
-          path: FinalEngine.Runtime/bin/x64/Release/net9.0/
+          path: FinalEngine.Runtime/bin/Release/net9.0/
 
   # FinalEngine.Utilities
   build_utilities:
@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FinalEngine.Utilities Binaries
-          path: FinalEngine.Utilities/bin/x64/Release/net9.0/
+          path: FinalEngine.Utilities/bin/Release/net9.0/
 
   # Release
   release:
