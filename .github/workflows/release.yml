@@ -179,11 +179,19 @@ jobs:
         with:
           path: nupkgs
       
-      - name: Push to NuGet
+      - name: Verify NuGet packages
         run: |
-          mkdir -p ./temp-feed
           for file in nupkgs/**/*.nupkg; do
-            dotnet nuget push "$file" --api-key ${{ secrets.NUGET_API_KEY }} --source ./temp-feed
+            echo "Verifying $file"
+            dotnet nuget verify "$file"
+          done
+
+      - name: Push to NuGet
+        if: env.PUSH_TO_NUGET == 'true'
+        run: |
+          for file in nupkgs/**/*.nupkg; do
+            echo "Pushing $file to NuGet"
+            dotnet nuget push "$file" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
           done
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
