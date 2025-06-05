@@ -81,7 +81,7 @@ internal sealed class ModuleScanner : IModuleScanner
 
         try
         {
-            assembly = Assembly.LoadFrom(filePath);
+            assembly = Assembly.Load(File.ReadAllBytes(filePath));
             return true;
         }
         catch (FileNotFoundException ex)
