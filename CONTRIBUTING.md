@@ -22,7 +22,7 @@ First off, don't be intimidated and the best thing you can do if you're having t
 - **DO** use the comment sections in the issues and pull requests that are relevant to said issues and PRs. This not only keeps conversations contained in the issues and PRs, it sends notifications to the project maintainers, and shows the conversation to the community/public.
 - **DO** leave a comment in the issue that you are interested in to let the project maintainers know that you would like to work on the issue.
 - **DO** create PRs with the title matching **EXACTLY** to the associated issue's title. PRs with mismatching titles will not pass status checks and cannot be merged.
-- **DO** use [pull request templates](./pull_request_template.md) when creating PRs. Pull requests without a PR template will not be merged.
+- **DO** use [pull request templates](./.github/pull_request_template.md) when creating PRs. Pull requests without a PR template will not be merged.
 - **DO** use [Early Pull Requests](https://medium.com/practical-blend/pull-request-first-f6bb667a9b6).
 - **DON'T** start working on a PR until you get confirmation from a project maintainer and the issue is assigned to you. We aim to ensure that you invest your time efficiently on issues that align with your permissions and contributions.
 - **DON'T** make PRs that don't directly affect the end user, such as style changes. These are best done as part of a PR related to the area in question. Documentation is fine (and encouraged!), as is useful to the end user.
