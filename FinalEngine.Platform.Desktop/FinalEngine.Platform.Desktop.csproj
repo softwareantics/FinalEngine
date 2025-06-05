@@ -11,7 +11,31 @@
     <Platforms>x64</Platforms>
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Title>$(AssemblyName)</Title>
+    <Authors>softwareantics</Authors>
+    <Company>Software Antics</Company>
+    <Description>A desktop implementation of the FinalEngine.Platform abstractions used to handle desktop platform specific requirements.</Description>
+    <Copyright>© Software Antics 2025</Copyright>
+    <PackageProjectUrl>https://www.softwareantics.com.au</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://www.github.com/softwareantics/FinalEngine</RepositoryUrl>
+    <PackageTags>game,game engine,engine,platform,desktop,final engine,final</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\Shared\GlobalSuppressions.cs" Link="Properties\GlobalSuppressions.cs" />

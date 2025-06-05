@@ -9,7 +9,31 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Platforms>x64</Platforms>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Title>$(AssemblyName)</Title>
+    <Authors>softwareantics</Authors>
+    <Company>Software Antics</Company>
+    <Description>A common utility library for Final Engine games.</Description>
+    <Copyright>© Software Antics 2025</Copyright>
+    <PackageProjectUrl>https://www.softwareantics.com.au</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://www.github.com/softwareantics/FinalEngine</RepositoryUrl>
+    <PackageTags>game,game engine,engine,utility,utilities,final engine,final</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\Shared\Styling\StyleCop\Other\stylecop.json" Link="Properties\stylecop.json" />
