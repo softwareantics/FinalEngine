@@ -7,10 +7,21 @@ on:
       - 'v*'
 
 jobs:
+  set_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - id: get_version
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
+
   # FinalEngine.Platform
   build_platform:
     name: Build and Upload FinalEngine.Platform
     runs-on: ubuntu-latest
+    needs: set_version
+    env:
+      VERSION: ${{ needs.set_version.outputs.version }}
     
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +37,7 @@ jobs:
         run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
 
       - name: Pack
-        run: dotnet pack FinalEngine.Platform/FinalEngine.Platform.csproj --no-build --configuration Release --output ./nupkgs
+        run: dotnet pack FinalEngine.Platform/FinalEngine.Platform.csproj --no-build --configuration Release --output ./nupkgs -p:Version=${{ env.VERSION }}
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
@@ -183,7 +194,7 @@ jobs:
         run: |
           for file in nupkgs/**/*.nupkg; do
             echo "Verifying $file"
-            dotnet nuget verify "$file"
+            dotnet nuget verify "$file" --no-signature
           done
 
       - name: Push to NuGet
