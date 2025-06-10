@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>FinalEngine.Platform</RootNamespace>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.EnumMapping" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine\FinalEngine.csproj" />
+  </ItemGroup>
+
+</Project>

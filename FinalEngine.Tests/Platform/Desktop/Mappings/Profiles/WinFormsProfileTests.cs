@@ -7,7 +7,7 @@ namespace FinalEngine.Tests.Platform.Desktop.Mappings.Profiles;
 using System.Windows.Forms;
 using AutoMapper;
 using FinalEngine.Platform;
-using FinalEngine.Platform.Desktop.Mappings.Profiles;
+using FinalEngine.Platform.Mappings.Profiles;
 using NUnit.Framework;
 
 [TestFixture]

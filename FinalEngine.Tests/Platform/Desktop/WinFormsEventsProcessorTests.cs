@@ -6,10 +6,10 @@ namespace FinalEngine.Tests.Platform.Desktop;
 
 using System;
 using System.Windows.Forms;
-using FinalEngine.Platform.Desktop;
-using FinalEngine.Platform.Desktop.Invocation.Applications;
-using FinalEngine.Platform.Desktop.Invocation.Native;
-using FinalEngine.Platform.Desktop.Native.Messaging;
+using FinalEngine.Platform;
+using FinalEngine.Platform.Adapters.Applications;
+using FinalEngine.Platform.Adapters.Native;
+using FinalEngine.Platform.Native.Messaging;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;

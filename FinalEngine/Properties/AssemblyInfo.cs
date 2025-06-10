@@ -5,13 +5,12 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
-[assembly: CLSCompliant(false)]
+[assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("FinalEngine.Platform.Desktop")]
-[assembly: AssemblyDescription("A desktop implementation of the Final Engine platform abstractions used to handle desktop platform specific requirements.")]
-[assembly: Guid("DEB8D3CE-C1DA-4F69-B6E4-8C7DCFEB6C9A")]
-[assembly: SupportedOSPlatform("windows")]
+[assembly: AssemblyTitle("FinalEngine")]
+[assembly: AssemblyDescription("The core framework for Final Engine.")]
+[assembly: Guid("2EC3BAF1-BE85-467C-85A3-4DC1D763704B")]
+[assembly: InternalsVisibleTo("FinalEngine.Hosting")]
 [assembly: InternalsVisibleTo("FinalEngine.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

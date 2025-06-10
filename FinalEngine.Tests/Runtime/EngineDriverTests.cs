@@ -7,8 +7,8 @@ namespace FinalEngine.Tests.Runtime;
 using System;
 using FinalEngine.Platform;
 using FinalEngine.Runtime;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using NSubstitute;
 using NUnit.Framework;
 
@@ -19,47 +19,32 @@ internal sealed class EngineDriverTests
 
     private IEventsProcessor eventsProcessor;
 
+    private GameContainerBase gameContainer;
+
     private ILogger<EngineDriver> logger;
+
+    private IServiceProvider provider;
 
     private IWindow window;
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenEventsProcessorIsNull()
+    public void ConstructorShouldSetServiceLocatorWhenInvoked()
     {
-        // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new EngineDriver(this.logger, this.window, null);
-        });
-
-        // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("eventsProcessor"));
+        // Act and assert
+        Assert.That(ServiceLocator.Instance, Is.SameAs(this.provider));
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
+    public void ConstructorShouldThrowArgumentNullExceptionWhenProviderIsNull()
     {
         // Act & Assert
         var ex = Assert.Throws<ArgumentNullException>(() =>
         {
-            new EngineDriver(null, this.window, this.eventsProcessor);
+            new EngineDriver(null);
         });
 
         // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("logger"));
-    }
-
-    [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenWindowIsNull()
-    {
-        // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new EngineDriver(this.logger, null, this.eventsProcessor);
-        });
-
-        // Assert
-        Assert.That(ex.ParamName, Is.EqualTo("window"));
+        Assert.That(ex.ParamName, Is.EqualTo("provider"));
     }
 
     [Test]
@@ -116,11 +101,14 @@ internal sealed class EngineDriverTests
     [SetUp]
     public void Setup()
     {
-        this.logger = Substitute.For<ILogger<EngineDriver>>();
-        this.window = Substitute.For<IWindow>();
-        this.eventsProcessor = Substitute.For<IEventsProcessor>();
+        var services = new ServiceCollection()
+            .AddSingleton<IWindow>(_ => this.window = Substitute.For<IWindow>())
+            .AddSingleton<IEventsProcessor>(_ => this.eventsProcessor = Substitute.For<IEventsProcessor>())
+            .AddSingleton<ILogger<EngineDriver>>(_ => this.logger = Substitute.For<ILogger<EngineDriver>>())
+            .AddSingleton<GameContainerBase>(_ => this.gameContainer = Substitute.For<GameContainerBase>());
 
-        this.engineDriver = new EngineDriver(this.logger, this.window, this.eventsProcessor);
+        this.provider = services.BuildServiceProvider();
+        this.engineDriver = new EngineDriver(this.provider);
     }
 
     [Test]

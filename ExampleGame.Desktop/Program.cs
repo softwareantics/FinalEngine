@@ -2,20 +2,23 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace TestGame;
+namespace ExampleGame.Desktop;
 
 using FinalEngine.Hosting.Extensions;
+using FinalEngine.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class Program
 {
     private static void Main()
     {
-        var services = new ServiceCollection();
+        var provider = new ServiceCollection()
+            .AddFinalEngine<GameContainer>()
+            .BuildServiceProvider();
 
-        services.AddFinalEngine<GameContainer>(x =>
+        using (var driver = provider.GetRequiredService<IEngineDriver>())
         {
-            x.
-        })
+            driver.Start();
+        }
     }
 }
