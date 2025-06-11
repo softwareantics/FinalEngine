@@ -2,17 +2,18 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace ExampleGame;
+namespace FinalEngine.Hosting;
 
-using ExampleGame.Services;
-using FinalEngine.Hosting;
+using System.Diagnostics.CodeAnalysis;
+using FinalEngine.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 
-public sealed class ServiceConfigurator : IServiceConfigurator
+[ExcludeFromCodeCoverage]
+internal sealed class ServiceConfigurator : IServiceConfigurator
 {
     public void Configure(IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
-        services.AddSingleton<ITestService, TestService>();
+        services.AddSingleton<IEngineDriver, EngineDriver>();
     }
 }

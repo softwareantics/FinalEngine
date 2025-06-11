@@ -11,6 +11,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FinalEngine")]
 [assembly: AssemblyDescription("The core framework for Final Engine.")]
 [assembly: Guid("2EC3BAF1-BE85-467C-85A3-4DC1D763704B")]
-[assembly: InternalsVisibleTo("FinalEngine.Hosting")]
 [assembly: InternalsVisibleTo("FinalEngine.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

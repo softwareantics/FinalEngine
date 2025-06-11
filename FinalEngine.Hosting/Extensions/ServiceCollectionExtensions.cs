@@ -4,10 +4,15 @@
 
 namespace FinalEngine.Hosting.Extensions;
 
-using FinalEngine.Runtime;
+using System.Reflection;
+using FinalEngine.Hosting.Services;
+using FinalEngine.Hosting.Services.Activation;
+using FinalEngine.Hosting.Services.Discovery;
+using FinalEngine.Hosting.Services.Loading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 public static class ServiceCollectionExtensions
 {
@@ -22,7 +27,35 @@ public static class ServiceCollectionExtensions
         var builder = new EngineBuilder(services);
         configure?.Invoke(builder);
 
-        services.AddLogging(x =>
+        services.AddLogging(ConfigureLogging(configuration));
+
+        services.AddGameServices(configuration);
+        services.AddSingleton<GameContainerBase, TGameContainer>();
+
+        return services;
+    }
+
+    private static void AddGameServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        using (var factory = LoggerFactory.Create(ConfigureLogging(configuration)))
+        {
+            var assemblyLoader = new AssembyLoader(factory.CreateLogger<AssembyLoader>());
+            var typeLocator = new TypeLocator(factory.CreateLogger<TypeLocator>());
+            var activator = new ConfiguratorActivator(factory.CreateLogger<ConfiguratorActivator>());
+
+            foreach (var assembly in assemblyLoader.LoadAssemblies())
+            {
+                foreach (var type in typeLocator.GetSupportedTypes(assembly))
+                {
+                    activator.ActivateAndConfigure(type, services);
+                }
+            }
+        }
+    }
+
+    private static Action<ILoggingBuilder> ConfigureLogging(IConfiguration configuration)
+    {
+        return x =>
         {
             x.ClearProviders();
             x.AddConsole();
@@ -35,36 +68,6 @@ public static class ServiceCollectionExtensions
             }
 
             x.AddConfiguration(configuration.GetSection("Logging"));
-        });
-
-        services.AddGameServices();
-
-        services.AddSingleton<IEngineDriver, EngineDriver>();
-        services.AddSingleton<GameContainerBase, TGameContainer>();
-
-        return services;
-    }
-
-    private static IServiceCollection AddGameServices(this IServiceCollection services)
-    {
-        var container = new ServiceCollection();
-
-        container.Scan(scanner =>
-        {
-            scanner
-                .FromApplicationDependencies()
-                .AddClasses(x => x.AssignableTo<IServiceConfigurator>())
-                .As<IServiceConfigurator>()
-                .WithSingletonLifetime();
-        });
-
-        var provider = container.BuildServiceProvider();
-
-        foreach (var configurator in provider.GetServices<IServiceConfigurator>())
-        {
-            configurator.Configure(services);
-        }
-
-        return services;
+        };
     }
 }

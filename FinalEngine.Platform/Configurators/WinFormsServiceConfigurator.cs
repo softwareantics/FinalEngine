@@ -14,7 +14,7 @@ using FinalEngine.Platform.Mappings.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
 [ExcludeFromCodeCoverage]
-public sealed class WinFormsServiceConfigurator : IServiceConfigurator
+internal sealed class WinFormsServiceConfigurator : IServiceConfigurator
 {
     public void Configure(IServiceCollection services)
     {

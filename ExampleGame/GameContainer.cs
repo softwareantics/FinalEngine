@@ -4,16 +4,12 @@
 
 namespace ExampleGame;
 
-using ExampleGame.Services;
 using FinalEngine;
 
 public sealed class GameContainer : GameContainerBase
 {
-    public GameContainer(ITestService testService)
+    public GameContainer()
     {
-        ArgumentNullException.ThrowIfNull(testService);
-        testService.DoSomething();
-
         this.Window.Title = "Hello, World!";
     }
 }
