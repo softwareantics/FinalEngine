@@ -8,9 +8,10 @@ on:
       branches: [ "final" ]
 
 jobs:
-  # FinalEngine.Platform
-  build_platform:
-    name: Platform
+
+  # FinalEngine
+  build_core:
+    name: Core
     runs-on: ubuntu-latest
     
     steps:
@@ -20,15 +21,33 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Platform dependencies
-        run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
+      - name: Restore
+        run: dotnet restore FinalEngine/FinalEngine.csproj
 
-      - name: Build FinalEngine.Platform
-        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Debug
+      - name: Build
+        run: dotnet build FinalEngine/FinalEngine.csproj --no-restore --configuration Debug
+
+  # FinalEngine.Hosting
+  build_hosting:
+    name: Hosting
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Hosting/FinalEngine.Hosting.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Hosting/FinalEngine.Hosting.csproj --no-restore --configuration Debug
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
-    name: Windows Platform
+    name: Windows
     runs-on: windows-latest
 
     steps:
@@ -38,44 +57,8 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore FinalEngine.Platform.Desktop dependencies
+      - name: Restore
         run: dotnet restore FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj
 
-      - name: Build FinalEngine.Platform.Desktop
+      - name: Build
         run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Debug
-
-  # FinalEngine.Runtime
-  build_runtime:
-    name: Runtime
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 9.0.x
-
-      - name: Restore FinalEngine.Runtime dependencies
-        run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
-
-      - name: Build FinalEngine.Runtime
-        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Debug
-
-  # FinalEngine.Utilities
-  build_utilities:
-    name: Utilities
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 9.0.x
-
-      - name: Restore FinalEngine.Utilities dependencies
-        run: dotnet restore FinalEngine.Utilities/FinalEngine.Utilities.csproj
-
-      - name: Build FinalEngine.Utilities
-        run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Debug

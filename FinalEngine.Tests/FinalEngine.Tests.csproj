@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalEngine.Hosting\FinalEngine.Hosting.csproj" />
-    <ProjectReference Include="..\FinalEngine.Platform\FinalEngine.Platform.Desktop.csproj" />
     <ProjectReference Include="..\FinalEngine\FinalEngine.csproj" />
   </ItemGroup>
 

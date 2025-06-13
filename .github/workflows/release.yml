@@ -15,14 +15,11 @@ jobs:
       - id: get_version
         run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
 
-  # FinalEngine.Platform
-  build_platform:
-    name: Build and Upload FinalEngine.Platform
+  # FinalEngine
+  build_core:
+    name: Build Core
     runs-on: ubuntu-latest
-    needs: set_version
-    env:
-      VERSION: ${{ needs.set_version.outputs.version }}
-    
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET
@@ -31,29 +28,44 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore
-        run: dotnet restore FinalEngine.Platform/FinalEngine.Platform.csproj
+        run: dotnet restore FinalEngine/FinalEngine.csproj
 
       - name: Build
-        run: dotnet build FinalEngine.Platform/FinalEngine.Platform.csproj --no-restore --configuration Release
+        run: dotnet build FinalEngine/FinalEngine.csproj --no-restore --configuration Release
 
-      - name: Pack
-        run: dotnet pack FinalEngine.Platform/FinalEngine.Platform.csproj --no-build --configuration Release --output ./nupkgs -p:Version=${{ env.VERSION }}
-
-      - name: Upload Package
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Platform.nupkg
-          path: ./nupkgs/*.nupkg
+          name: FinalEngine
+          path: FinalEngine/bin/Release/net9.0/
 
-      - name: Upload Artifacts
+  # FinalEngine.Hosting
+  build_hosting:
+    name: Build Hosting
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Hosting/FinalEngine.Hosting.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Hosting/FinalEngine.Hosting.csproj --no-restore --configuration Release
+
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: FinalEngine.Platform
-          path: FinalEngine.Platform/bin/Release/net9.0/
+          name: FinalEngine.Hosting
+          path: FinalEngine.Hosting/bin/Release/net9.0/
 
   # FinalEngine.Platform.Desktop
   build_platform_desktop:
-    name: Build and Upload FinalEngine.Platform.Desktop
+    name: Build Windows
     runs-on: windows-latest
 
     steps:
@@ -75,97 +87,42 @@ jobs:
           name: FinalEngine.Platform.Desktop
           path: FinalEngine.Platform.Desktop/bin/Release/net9.0-windows/
 
-  # FinalEngine.Runtime
-  build_runtime:
-    name: Build and Upload FinalEngine.Runtime
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 9.0.x
-
-      - name: Restore
-        run: dotnet restore FinalEngine.Runtime/FinalEngine.Runtime.csproj
-
-      - name: Build
-        run: dotnet build FinalEngine.Runtime/FinalEngine.Runtime.csproj --no-restore --configuration Release
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Runtime
-          path: FinalEngine.Runtime/bin/Release/net9.0/
-
-  # FinalEngine.Utilities
-  build_utilities:
-    name: Build and Upload FinalEngine.Utilities
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 9.0.x
-
-      - name: Restore
-        run: dotnet restore FinalEngine.Utilities/FinalEngine.Utilities.csproj
-
-      - name: Build
-        run: dotnet build FinalEngine.Utilities/FinalEngine.Utilities.csproj --no-restore --configuration Release
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: FinalEngine.Utilities
-          path: FinalEngine.Utilities/bin/Release/net9.0/
-
   # Release
   release:
     name: Create GitHub Release
-    needs: [build_platform, build_platform_desktop, build_runtime, build_utilities]
+    needs: [build_core, build_hosting, build_platform_desktop]
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1 
+          fetch-depth: 1
 
-      - name: Download FinalEngine.Platform artificats
+      - name: Download Core artifacts
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Platform
-          path: artifacts/FinalEngine.Platform
+          name: FinalEngine
+          path: artifacts/FinalEngine
 
-      - name: Download FinalEngine.Platform.Desktop artifacts
+      - name: Download Windows artifacts
         uses: actions/download-artifact@v4
         with:
           name: FinalEngine.Platform.Desktop
           path: artifacts/FinalEngine.Platform.Desktop
 
-      - name: Download FinalEngine.Runtime artifacts
+      - name: Download Hosting artifacts
         uses: actions/download-artifact@v4
         with:
-          name: FinalEngine.Runtime
-          path: artifacts/FinalEngine.Runtime
-
-      - name: Download FinalEngine.Utilities artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: FinalEngine.Utilities
-          path: artifacts/FinalEngine.Utilities
+          name: FinalEngine.Hosting
+          path: artifacts/FinalEngine.Hosting
 
       - name: Zip artifacts
         run: |
           cd artifacts
-          zip -r FinalEngine.Platform.zip FinalEngine.Platform
+          zip -r FinalEngine.zip FinalEngine
           zip -r FinalEngine.Platform.Desktop.zip FinalEngine.Platform.Desktop
-          zip -r FinalEngine.Runtime.zip FinalEngine.Runtime
-          zip -r FinalEngine.Utilities.zip FinalEngine.Utilities
+          zip -r FinalEngine.Hosting.zip FinalEngine.Hosting
 
       - name: Extract version
         id: kacl
@@ -178,24 +135,8 @@ jobs:
         with:
           body: ${{ steps.kacl.outputs.release }}
           files: |
-            artifacts/FinalEngine.Platform.zip
+            artifacts/FinalEngine.zip
             artifacts/FinalEngine.Platform.Desktop.zip
-            artifacts/FinalEngine.Runtime.zip
-            artifacts/FinalEngine.Utilities.zip
+            artifacts/FinalEngine.Hosting.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Download NuGet packages
-        uses: actions/download-artifact@v4
-        with:
-          path: nupkgs
-
-      - name: Push to NuGet
-        if: env.PUSH_TO_NUGET == 'true'
-        run: |
-          for file in nupkgs/**/*.nupkg; do
-            echo "Pushing $file to NuGet"
-            dotnet nuget push "$file" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-          done
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
