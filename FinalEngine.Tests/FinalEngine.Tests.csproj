@@ -14,15 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\GlobalSuppressions.cs" Link="Properties\GlobalSuppressions.cs" />
-    <Compile Include="..\Shared\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="..\Shared\Styling\StyleCop\Tests\stylecop.json" Link="Properties\stylecop.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="NSubstitute.Analyzers.CSharp">
       <PrivateAssets>all</PrivateAssets>

@@ -2,19 +2,15 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime;
+namespace FinalEngine.Hosting;
 
-using FinalEngine.Platform;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
-
-//// TODO: Finish unit tests - added GameContainerBase and registration of services in the constructor.
+using FinalEngine.Platform;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides a standard implementation of an <see cref="IEngineDriver"/> that manages the engine/game life-cycle.
 /// </summary>
-///
 /// <seealso cref="IEngineDriver"/>
 internal sealed class EngineDriver : IEngineDriver
 {
@@ -27,11 +23,6 @@ internal sealed class EngineDriver : IEngineDriver
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
     /// </summary>
     private readonly ILogger<EngineDriver> logger;
-
-    /// <summary>
-    /// Specifies a <see cref="GameContainerBase"/> that represents the game container used to manage the game state and content.
-    /// </summary>
-    private GameContainerBase? gameContainer;
 
     /// <summary>
     /// Indicates whether the <see cref="EngineDriver"/> has been disposed.
@@ -52,21 +43,40 @@ internal sealed class EngineDriver : IEngineDriver
     /// Initializes a new instance of the <see cref="EngineDriver"/> class.
     /// </summary>
     ///
-    /// <param name="provider">
-    /// The <see cref="IServiceProvider"/> that provides the required services for the engine driver.
+    /// <param name="logger">
+    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
+    /// </param>
+    ///
+    /// <param name="window">
+    /// Specifies an <see cref="IWindow"/> that represents the window to be used by the engine driver.
+    /// </param>
+    ///
+    /// <param name="eventsProcessor">
+    /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
     /// </param>
     ///
     /// <exception cref="ArgumentNullException">
-    /// Thrown when the specified <paramref name="provider"/> parameter is <c>null</c>.
+    /// Thrown when one of the following parameters is null:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <paramref name="logger"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="window"/>
+    ///     </item>
+    ///     <item>
+    ///         <paramref name="eventsProcessor"/>
+    ///     </item>
+    /// </list>
     /// </exception>
-    public EngineDriver(IServiceProvider provider)
+    public EngineDriver(
+        ILogger<EngineDriver> logger,
+        IWindow window,
+        IEventsProcessor eventsProcessor)
     {
-        ServiceLocator.SetServiceProvider(provider);
-
-        this.logger = provider.GetRequiredService<ILogger<EngineDriver>>();
-        this.window = provider.GetRequiredService<IWindow>();
-        this.eventsProcessor = provider.GetRequiredService<IEventsProcessor>();
-        this.gameContainer = provider.GetRequiredService<GameContainerBase>();
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this.window = window ?? throw new ArgumentNullException(nameof(window));
+        this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
     }
 
     /// <summary>
@@ -132,19 +142,10 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.logger.LogTrace("Disposing the engine driver...");
 
-        if (disposing)
+        if (disposing && this.window != null)
         {
-            if (this.gameContainer != null)
-            {
-                this.gameContainer.Dispose();
-                this.gameContainer = null;
-            }
-
-            if (this.window != null)
-            {
-                this.window.Dispose();
-                this.window = null;
-            }
+            this.window.Dispose();
+            this.window = null;
         }
 
         this.isDisposed = true;
@@ -157,21 +158,13 @@ internal sealed class EngineDriver : IEngineDriver
     {
         this.isRunning = true;
 
-        this.gameContainer!.Initialize();
-        this.gameContainer.LoadContent();
-
         this.logger.LogInformation("Entering the game loop...");
 
         while (this.eventsProcessor.CanProcessEvents)
         {
-            this.gameContainer.Update();
-            this.gameContainer.Draw();
-
             this.eventsProcessor.ProcessEvents();
         }
 
         this.logger.LogInformation("Exited the game loop.");
-
-        this.gameContainer.UnloadContent();
     }
 }

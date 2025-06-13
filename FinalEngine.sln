@@ -34,12 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Hosting", "Fina
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Platform.Desktop", "FinalEngine.Platform\FinalEngine.Platform.Desktop.csproj", "{6053FFFB-515D-444B-A58F-05710B93A549}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{BB132247-057E-4EA8-B3D5-EBCC68D77004}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGame", "ExampleGame\ExampleGame.csproj", "{258FB032-857B-4AE5-A539-860691368824}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGame.Desktop", "ExampleGame.Desktop\ExampleGame.Desktop.csproj", "{0A1E8A87-43FF-474E-8633-2212B3C23F30}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,14 +55,6 @@ Global
 		{6053FFFB-515D-444B-A58F-05710B93A549}.Debug|x64.Build.0 = Debug|x64
 		{6053FFFB-515D-444B-A58F-05710B93A549}.Release|x64.ActiveCfg = Release|x64
 		{6053FFFB-515D-444B-A58F-05710B93A549}.Release|x64.Build.0 = Release|x64
-		{258FB032-857B-4AE5-A539-860691368824}.Debug|x64.ActiveCfg = Debug|x64
-		{258FB032-857B-4AE5-A539-860691368824}.Debug|x64.Build.0 = Debug|x64
-		{258FB032-857B-4AE5-A539-860691368824}.Release|x64.ActiveCfg = Release|x64
-		{258FB032-857B-4AE5-A539-860691368824}.Release|x64.Build.0 = Release|x64
-		{0A1E8A87-43FF-474E-8633-2212B3C23F30}.Debug|x64.ActiveCfg = Debug|x64
-		{0A1E8A87-43FF-474E-8633-2212B3C23F30}.Debug|x64.Build.0 = Debug|x64
-		{0A1E8A87-43FF-474E-8633-2212B3C23F30}.Release|x64.ActiveCfg = Release|x64
-		{0A1E8A87-43FF-474E-8633-2212B3C23F30}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,8 +64,6 @@ Global
 		{06F0CC7C-9531-4BF9-B522-FF8365A8F67A} = {CDE87FA7-2A55-42EB-B469-CCB4ED4951D6}
 		{C0DE2ED2-AACA-472C-A05F-4CB518465359} = {5119D05A-5EDA-44A9-9F47-D079A23921A4}
 		{6053FFFB-515D-444B-A58F-05710B93A549} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{258FB032-857B-4AE5-A539-860691368824} = {BB132247-057E-4EA8-B3D5-EBCC68D77004}
-		{0A1E8A87-43FF-474E-8633-2212B3C23F30} = {BB132247-057E-4EA8-B3D5-EBCC68D77004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72EB2B58-57F1-44FF-8653-8234E41F1E83}

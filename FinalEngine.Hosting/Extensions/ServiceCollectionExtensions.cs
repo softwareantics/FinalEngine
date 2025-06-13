@@ -4,20 +4,15 @@
 
 namespace FinalEngine.Hosting.Extensions;
 
-using System.Reflection;
-using FinalEngine.Hosting.Services;
-using FinalEngine.Hosting.Services.Activation;
-using FinalEngine.Hosting.Services.Discovery;
-using FinalEngine.Hosting.Services.Loading;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddFinalEngine<TGameContainer>(this IServiceCollection services, Action<IEngineBuilder>? configure = null)
-        where TGameContainer : GameContainerBase
+    public static IServiceCollection AddFinalEngine(this IServiceCollection services, Action<IEngineBuilder>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
 
@@ -27,35 +22,7 @@ public static class ServiceCollectionExtensions
         var builder = new EngineBuilder(services);
         configure?.Invoke(builder);
 
-        services.AddLogging(ConfigureLogging(configuration));
-
-        services.AddGameServices(configuration);
-        services.AddSingleton<GameContainerBase, TGameContainer>();
-
-        return services;
-    }
-
-    private static void AddGameServices(this IServiceCollection services, IConfiguration configuration)
-    {
-        using (var factory = LoggerFactory.Create(ConfigureLogging(configuration)))
-        {
-            var assemblyLoader = new AssembyLoader(factory.CreateLogger<AssembyLoader>());
-            var typeLocator = new TypeLocator(factory.CreateLogger<TypeLocator>());
-            var activator = new ConfiguratorActivator(factory.CreateLogger<ConfiguratorActivator>());
-
-            foreach (var assembly in assemblyLoader.LoadAssemblies())
-            {
-                foreach (var type in typeLocator.GetSupportedTypes(assembly))
-                {
-                    activator.ActivateAndConfigure(type, services);
-                }
-            }
-        }
-    }
-
-    private static Action<ILoggingBuilder> ConfigureLogging(IConfiguration configuration)
-    {
-        return x =>
+        services.AddLogging(x =>
         {
             x.ClearProviders();
             x.AddConsole();
@@ -68,6 +35,10 @@ public static class ServiceCollectionExtensions
             }
 
             x.AddConfiguration(configuration.GetSection("Logging"));
-        };
+        });
+
+        services.AddSingleton<IEngineDriver, EngineDriver>();
+
+        return services;
     }
 }

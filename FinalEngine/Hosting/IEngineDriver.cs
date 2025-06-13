@@ -2,7 +2,7 @@
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Runtime;
+namespace FinalEngine.Hosting;
 
 /// <summary>
 /// Defines an interface that represents a driver for running an engine.
