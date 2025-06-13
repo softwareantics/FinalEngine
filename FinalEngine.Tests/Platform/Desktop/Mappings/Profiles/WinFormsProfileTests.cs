@@ -36,10 +36,7 @@ internal sealed class WinFormsProfileTests
     [SetUp]
     public void SetUp()
     {
-        var config = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<WinFormsProfile>();
-        });
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<WinFormsProfile>());
 
         this.mapper = config.CreateMapper();
     }

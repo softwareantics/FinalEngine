@@ -51,10 +51,7 @@ internal sealed class WinFormsEventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenApplicationAdapterIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsEventsProcessor(this.logger, this.nativeAdapter, null);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(this.logger, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("application"));
@@ -64,10 +61,7 @@ internal sealed class WinFormsEventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsEventsProcessor(null, this.nativeAdapter, this.applicationAdapter);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(null, this.nativeAdapter, this.applicationAdapter));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("logger"));
@@ -77,10 +71,7 @@ internal sealed class WinFormsEventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenNativeAdapterIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsEventsProcessor(this.logger, null, this.applicationAdapter);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(this.logger, null, this.applicationAdapter));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("native"));

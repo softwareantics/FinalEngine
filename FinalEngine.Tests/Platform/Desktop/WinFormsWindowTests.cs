@@ -62,10 +62,7 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { var _ = this.window.ClientSize; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.ClientSize = new Size(1, 1);
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.ClientSize = new Size(1, 1));
     }
 
     [Test]
@@ -92,10 +89,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldNotThrowArgumentNullExceptionWhenLoggerIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsWindow(null, this.form, this.nativeAdapter, null);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(null, this.form, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("logger"));
@@ -105,10 +99,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenFormIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsWindow(this.logger, null, this.nativeAdapter, this.mapper);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, null, this.nativeAdapter, this.mapper));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("form"));
@@ -118,10 +109,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsWindow(this.logger, this.form, this.nativeAdapter, null);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, this.form, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("mapper"));
@@ -131,10 +119,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenNativeAdapterIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            new WinFormsWindow(this.logger, this.form, null, this.mapper);
-        });
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, this.form, null, this.mapper));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("native"));
@@ -166,10 +151,7 @@ internal sealed class WinFormsWindowTests
     {
         // Act
         var method = typeof(WinFormsWindow).GetMethod("Form_FormClosed", BindingFlags.NonPublic | BindingFlags.Instance);
-        var ex = Assert.Throws<TargetInvocationException>(() =>
-        {
-            method!.Invoke(this.window, [null, null]);
-        });
+        var ex = Assert.Throws<TargetInvocationException>(() => method!.Invoke(this.window, [null, null]));
 
         // Assert
         Assert.That(ex!.InnerException, Is.TypeOf<ArgumentNullException>());
@@ -218,10 +200,7 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { bool _ = this.window.IsUserReSizable; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.IsUserReSizable = false;
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.IsUserReSizable = false);
     }
 
     [Test]
@@ -255,10 +234,7 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { bool _ = this.window.IsVisible; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.IsVisible = true;
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.IsVisible = true);
     }
 
     [SetUp]
@@ -349,10 +325,7 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { var _ = this.window.State; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.State = WindowState.Normal;
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.State = WindowState.Normal);
     }
 
     [Test]
@@ -390,10 +363,7 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { var _ = this.window.Style; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.Style = WindowStyle.Resizable;
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.Style = WindowStyle.Resizable);
     }
 
     [TearDown]
@@ -434,9 +404,6 @@ internal sealed class WinFormsWindowTests
 
         // Act & Assert
         Assert.Throws<ObjectDisposedException>(() => { string _ = this.window.Title; });
-        Assert.Throws<ObjectDisposedException>(() =>
-        {
-            this.window.Title = "Should Fail";
-        });
+        Assert.Throws<ObjectDisposedException>(() => this.window.Title = "Should Fail");
     }
 }
