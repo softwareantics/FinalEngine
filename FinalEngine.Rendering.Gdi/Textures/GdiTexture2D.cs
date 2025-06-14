@@ -50,6 +50,7 @@ internal sealed class GdiTexture2D : IGdiTexture2D
                     g = (byte)(g * alpha);
                     b = (byte)(b * alpha);
 
+                    // RGBA -> BGRA (GDI+ uses BGRA channel order unless indexed).
                     destBuffer[destIndex + 0] = b;
                     destBuffer[destIndex + 1] = g;
                     destBuffer[destIndex + 2] = r;
