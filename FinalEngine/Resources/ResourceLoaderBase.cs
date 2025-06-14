@@ -4,6 +4,9 @@
 
 namespace FinalEngine.Resources;
 
+using System.Diagnostics.CodeAnalysis;
+
+[ExcludeFromCodeCoverage]
 public abstract class ResourceLoaderBase<TResource> : IResourceLoader
     where TResource : IResource
 {
@@ -11,6 +14,7 @@ public abstract class ResourceLoaderBase<TResource> : IResourceLoader
 
     IResource IResourceLoader.LoadResource(string filePath)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(filePath);
+        return this.LoadResource(filePath);
     }
 }

@@ -4,58 +4,95 @@
 
 namespace FinalEngine.Tests.Resources.Extensions.ImageSharp;
 
+using System;
+using System.IO;
 using System.IO.Abstractions;
 using FinalEngine.Rendering;
 using FinalEngine.Resources.Extensions;
 using FinalEngine.Resources.Extensions.Adapters;
 using NSubstitute;
+using NUnit.Framework;
 
 [TestFixture]
 internal sealed class Texture2DResourceLoaderTests
 {
+    private const string ValidFilePath = "C:\\textures\\test.png";
+
     private IFileSystem fileSystem;
 
-    private IImageAdapter imageSharp;
+    private IImageAdapter imageAdapter;
+
+    private Texture2DResourceLoader loader;
 
     private IRenderResourceFactory resourceFactory;
-
-    private Texture2DResourceLoader resourceLoader;
-
-    [Test]
-    public void ConstructorShouldNotThrowExceptionWhenInvoked()
-    {
-        // Act and assert
-        Assert.DoesNotThrow(() => new Texture2DResourceLoader(this.fileSystem, this.imageSharp, this.resourceFactory));
-    }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenFileSystemIsNull()
     {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(null, this.imageSharp, this.resourceFactory));
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+            new Texture2DResourceLoader(null, this.imageAdapter, this.resourceFactory));
+        Assert.That(ex.ParamName, Is.EqualTo("fileSystem"));
     }
 
     [Test]
-    public void ConstructorShouldThrowArgumentNullExceptionWhenImageSharpIsNull()
+    public void ConstructorShouldThrowArgumentNullExceptionWhenImageAdapterIsNull()
     {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem, null, this.resourceFactory));
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+            new Texture2DResourceLoader(this.fileSystem, null, this.resourceFactory));
+        Assert.That(ex.ParamName, Is.EqualTo("imageSharp"));
     }
 
     [Test]
     public void ConstructorShouldThrowArgumentNullExceptionWhenResourceFactoryIsNull()
     {
-        // Act and assert
-        Assert.Throws<ArgumentNullException>(() => new Texture2DResourceLoader(this.fileSystem, this.imageSharp, null));
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() =>
+            new Texture2DResourceLoader(this.fileSystem, this.imageAdapter, null));
+        Assert.That(ex.ParamName, Is.EqualTo("resourceFactory"));
+    }
+
+    [TestCase("")]
+    [TestCase("   ")]
+    public void LoadResourceShouldThrowArgumentExceptionWhenFilePathIsNullOrWhiteSpace(string filePath)
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => this.loader.LoadResource(filePath));
+    }
+
+    [Test]
+    public void LoadResourceShouldThrowArgumentNullExceptionWhenFilePathIsNull()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => this.loader.LoadResource(null));
+    }
+
+    [Test]
+    public void LoadResourceShouldThrowFileNotFoundExceptionWhenFileDoesNotExist()
+    {
+        // Arrange
+        this.fileSystem.File.Exists(ValidFilePath).Returns(false);
+
+        // Act & Assert
+        Assert.Throws<FileNotFoundException>(() => this.loader.LoadResource(ValidFilePath));
     }
 
     [SetUp]
-    public void Setup()
+    public void SetUp()
     {
         this.fileSystem = Substitute.For<IFileSystem>();
-        this.imageSharp = Substitute.For<IImageAdapter>();
+        this.imageAdapter = Substitute.For<IImageAdapter>();
         this.resourceFactory = Substitute.For<IRenderResourceFactory>();
+        this.loader = new Texture2DResourceLoader(this.fileSystem, this.imageAdapter, this.resourceFactory);
+    }
 
-        this.resourceLoader = new Texture2DResourceLoader(this.fileSystem, this.imageSharp, this.resourceFactory);
+    [TearDown]
+    public void TearDown()
+    {
+        this.fileSystem = null;
+        this.imageAdapter = null;
+        this.resourceFactory = null;
+        this.loader = null;
     }
 }
