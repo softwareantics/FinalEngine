@@ -12,4 +12,9 @@ internal sealed class FormAdapter : Form, IFormAdapter
     public FormAdapter()
     {
     }
+
+    void IFormAdapter.SetStyle(ControlStyles flag, bool value)
+    {
+        this.SetStyle(flag, value);
+    }
 }

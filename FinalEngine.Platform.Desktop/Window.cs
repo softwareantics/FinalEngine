@@ -46,6 +46,17 @@ internal sealed class Window : IWindow
         this.IsUserReSizable = false;
         this.ClientSize = new Size(DefaultClientWidth, DefaultClientHeight);
 
+        // Disable double buffering as this is handled by the rendering layer.
+        this.form.SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
+
+        // Ignore erase background messages to reduce flickering.
+        this.form.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
+        // Reduce flickering by ensuring the Paint event is not handled by the form itself.
+        // Typically this style and the one above should be set to true to reduce flickering.
+        // but we handle the rendering in the rendering layer and not in the form itself.
+        this.form.SetStyle(ControlStyles.UserPaint, false);
+
         this.IsVisible = true;
 
         this.logger.LogInformation("Window initialized: Size={Size}, Title='{Title}'", this.ClientSize, this.Title);

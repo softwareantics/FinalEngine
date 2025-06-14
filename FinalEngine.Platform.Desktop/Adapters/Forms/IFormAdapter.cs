@@ -25,4 +25,6 @@ internal interface IFormAdapter : IDisposable
     FormWindowState WindowState { get; set; }
 
     void Close();
+
+    void SetStyle(ControlStyles flag, bool value);
 }

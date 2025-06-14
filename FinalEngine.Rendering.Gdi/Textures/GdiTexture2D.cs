@@ -5,8 +5,8 @@
 namespace FinalEngine.Rendering.Textures;
 
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using FinalEngine.Rendering.Adapters.Drawing;
+using FinalEngine.Rendering.Services;
 
 internal sealed class GdiTexture2D : IGdiTexture2D
 {
@@ -25,41 +25,7 @@ internal sealed class GdiTexture2D : IGdiTexture2D
 
         this.bitmap = createBitmap(width, height, Format);
 
-        using (var data = this.bitmap.LockBits(ImageLockMode.WriteOnly, Format))
-        {
-            int stride = data.Stride;
-
-            byte[] destBuffer = new byte[stride * this.Height];
-
-            for (int y = 0; y < this.Height; y++)
-            {
-                for (int x = 0; x < this.Width; x++)
-                {
-                    int srcIndex = ((y * this.Width) + x) * 4;
-                    int destIndex = (y * stride) + (x * 4);
-
-                    byte r = pixels[srcIndex + 0];
-                    byte g = pixels[srcIndex + 1];
-                    byte b = pixels[srcIndex + 2];
-                    byte a = pixels[srcIndex + 3];
-
-                    // Pre-multiply channels (for PixelFormat.Format32bppPArgb).
-                    float alpha = a / 255f;
-
-                    r = (byte)(r * alpha);
-                    g = (byte)(g * alpha);
-                    b = (byte)(b * alpha);
-
-                    // RGBA -> BGRA (GDI+ uses BGRA channel order unless indexed).
-                    destBuffer[destIndex + 0] = b;
-                    destBuffer[destIndex + 1] = g;
-                    destBuffer[destIndex + 2] = r;
-                    destBuffer[destIndex + 3] = a;
-                }
-            }
-
-            Marshal.Copy(destBuffer, 0, data.Scan0, destBuffer.Length);
-        }
+        BitmapUtilities.WritePremultipliedRgbaToBgraBitmap(this.bitmap, pixels, Format);
     }
 
     ~GdiTexture2D()
