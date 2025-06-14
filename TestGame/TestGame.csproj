@@ -9,7 +9,14 @@
     <ProjectReference Include="..\FinalEngine.Hosting\FinalEngine.Hosting.csproj" />
     <ProjectReference Include="..\FinalEngine.Platform.Desktop\FinalEngine.Platform.Desktop.csproj" />
     <ProjectReference Include="..\FinalEngine.Rendering.Gdi\FinalEngine.Rendering.Gdi.csproj" />
+    <ProjectReference Include="..\FinalEngine.Resources.Extensions.ImageSharp\FinalEngine.Resources.Extensions.ImageSharp.csproj" />
     <ProjectReference Include="..\FinalEngine\FinalEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Rendering.Gdi",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{27205862-8210-4E0B-9DF1-336F2EC1035B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{F29DC200-DF20-4287-B3D0-AFB83B1C247C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Resources.Extensions.ImageSharp", "FinalEngine.Resources.Extensions.ImageSharp\FinalEngine.Resources.Extensions.ImageSharp.csproj", "{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -69,6 +73,10 @@ Global
 		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Debug|x64.Build.0 = Debug|x64
 		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Release|x64.ActiveCfg = Release|x64
 		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Release|x64.Build.0 = Release|x64
+		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Debug|x64.ActiveCfg = Debug|x64
+		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Debug|x64.Build.0 = Debug|x64
+		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Release|x64.ActiveCfg = Release|x64
+		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +87,7 @@ Global
 		{C0DE2ED2-AACA-472C-A05F-4CB518465359} = {5119D05A-5EDA-44A9-9F47-D079A23921A4}
 		{7CAB2871-37DE-FCD6-1B29-CE64FD492B41} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DADC3795-508B-4EC1-BE4F-D53BE635C7A7} = {3A56FA81-65EF-43F3-8898-E0898CD8C18C}
+		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909} = {F29DC200-DF20-4287-B3D0-AFB83B1C247C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72EB2B58-57F1-44FF-8653-8234E41F1E83}

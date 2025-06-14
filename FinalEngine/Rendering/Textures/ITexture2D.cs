@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Rendering.Textures;
 
-public interface ITexture2D
+using FinalEngine.Resources;
+
+public interface ITexture2D : IResource
 {
     int Height { get; }
 

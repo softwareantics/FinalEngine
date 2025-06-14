@@ -6,6 +6,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="Microsoft.Extensions.Logging.EventSource" />
     <PackageReference Include="Microsoft.Extensions.Logging.EventLog" />
+    <PackageReference Include="System.IO.Abstractions" />
   </ItemGroup>
   
   <ItemGroup>

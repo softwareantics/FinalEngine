@@ -8,6 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
+using FinalEngine.Rendering.Textures;
+using FinalEngine.Resources;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -20,6 +22,8 @@ internal sealed class EngineDriver : IEngineDriver
     /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
     /// </summary>
     private readonly IEventsProcessor eventsProcessor;
+
+    private readonly ResourceLoaderBase<ITexture2D> loader;
 
     /// <summary>
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
@@ -62,6 +66,7 @@ internal sealed class EngineDriver : IEngineDriver
     /// </param>
     /// <param name="renderDevice"></param>
     /// <param name="renderContextFactory"></param>
+    /// <param name="loader"></param>
     ///
     /// <exception cref="ArgumentNullException">
     /// Thrown when one of the following parameters is null:
@@ -82,10 +87,12 @@ internal sealed class EngineDriver : IEngineDriver
         IWindow window,
         IEventsProcessor eventsProcessor,
         IRenderDevice renderDevice,
-        IRenderContext.RenderContextFactory renderContextFactory)
+        IRenderContext.RenderContextFactory renderContextFactory,
+       ResourceLoaderBase<ITexture2D> loader)
     {
         ArgumentNullException.ThrowIfNull(renderContextFactory);
 
+        this.loader = loader ?? throw new ArgumentNullException(nameof(loader));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.window = window ?? throw new ArgumentNullException(nameof(window));
         this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
@@ -177,9 +184,14 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.renderContext!.MakeCurrent();
 
+        var texture = this.loader.LoadResource("test.png");
+
         while (this.eventsProcessor.CanProcessEvents)
         {
             this.renderDevice.Clear(Color.CornflowerBlue);
+
+            this.renderDevice.DrawTexture(texture, new System.Numerics.Vector2(10, 10));
+
             this.renderContext.SwapBuffers();
             this.eventsProcessor.ProcessEvents();
         }

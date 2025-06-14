@@ -4,6 +4,7 @@ using FinalEngine.Hosting;
 using FinalEngine.Hosting.Extensions;
 using FinalEngine.Platform.Extensions;
 using FinalEngine.Rendering.Extensions;
+using FinalEngine.Resources.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class Program
@@ -15,6 +16,7 @@ internal static class Program
             {
                 x.UseWindows();
                 x.UseGdi();
+                x.UseImageSharp();
             });
 
         var provider = services.BuildServiceProvider();

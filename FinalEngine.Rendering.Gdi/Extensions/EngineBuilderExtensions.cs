@@ -16,10 +16,14 @@ public static class EngineBuilderExtensions
         ArgumentNullException.ThrowIfNull(builder);
 
         builder.Services.AddSingleton<IBufferedGraphicsContextAdapter, BufferedGraphicsContextAdapter>();
+
         builder.Services.AddSingleton<IRenderContext.RenderContextFactory>(x => (handle, size) => new RenderContext(handle, size));
+        builder.Services.AddSingleton<IBitmapAdapter.BitmapAdapterFactory>(x => (width, height, format) => new BitmapAdapter(width, height, format));
 
         builder.Services.AddSingleton<IGraphicsProvider, GraphicsProvider>();
         builder.Services.AddSingleton<IRenderDevice, RenderDevice>();
+        builder.Services.AddSingleton<IRenderResourceFactory, RenderResourceFactory>();
+
         return builder;
     }
 }
