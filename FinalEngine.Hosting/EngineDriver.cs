@@ -5,7 +5,9 @@
 namespace FinalEngine.Hosting;
 
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using FinalEngine.Platform;
+using FinalEngine.Rendering;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
@@ -23,6 +25,10 @@ internal sealed class EngineDriver : IEngineDriver
     /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
     /// </summary>
     private readonly ILogger<EngineDriver> logger;
+
+    private readonly IRenderContext? renderContext;
+
+    private readonly IRenderDevice renderDevice;
 
     /// <summary>
     /// Indicates whether the <see cref="EngineDriver"/> has been disposed.
@@ -54,6 +60,8 @@ internal sealed class EngineDriver : IEngineDriver
     /// <param name="eventsProcessor">
     /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
     /// </param>
+    /// <param name="renderDevice"></param>
+    /// <param name="renderContextFactory"></param>
     ///
     /// <exception cref="ArgumentNullException">
     /// Thrown when one of the following parameters is null:
@@ -72,11 +80,18 @@ internal sealed class EngineDriver : IEngineDriver
     public EngineDriver(
         ILogger<EngineDriver> logger,
         IWindow window,
-        IEventsProcessor eventsProcessor)
+        IEventsProcessor eventsProcessor,
+        IRenderDevice renderDevice,
+        IRenderContext.RenderContextFactory renderContextFactory)
     {
+        ArgumentNullException.ThrowIfNull(renderContextFactory);
+
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.window = window ?? throw new ArgumentNullException(nameof(window));
         this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
+        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
+
+        this.renderContext = renderContextFactory(this.window.Handle, this.window.ClientSize);
     }
 
     /// <summary>
@@ -160,8 +175,12 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.logger.LogInformation("Entering the game loop...");
 
+        this.renderContext!.MakeCurrent();
+
         while (this.eventsProcessor.CanProcessEvents)
         {
+            this.renderDevice.Clear(Color.CornflowerBlue);
+            this.renderContext.SwapBuffers();
             this.eventsProcessor.ProcessEvents();
         }
 
