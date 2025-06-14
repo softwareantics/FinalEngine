@@ -9,4 +9,8 @@ using System.Drawing;
 internal interface IGraphicsAdapter : IDisposable
 {
     void Clear(Color color);
+
+    void DrawImageUnscaled(IBitmapAdapter image, int x, int y);
+
+    void EnableLowestQuality();
 }

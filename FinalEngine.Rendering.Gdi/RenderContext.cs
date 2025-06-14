@@ -32,6 +32,7 @@ internal sealed class RenderContext : IRenderContext
         };
 
         this.bufferedGraphics = this.context.Allocate(handle, new Rectangle(Point.Empty, size));
+        this.bufferedGraphics.Graphics.EnableLowestQuality();
     }
 
     ~RenderContext()
