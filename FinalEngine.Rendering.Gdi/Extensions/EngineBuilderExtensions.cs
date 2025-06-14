@@ -4,11 +4,13 @@
 
 namespace FinalEngine.Rendering.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Hosting;
 using FinalEngine.Rendering.Adapters.Drawing;
 using FinalEngine.Rendering.Services;
 using Microsoft.Extensions.DependencyInjection;
 
+[ExcludeFromCodeCoverage]
 public static class EngineBuilderExtensions
 {
     public static IEngineBuilder UseGdi(this IEngineBuilder builder)

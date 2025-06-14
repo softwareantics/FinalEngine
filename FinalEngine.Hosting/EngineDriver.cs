@@ -5,124 +5,50 @@
 namespace FinalEngine.Hosting;
 
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using FinalEngine.Platform;
 using FinalEngine.Rendering;
-using FinalEngine.Rendering.Textures;
-using FinalEngine.Resources;
 using Microsoft.Extensions.Logging;
 
-/// <summary>
-/// Provides a standard implementation of an <see cref="IEngineDriver"/> that manages the engine/game life-cycle.
-/// </summary>
-/// <seealso cref="IEngineDriver"/>
 internal sealed class EngineDriver : IEngineDriver
 {
-    /// <summary>
-    /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
-    /// </summary>
     private readonly IEventsProcessor eventsProcessor;
 
-    private readonly ResourceLoaderBase<ITexture2D> loader;
-
-    /// <summary>
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </summary>
     private readonly ILogger<EngineDriver> logger;
 
-    private readonly IRenderContext? renderContext;
-
-    private readonly IRenderDevice renderDevice;
-
-    /// <summary>
-    /// Indicates whether the <see cref="EngineDriver"/> has been disposed.
-    /// </summary>
     private bool isDisposed;
 
-    /// <summary>
-    /// Indicates whether the <see cref="EngineDriver"/> is currently running.
-    /// </summary>
     private bool isRunning;
 
-    /// <summary>
-    /// Specifies an <see cref="IWindow"/> that represents the window to be used by the engine driver.
-    /// </summary>
+    private IRenderContext? renderContext;
+
     private IWindow? window;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EngineDriver"/> class.
-    /// </summary>
-    ///
-    /// <param name="logger">
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </param>
-    ///
-    /// <param name="window">
-    /// Specifies an <see cref="IWindow"/> that represents the window to be used by the engine driver.
-    /// </param>
-    ///
-    /// <param name="eventsProcessor">
-    /// Specifies an <see cref="IEventsProcessor"/> that represents the events processor used to handle events in the message queue.
-    /// </param>
-    /// <param name="renderDevice"></param>
-    /// <param name="renderContextFactory"></param>
-    /// <param name="loader"></param>
-    ///
-    /// <exception cref="ArgumentNullException">
-    /// Thrown when one of the following parameters is null:
-    /// <list type="bullet">
-    ///     <item>
-    ///         <paramref name="logger"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="window"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="eventsProcessor"/>
-    ///     </item>
-    /// </list>
-    /// </exception>
     public EngineDriver(
         ILogger<EngineDriver> logger,
         IWindow window,
         IEventsProcessor eventsProcessor,
-        IRenderDevice renderDevice,
-        IRenderContext.RenderContextFactory renderContextFactory,
-       ResourceLoaderBase<ITexture2D> loader)
+        IRenderContext.RenderContextFactory renderContextFactory)
     {
         ArgumentNullException.ThrowIfNull(renderContextFactory);
 
-        this.loader = loader ?? throw new ArgumentNullException(nameof(loader));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.window = window ?? throw new ArgumentNullException(nameof(window));
         this.eventsProcessor = eventsProcessor ?? throw new ArgumentNullException(nameof(eventsProcessor));
-        this.renderDevice = renderDevice ?? throw new ArgumentNullException(nameof(renderDevice));
-
         this.renderContext = renderContextFactory(this.window.Handle, this.window.ClientSize);
     }
 
-    /// <summary>
-    /// Finalizes an instance of the <see cref="EngineDriver"/> class.
-    /// </summary>
     [ExcludeFromCodeCoverage]
     ~EngineDriver()
     {
         this.Dispose(false);
     }
 
-    /// <summary>
-    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    /// </summary>
     public void Dispose()
     {
         this.Dispose(true);
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="EngineDriver"/> has already been disposed.
-    /// </exception>
     public void Start()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
@@ -138,10 +64,6 @@ internal sealed class EngineDriver : IEngineDriver
         this.RunGameLoop();
     }
 
-    /// <inheritdoc/>
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="EngineDriver"/> has already been disposed.
-    /// </exception>
     public void Stop()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(EngineDriver));
@@ -149,12 +71,6 @@ internal sealed class EngineDriver : IEngineDriver
         this.isRunning = false;
     }
 
-    /// <summary>
-    /// Releases unmanaged and - optionally - managed resources.
-    /// </summary>
-    /// <param name="disposing">
-    /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-    /// </param>
     private void Dispose(bool disposing)
     {
         if (this.isDisposed)
@@ -164,18 +80,24 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.logger.LogTrace("Disposing the engine driver...");
 
-        if (disposing && this.window != null)
+        if (disposing)
         {
-            this.window.Dispose();
-            this.window = null;
+            if (this.renderContext != null)
+            {
+                this.renderContext.Dispose();
+                this.renderContext = null;
+            }
+
+            if (this.window != null)
+            {
+                this.window.Dispose();
+                this.window = null;
+            }
         }
 
         this.isDisposed = true;
     }
 
-    /// <summary>
-    /// Runs the main game loop.
-    /// </summary>
     private void RunGameLoop()
     {
         this.isRunning = true;
@@ -184,14 +106,8 @@ internal sealed class EngineDriver : IEngineDriver
 
         this.renderContext!.MakeCurrent();
 
-        var texture = this.loader.LoadResource("test.png");
-
         while (this.eventsProcessor.CanProcessEvents)
         {
-            this.renderDevice.Clear(Color.CornflowerBlue);
-
-            this.renderDevice.DrawTexture(texture, new System.Numerics.Vector2(10, 10));
-
             this.renderContext.SwapBuffers();
             this.eventsProcessor.ProcessEvents();
         }

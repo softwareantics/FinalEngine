@@ -21,7 +21,7 @@ internal interface IBitmapAdapter : IDisposable
 
     IBitmapDataAdapter LockBits(Rectangle rect, ImageLockMode flags, PixelFormat format);
 
-    IBitmapDataAdapter LockBits(ImageLockMode writeOnly, PixelFormat format);
+    IBitmapDataAdapter LockBits(ImageLockMode flags, PixelFormat format);
 
     void UnlockBits(IBitmapDataAdapter bitmapdata);
 }

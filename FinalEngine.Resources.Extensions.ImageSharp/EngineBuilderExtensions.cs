@@ -4,11 +4,13 @@
 
 namespace FinalEngine.Resources.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Hosting;
 using FinalEngine.Rendering.Textures;
 using FinalEngine.Resources.Extensions.Adapters;
 using Microsoft.Extensions.DependencyInjection;
 
+[ExcludeFromCodeCoverage]
 public static class EngineBuilderExtensions
 {
     public static IEngineBuilder UseImageSharp(this IEngineBuilder builder)

@@ -4,9 +4,11 @@
 
 namespace FinalEngine.Rendering.Adapters.Imaging;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Imaging;
 using FinalEngine.Rendering.Adapters.Drawing;
 
+[ExcludeFromCodeCoverage]
 internal sealed class BitmapDataAdapter : IBitmapDataAdapter
 {
     private readonly IBitmapAdapter bitmap;

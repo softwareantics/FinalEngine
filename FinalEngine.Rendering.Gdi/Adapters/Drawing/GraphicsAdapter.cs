@@ -12,9 +12,9 @@ using System.Drawing.Text;
 [ExcludeFromCodeCoverage]
 internal sealed class GraphicsAdapter : IGraphicsAdapter
 {
-    private readonly bool isDisposed;
-
     private Graphics? graphics;
+
+    private bool isDisposed;
 
     public GraphicsAdapter(Graphics graphics)
     {
@@ -71,6 +71,6 @@ internal sealed class GraphicsAdapter : IGraphicsAdapter
             this.graphics = null;
         }
 
-        this.graphics = null;
+        this.isDisposed = true;
     }
 }

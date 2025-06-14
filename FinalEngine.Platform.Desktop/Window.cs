@@ -11,88 +11,22 @@ using FinalEngine.Platform.Adapters.Forms;
 using FinalEngine.Platform.Adapters.Native;
 using Microsoft.Extensions.Logging;
 
-/// <summary>
-/// Provides a Windows Forms implementation of the <see cref="IWindow"/> interface for managing a window on desktop platforms.
-/// </summary>
-///
-/// <remarks>
-/// This class wraps a Windows Forms <see cref="IFormAdapter"/> to implement the <see cref="IWindow"/> contract, allowing control over window properties such as size, style, state, visibility, and title. It handles platform-specific behaviors such as switching to fullscreen by changing the window style to borderless to prevent taskbar display issues. The class also manages resource cleanup and disposal of the underlying form.
-/// </remarks>
-/// <inheritdoc cref="IWindow" />
 internal sealed class Window : IWindow
 {
-    /// <summary>
-    /// Specifies an <see cref="int"/> that represents the default client height of the window.
-    /// </summary>
     private const int DefaultClientHeight = 720;
 
-    /// <summary>
-    /// Specifies an <see cref="int"/> that represents the default client width of the window.
-    /// </summary>
     private const int DefaultClientWidth = 1280;
 
-    /// <summary>
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </summary>
     private readonly ILogger<Window> logger;
 
-    /// <summary>
-    /// Specifies an <see cref="IMapper"/> that is used to translate between platform-specific and engine-specific types.
-    /// </summary>
     private readonly IMapper mapper;
 
-    /// <summary>
-    /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls related to window management.
-    /// </summary>
     private readonly INativeAdapter native;
 
-    /// <summary>
-    /// Specifies an <see cref="IFormAdapter"/> that represents the underlying Windows Forms window.
-    /// </summary>
     private IFormAdapter? form;
 
-    /// <summary>
-    /// Indicates whether the <see cref="Window"/> instance has been disposed.
-    /// </summary>
     private bool isDisposed;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Window"/> class.
-    /// </summary>
-    ///
-    /// <param name="logger">
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </param>
-    ///
-    /// <param name="form">
-    /// Specifies an <see cref="IFormAdapter"/> that represents the underlying window.
-    /// </param>
-    ///
-    /// <param name="native">
-    /// Specifies an <see cref="INativeAdapter"/> that represents an adapter for Windows API calls.
-    /// </param>
-    ///
-    /// <param name="mapper">
-    /// Specifies an <see cref="IMapper"/> that represents the mapper used to translate between platform and engine types.
-    /// </param>
-    ///
-    /// <exception cref="ArgumentNullException">
-    /// Thrown when the one of the following parameters are null:
-    /// <list type="bullet">
-    ///     <item>
-    ///         <paramref name="logger"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="form"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="native"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="mapper"/>
-    ///     </item>
-    /// </list>
-    /// </exception>
     public Window(
         ILogger<Window> logger,
         IFormAdapter form,
@@ -117,19 +51,12 @@ internal sealed class Window : IWindow
         this.logger.LogInformation("Window initialized: Size={Size}, Title='{Title}'", this.ClientSize, this.Title);
     }
 
-    /// <summary>
-    /// Finalizes an instance of the <see cref="Window"/> class.
-    /// </summary>
     [ExcludeFromCodeCoverage]
     ~Window()
     {
         this.Dispose(false);
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public Size ClientSize
     {
         get
@@ -145,10 +72,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public nint Handle
     {
         get
@@ -158,10 +81,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public bool IsUserReSizable
     {
         get
@@ -177,10 +96,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public bool IsVisible
     {
         get
@@ -196,14 +111,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <remarks>
-    /// When switching to <see cref="WindowState.Fullscreen"/>, this implementation sets the window style to <see cref="WindowStyle.Borderless"/> first to address an issue where the Windows taskbar remains visible otherwise.
-    /// </remarks>
-    ///
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public WindowState State
     {
         get
@@ -237,10 +144,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public WindowStyle Style
     {
         get
@@ -257,10 +160,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public string Title
     {
         get
@@ -276,10 +175,6 @@ internal sealed class Window : IWindow
         }
     }
 
-    /// <inheritdoc />
-    /// <exception cref="ObjectDisposedException">
-    /// Thrown when the <see cref="Window"/> instance has been disposed.
-    /// </exception>
     public void Close()
     {
         ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
@@ -288,20 +183,12 @@ internal sealed class Window : IWindow
         this.form!.Close();
     }
 
-    /// <inheritdoc />
     public void Dispose()
     {
         this.Dispose(true);
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    /// Releases unmanaged and - optionally - managed resources.
-    /// </summary>
-    ///
-    /// <param name="disposing">
-    /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-    /// </param>
     private void Dispose(bool disposing)
     {
         if (this.isDisposed)
@@ -321,21 +208,6 @@ internal sealed class Window : IWindow
         this.isDisposed = true;
     }
 
-    /// <summary>
-    /// Occurs when the form has closed.
-    /// </summary>
-    ///
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    ///
-    /// <param name="e">
-    /// Specifies a <see cref="FormClosedEventArgs"/> instance containing the event data.
-    /// </param>
-    ///
-    /// <exception cref="ArgumentNullException">
-    /// Thrown when the specified <paramref name="e"/> parameter is null.
-    /// </exception>
     private void Form_FormClosed(object? sender, FormClosedEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);

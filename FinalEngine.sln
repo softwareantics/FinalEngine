@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rendering", "Rendering", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Rendering.Gdi", "FinalEngine.Rendering.Gdi\FinalEngine.Rendering.Gdi.csproj", "{DADC3795-508B-4EC1-BE4F-D53BE635C7A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{27205862-8210-4E0B-9DF1-336F2EC1035B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{F29DC200-DF20-4287-B3D0-AFB83B1C247C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalEngine.Resources.Extensions.ImageSharp", "FinalEngine.Resources.Extensions.ImageSharp\FinalEngine.Resources.Extensions.ImageSharp.csproj", "{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}"
@@ -69,10 +67,6 @@ Global
 		{DADC3795-508B-4EC1-BE4F-D53BE635C7A7}.Debug|x64.Build.0 = Debug|x64
 		{DADC3795-508B-4EC1-BE4F-D53BE635C7A7}.Release|x64.ActiveCfg = Release|x64
 		{DADC3795-508B-4EC1-BE4F-D53BE635C7A7}.Release|x64.Build.0 = Release|x64
-		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Debug|x64.ActiveCfg = Debug|x64
-		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Debug|x64.Build.0 = Debug|x64
-		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Release|x64.ActiveCfg = Release|x64
-		{27205862-8210-4E0B-9DF1-336F2EC1035B}.Release|x64.Build.0 = Release|x64
 		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Debug|x64.ActiveCfg = Debug|x64
 		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Debug|x64.Build.0 = Debug|x64
 		{7EC00315-2BFB-4DD2-86EB-FDA4DFD10909}.Release|x64.ActiveCfg = Release|x64
