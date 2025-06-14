@@ -34,8 +34,8 @@ public static class EngineBuilderExtensions
         builder.Services.AddTransient<INativeAdapter, NativeAdapter>();
         builder.Services.AddTransient<IApplicationAdapter, ApplicationAdapter>();
 
-        builder.Services.AddSingleton<IWindow, WinFormsWindow>();
-        builder.Services.AddSingleton<IEventsProcessor, WinFormsEventsProcessor>();
+        builder.Services.AddSingleton<IWindow, Window>();
+        builder.Services.AddSingleton<IEventsProcessor, EventsProcessor>();
 
         return builder;
     }

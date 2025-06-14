@@ -19,6 +19,9 @@ internal interface IFormAdapter : IDisposable
     /// <inheritdoc cref="Form.FormBorderStyle"/>
     FormBorderStyle FormBorderStyle { get; set; }
 
+    /// <inheritdoc cref="Control.Handle"/>
+    nint Handle { get; }
+
     /// <inheritdoc cref="Form.MaximizeBox"/>
     bool MaximizeBox { get; set; }
 
