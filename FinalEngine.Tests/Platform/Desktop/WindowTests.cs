@@ -1,31 +1,31 @@
-// <copyright file="WinFormsWindowTests.cs" company="Software Antics">
+// <copyright file="WindowTests.cs" company="Software Antics">
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Platform.Desktop;
 
-using AutoMapper;
-using FinalEngine.Platform;
-using NSubstitute;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using Microsoft.Extensions.Logging;
+using AutoMapper;
+using FinalEngine.Platform;
 using FinalEngine.Platform.Adapters.Forms;
 using FinalEngine.Platform.Adapters.Native;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
 
 [TestFixture]
-internal sealed class WinFormsWindowTests
+internal sealed class WindowTests
 {
     private IFormAdapter form;
 
-    private ILogger<WinFormsWindow> logger;
+    private ILogger<Window> logger;
 
     private IMapper mapper;
 
     private INativeAdapter nativeAdapter;
 
-    private WinFormsWindow window;
+    private Window window;
 
     [Test]
     public void ClientSizeShouldReturnFormClientSize()
@@ -89,7 +89,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldNotThrowArgumentNullExceptionWhenLoggerIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(null, this.form, this.nativeAdapter, null));
+        var ex = Assert.Throws<ArgumentNullException>(() => new Window(null, this.form, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("logger"));
@@ -99,7 +99,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenFormIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, null, this.nativeAdapter, this.mapper));
+        var ex = Assert.Throws<ArgumentNullException>(() => new Window(this.logger, null, this.nativeAdapter, this.mapper));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("form"));
@@ -109,7 +109,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenMapperIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, this.form, this.nativeAdapter, null));
+        var ex = Assert.Throws<ArgumentNullException>(() => new Window(this.logger, this.form, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("mapper"));
@@ -119,7 +119,7 @@ internal sealed class WinFormsWindowTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenNativeAdapterIsNull()
     {
         // Arrange & Act
-        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsWindow(this.logger, this.form, null, this.mapper));
+        var ex = Assert.Throws<ArgumentNullException>(() => new Window(this.logger, this.form, null, this.mapper));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("native"));
@@ -150,7 +150,7 @@ internal sealed class WinFormsWindowTests
     public void FormClosedShouldThrowArgumentNullExceptionWhenArgsNull()
     {
         // Act
-        var method = typeof(WinFormsWindow).GetMethod("Form_FormClosed", BindingFlags.NonPublic | BindingFlags.Instance);
+        var method = typeof(Window).GetMethod("Form_FormClosed", BindingFlags.NonPublic | BindingFlags.Instance);
         var ex = Assert.Throws<TargetInvocationException>(() => method!.Invoke(this.window, [null, null]));
 
         // Assert
@@ -240,7 +240,7 @@ internal sealed class WinFormsWindowTests
     [SetUp]
     public void SetUp()
     {
-        this.logger = Substitute.For<ILogger<WinFormsWindow>>();
+        this.logger = Substitute.For<ILogger<Window>>();
         this.form = Substitute.For<IFormAdapter>();
         this.nativeAdapter = Substitute.For<INativeAdapter>();
         this.mapper = Substitute.For<IMapper>();
@@ -257,7 +257,7 @@ internal sealed class WinFormsWindowTests
         this.mapper.Map<WindowStyle>(Arg.Any<FormBorderStyle>()).Returns(WindowStyle.Resizable);
         this.mapper.Map<FormBorderStyle>(Arg.Any<WindowStyle>()).Returns(FormBorderStyle.Sizable);
 
-        this.window = new WinFormsWindow(this.logger, this.form, this.nativeAdapter, this.mapper);
+        this.window = new Window(this.logger, this.form, this.nativeAdapter, this.mapper);
     }
 
     [Test]

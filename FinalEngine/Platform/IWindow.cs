@@ -84,6 +84,15 @@ public interface IWindow : IDisposable
     Size ClientSize { get; set; }
 
     /// <summary>
+    /// Gets the handle to the window, which is a platform-specific identifier used to interact with the window at a lower level.
+    /// </summary>
+    ///
+    /// <value>
+    /// The handle to the window, represented as a platform-specific integer value. This handle is used for operations such as rendering, event handling, and other interactions with the window.
+    /// </value>
+    nint Handle { get; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the window can be resized manually by the user.
     /// </summary>
     ///

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>FinalEngine.Resources.Extensions</RootNamespace>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" />
+    <PackageReference Include="System.IO.Abstractions" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine\FinalEngine.csproj" />
+  </ItemGroup>
+</Project>

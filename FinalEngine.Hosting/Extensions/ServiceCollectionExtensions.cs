@@ -5,6 +5,7 @@
 namespace FinalEngine.Hosting.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
+using System.IO.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,8 @@ public static class ServiceCollectionExtensions
 
         var builder = new EngineBuilder(services);
         configure?.Invoke(builder);
+
+        services.AddSingleton<IFileSystem, FileSystem>();
 
         services.AddLogging(x =>
         {

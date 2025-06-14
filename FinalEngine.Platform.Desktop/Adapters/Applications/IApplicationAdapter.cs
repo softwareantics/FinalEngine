@@ -4,11 +4,7 @@
 
 namespace FinalEngine.Platform.Adapters.Applications;
 
-/// <summary>
-/// Defines an interface that represents an <see cref="Application"/> adapter.
-/// </summary>
 internal interface IApplicationAdapter
 {
-    /// <inheritdoc cref="Application.FilterMessage(ref Message)"/>
     bool FilterMessage(ref Message message);
 }

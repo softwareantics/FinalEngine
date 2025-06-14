@@ -87,6 +87,54 @@ jobs:
           name: FinalEngine.Platform.Desktop
           path: FinalEngine.Platform.Desktop/bin/Release/net9.0-windows/
 
+  # FinalEngine.Rendering.Gdi
+  build_rendering_gdi:
+    name: Build GDI+ Rendering
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Rendering.Gdi/FinalEngine.Rendering.Gdi.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Rendering.Gdi/FinalEngine.Rendering.Gdi.csproj --no-restore --configuration Release
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Rendering.Gdi
+          path: FinalEngine.Rendering.Gdi/bin/Release/net9.0-windows/
+
+  # FinalEngine.Resources.Extensions.ImageSharp
+  build_resources_extensions_image_sharp:
+    name: Build ImageSharp Extensions
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Resources.Extensions.ImageSharp/FinalEngine.Resources.Extensions.ImageSharp.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Resources.Extensions.ImageSharp/FinalEngine.Resources.Extensions.ImageSharp.csproj --no-restore --configuration Release
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: FinalEngine.Resources.Extensions.ImageSharp
+          path: FinalEngine.Resources.Extensions.ImageSharp/bin/Release/net9.0/
+
   # Release
   release:
     name: Create GitHub Release
@@ -117,12 +165,26 @@ jobs:
           name: FinalEngine.Hosting
           path: artifacts/FinalEngine.Hosting
 
+      - name: Download GDI+ Rendering artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Rendering.Gdi
+          path: artifacts/FinalEngine.Rendering.Gdi
+
+      - name: Download ImageSharp Extensions artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: FinalEngine.Resources.Extensions.ImageSharp
+          path: artifacts/FinalEngine.Resources.Extensions.ImageSharp
+
       - name: Zip artifacts
         run: |
           cd artifacts
           zip -r FinalEngine.zip FinalEngine
           zip -r FinalEngine.Platform.Desktop.zip FinalEngine.Platform.Desktop
           zip -r FinalEngine.Hosting.zip FinalEngine.Hosting
+          zip -r FinalEngine.Rendering.Gdi.zip FinalEngine.Rendering.Gdi
+          zip -r FinalEngine.Resources.Extensions.ImageSharp.zip FinalEngine.Resources.Extensions.ImageSharp
 
       - name: Extract version
         id: kacl
@@ -138,5 +200,7 @@ jobs:
             artifacts/FinalEngine.zip
             artifacts/FinalEngine.Platform.Desktop.zip
             artifacts/FinalEngine.Hosting.zip
+            artifacts/FinalEngine.Rendering.Gdi.zip
+            artifacts/FinalEngine.Resources.Extensions.ImageSharp.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
