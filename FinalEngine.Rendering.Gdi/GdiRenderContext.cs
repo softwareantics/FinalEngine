@@ -1,4 +1,4 @@
-// <copyright file="RenderContext.cs" company="Software Antics">
+// <copyright file="GdiRenderResourceFactory.cs" company="Software Antics">
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace FinalEngine.Rendering;
 using System.Diagnostics.CodeAnalysis;
 using FinalEngine.Rendering.Adapters.Drawing;
 
-internal sealed class RenderContext : IRenderContext
+internal sealed class GdiRenderContext : IRenderContext
 {
     private IBufferedGraphicsAdapter? bufferedGraphics;
 
@@ -16,12 +16,12 @@ internal sealed class RenderContext : IRenderContext
     private bool isDisposed;
 
     [ExcludeFromCodeCoverage]
-    public RenderContext(nint handle, Size size)
+    public GdiRenderContext(nint handle, Size size)
         : this(new BufferedGraphicsContextAdapter(), handle, size)
     {
     }
 
-    public RenderContext(IBufferedGraphicsContextAdapter context, nint handle, Size size)
+    public GdiRenderContext(IBufferedGraphicsContextAdapter context, nint handle, Size size)
     {
         this.context = context ?? throw new ArgumentNullException(nameof(context));
 
@@ -35,7 +35,7 @@ internal sealed class RenderContext : IRenderContext
         this.bufferedGraphics.Graphics.EnableLowestQuality();
     }
 
-    ~RenderContext()
+    ~GdiRenderContext()
     {
         this.Dispose(false);
     }
@@ -50,13 +50,13 @@ internal sealed class RenderContext : IRenderContext
 
     public void MakeCurrent()
     {
-        ObjectDisposedException.ThrowIf(this.isDisposed, typeof(RenderContext));
+        ObjectDisposedException.ThrowIf(this.isDisposed, typeof(GdiRenderContext));
         CurrentGraphics = this.bufferedGraphics!.Graphics;
     }
 
     public void SwapBuffers()
     {
-        ObjectDisposedException.ThrowIf(this.isDisposed, typeof(RenderContext));
+        ObjectDisposedException.ThrowIf(this.isDisposed, typeof(GdiRenderContext));
         this.bufferedGraphics!.Render();
     }
 

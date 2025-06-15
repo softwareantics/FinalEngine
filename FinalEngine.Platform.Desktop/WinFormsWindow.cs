@@ -1,4 +1,4 @@
-// <copyright file="Window.cs" company="Software Antics">
+// <copyright file="WinFormsWindow.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -11,13 +11,13 @@ using FinalEngine.Platform.Adapters.Forms;
 using FinalEngine.Platform.Adapters.Native;
 using Microsoft.Extensions.Logging;
 
-internal sealed class Window : IWindow
+internal sealed class WinFormsWindow : IWindow
 {
     private const int DefaultClientHeight = 720;
 
     private const int DefaultClientWidth = 1280;
 
-    private readonly ILogger<Window> logger;
+    private readonly ILogger<WinFormsWindow> logger;
 
     private readonly IMapper mapper;
 
@@ -27,8 +27,8 @@ internal sealed class Window : IWindow
 
     private bool isDisposed;
 
-    public Window(
-        ILogger<Window> logger,
+    public WinFormsWindow(
+        ILogger<WinFormsWindow> logger,
         IFormAdapter form,
         INativeAdapter native,
         IMapper mapper)
@@ -63,7 +63,7 @@ internal sealed class Window : IWindow
     }
 
     [ExcludeFromCodeCoverage]
-    ~Window()
+    ~WinFormsWindow()
     {
         this.Dispose(false);
     }
@@ -72,13 +72,13 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.form!.ClientSize;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             this.form!.ClientSize = value;
         }
     }
@@ -87,7 +87,7 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, typeof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, typeof(WinFormsWindow));
             return this.form!.Handle;
         }
     }
@@ -96,13 +96,13 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.form!.MaximizeBox;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             this.form!.MaximizeBox = value;
         }
     }
@@ -111,13 +111,13 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.form!.Visible;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             this.form!.Visible = value;
         }
     }
@@ -126,13 +126,13 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.mapper.Map<WindowState>(this.form!.WindowState);
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
 
             this.logger.LogDebug("Setting window state to {State}.", value);
 
@@ -159,13 +159,13 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.mapper.Map<WindowStyle>(this.form!.FormBorderStyle);
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             this.logger.LogDebug("Changing window style to {Style}.", value);
             this.form!.FormBorderStyle = this.mapper.Map<FormBorderStyle>(value);
         }
@@ -175,20 +175,20 @@ internal sealed class Window : IWindow
     {
         get
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             return this.form!.Text;
         }
 
         set
         {
-            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+            ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
             this.form!.Text = value;
         }
     }
 
     public void Close()
     {
-        ObjectDisposedException.ThrowIf(this.isDisposed, nameof(Window));
+        ObjectDisposedException.ThrowIf(this.isDisposed, nameof(WinFormsWindow));
 
         this.logger.LogInformation("Closing window...");
         this.form!.Close();

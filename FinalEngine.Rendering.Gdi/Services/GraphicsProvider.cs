@@ -10,6 +10,6 @@ internal sealed class GraphicsProvider : IGraphicsProvider
 {
     public IGraphicsAdapter? GetCurrentGraphics()
     {
-        return RenderContext.CurrentGraphics;
+        return GdiRenderContext.CurrentGraphics;
     }
 }

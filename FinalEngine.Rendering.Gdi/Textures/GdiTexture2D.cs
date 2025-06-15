@@ -6,7 +6,7 @@ namespace FinalEngine.Rendering.Textures;
 
 using System.Drawing.Imaging;
 using FinalEngine.Rendering.Adapters.Drawing;
-using FinalEngine.Rendering.Services;
+using FinalEngine.Rendering.Utilities;
 
 internal sealed class GdiTexture2D : IGdiTexture2D
 {

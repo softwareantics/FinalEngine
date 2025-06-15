@@ -19,12 +19,12 @@ public static class EngineBuilderExtensions
 
         builder.Services.AddSingleton<IBufferedGraphicsContextAdapter, BufferedGraphicsContextAdapter>();
 
-        builder.Services.AddSingleton<IRenderContext.RenderContextFactory>(x => (handle, size) => new RenderContext(handle, size));
+        builder.Services.AddSingleton<IRenderContext.RenderContextFactory>(x => (handle, size) => new GdiRenderContext(handle, size));
         builder.Services.AddSingleton<IBitmapAdapter.BitmapAdapterFactory>(x => (width, height, format) => new BitmapAdapter(width, height, format));
 
         builder.Services.AddSingleton<IGraphicsProvider, GraphicsProvider>();
-        builder.Services.AddSingleton<IRenderDevice, RenderDevice>();
-        builder.Services.AddSingleton<IRenderResourceFactory, RenderResourceFactory>();
+        builder.Services.AddSingleton<IRenderDevice, GdiRenderDevice>();
+        builder.Services.AddSingleton<IRenderResourceFactory, GdiRenderResourceFactory>();
 
         return builder;
     }

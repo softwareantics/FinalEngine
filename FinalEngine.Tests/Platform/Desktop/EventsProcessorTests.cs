@@ -19,9 +19,9 @@ internal sealed class EventsProcessorTests
 {
     private IApplicationAdapter applicationAdapter;
 
-    private EventsProcessor eventsProcessor;
+    private WinFormsEventsProcessor eventsProcessor;
 
-    private ILogger<EventsProcessor> logger;
+    private ILogger<WinFormsEventsProcessor> logger;
 
     private INativeAdapter nativeAdapter;
 
@@ -32,8 +32,8 @@ internal sealed class EventsProcessorTests
         Assert.That(this.eventsProcessor.CanProcessEvents, Is.True);
 
         // Act
-        typeof(EventsProcessor)
-            .GetProperty(nameof(EventsProcessor.CanProcessEvents))
+        typeof(WinFormsEventsProcessor)
+            .GetProperty(nameof(WinFormsEventsProcessor.CanProcessEvents))
             .SetValue(this.eventsProcessor, false);
 
         // Assert
@@ -51,7 +51,7 @@ internal sealed class EventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenApplicationAdapterIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() => new EventsProcessor(this.logger, this.nativeAdapter, null));
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(this.logger, this.nativeAdapter, null));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("application"));
@@ -61,7 +61,7 @@ internal sealed class EventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenLoggerIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() => new EventsProcessor(null, this.nativeAdapter, this.applicationAdapter));
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(null, this.nativeAdapter, this.applicationAdapter));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("logger"));
@@ -71,7 +71,7 @@ internal sealed class EventsProcessorTests
     public void ConstructorShouldThrowArgumentNullExceptionWhenNativeAdapterIsNull()
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentNullException>(() => new EventsProcessor(this.logger, null, this.applicationAdapter));
+        var ex = Assert.Throws<ArgumentNullException>(() => new WinFormsEventsProcessor(this.logger, null, this.applicationAdapter));
 
         // Assert
         Assert.That(ex.ParamName, Is.EqualTo("native"));
@@ -115,8 +115,8 @@ internal sealed class EventsProcessorTests
     public void ProcessEventsShouldReturnImmediatelyWhenCanProcessEventsIsFalse()
     {
         // Arrange
-        typeof(EventsProcessor)
-            .GetProperty(nameof(EventsProcessor.CanProcessEvents))
+        typeof(WinFormsEventsProcessor)
+            .GetProperty(nameof(WinFormsEventsProcessor.CanProcessEvents))
             .SetValue(this.eventsProcessor, false);
 
         // Act
@@ -175,7 +175,7 @@ internal sealed class EventsProcessorTests
     {
         this.nativeAdapter = Substitute.For<INativeAdapter>();
         this.applicationAdapter = Substitute.For<IApplicationAdapter>();
-        this.logger = Substitute.For<ILogger<EventsProcessor>>();
-        this.eventsProcessor = new EventsProcessor(this.logger, this.nativeAdapter, this.applicationAdapter);
+        this.logger = Substitute.For<ILogger<WinFormsEventsProcessor>>();
+        this.eventsProcessor = new WinFormsEventsProcessor(this.logger, this.nativeAdapter, this.applicationAdapter);
     }
 }

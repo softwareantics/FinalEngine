@@ -2,7 +2,7 @@
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Rendering.Services;
+namespace FinalEngine.Rendering.Utilities;
 
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -28,8 +28,8 @@ internal static class BitmapUtilities
             {
                 for (int x = 0; x < width; x++)
                 {
-                    int srcIndex = ((y * width) + x) * 4;
-                    int destIndex = (y * stride) + (x * 4);
+                    int srcIndex = (y * width + x) * 4;
+                    int destIndex = y * stride + x * 4;
 
                     byte r = pixels[srcIndex + 0];
                     byte g = pixels[srcIndex + 1];

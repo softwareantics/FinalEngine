@@ -1,4 +1,4 @@
-// <copyright file="EventsProcessor.cs" company="Software Antics">
+// <copyright file="WinFormsEventsProcessor.cs" company="Software Antics">
 // Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -9,16 +9,16 @@ using FinalEngine.Platform.Adapters.Applications;
 using FinalEngine.Platform.Adapters.Native;
 using Microsoft.Extensions.Logging;
 
-internal sealed class EventsProcessor : IEventsProcessor
+internal sealed class WinFormsEventsProcessor : IEventsProcessor
 {
     private readonly IApplicationAdapter application;
 
-    private readonly ILogger<EventsProcessor> logger;
+    private readonly ILogger<WinFormsEventsProcessor> logger;
 
     private readonly INativeAdapter native;
 
-    public EventsProcessor(
-        ILogger<EventsProcessor> logger,
+    public WinFormsEventsProcessor(
+        ILogger<WinFormsEventsProcessor> logger,
         INativeAdapter native,
         IApplicationAdapter application)
     {
