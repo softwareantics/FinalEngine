@@ -62,3 +62,39 @@ jobs:
 
       - name: Build
         run: dotnet build FinalEngine.Platform.Desktop/FinalEngine.Platform.Desktop.csproj --no-restore --configuration Debug
+
+  # FinalEngine.Rendering.Gdi
+  build_rendering_gdi:
+    name: GDI+ Rendering
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Rendering.Gdi/FinalEngine.Rendering.Gdi.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Rendering.Gdi/FinalEngine.Rendering.Gdi.csproj --no-restore --configuration Debug
+
+  # FinalEngine.Resources.Extensions.ImageSharp
+  build_resources_extensions_image_sharp:
+    name: ImageSharp Extensions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore FinalEngine.Resources.Extensions.ImageSharp/FinalEngine.Resources.Extensions.ImageSharp.csproj
+
+      - name: Build
+        run: dotnet build FinalEngine.Resources.Extensions.ImageSharp/FinalEngine.Resources.Extensions.ImageSharp.csproj --no-restore --configuration Debug

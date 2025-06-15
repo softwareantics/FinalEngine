@@ -1,4 +1,4 @@
-// <copyright file="WinFormsEventsProcessorTests.cs" company="Software Antics">
+// <copyright file="EventsProcessorTests.cs" company="Software Antics">
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
@@ -15,7 +15,7 @@ using NSubstitute;
 using NUnit.Framework;
 
 [TestFixture]
-internal sealed class WinFormsEventsProcessorTests
+internal sealed class EventsProcessorTests
 {
     private IApplicationAdapter applicationAdapter;
 

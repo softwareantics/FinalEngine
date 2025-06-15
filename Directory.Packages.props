@@ -15,6 +15,10 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="[9.0.5,)" />
     <!-- DEPENDENCY INJECTION -->
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
+    <!-- IMAGING -->
+    <PackageVersion Include="SixLabors.ImageSharp" Version="[3.1.10,)" />
+    <!-- FILE IO -->
+    <PackageVersion Include="System.IO.Abstractions" Version="[22.0.14,)" />
     <!-- UNIT TESTING -->
     <PackageVersion Include="NSubstitute" Version="[5.3.0,)" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="[1.0.17,)" />

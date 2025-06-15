@@ -9,62 +9,14 @@ using FinalEngine.Platform.Adapters.Applications;
 using FinalEngine.Platform.Adapters.Native;
 using Microsoft.Extensions.Logging;
 
-/// <summary>
-/// Provides a Windows Forms-based implementation of the <see cref="IEventsProcessor"/> interface for processing Windows messages.
-/// </summary>
-///
-/// <remarks>
-/// This implementation mimics the message loop behavior of a Windows Forms application, enabling message filtering and dispatching through native interop. It is designed for game engine use cases where high-performance, reliable message handling is required for input and other system-level events.
-/// </remarks>
-///
-/// <seealso cref="IEventsProcessor"/>
 internal sealed class WinFormsEventsProcessor : IEventsProcessor
 {
-    /// <summary>
-    /// Specifies the <see cref="IApplicationAdapter"/> instance used to filter messages before they are processed.
-    /// </summary>
     private readonly IApplicationAdapter application;
 
-    /// <summary>
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </summary>
     private readonly ILogger<WinFormsEventsProcessor> logger;
 
-    /// <summary>
-    /// Specifies the <see cref="INativeAdapter"/> instance used to interact with the Windows API for message processing.
-    /// </summary>
     private readonly INativeAdapter native;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="WinFormsEventsProcessor"/> class.
-    /// </summary>
-    ///
-    /// <param name="logger">
-    /// Specifies an <see cref="ILogger{TCategoryName}"/> that is used for logging purposes.
-    /// </param>
-    ///
-    /// <param name="native">
-    /// Specifies an <see cref="INativeAdapter"/> that is used to perform Windows API calls for message retrieval and dispatching.
-    /// </param>
-    ///
-    /// <param name="application">
-    /// Specifies an <see cref="IApplicationAdapter"/> that is used to filter messages before processing.
-    /// </param>
-    ///
-    /// <exception cref="ArgumentNullException">
-    /// Thrown when one of the following parameters is null:
-    /// <list type="bullet">
-    ///     <item>
-    ///         <paramref name="logger"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="native"/>
-    ///     </item>
-    ///     <item>
-    ///         <paramref name="application"/>
-    ///     </item>
-    /// </list>
-    /// </exception>
     public WinFormsEventsProcessor(
         ILogger<WinFormsEventsProcessor> logger,
         INativeAdapter native,
@@ -79,20 +31,8 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
         this.logger.LogInformation("Events processor initialized and ready to process events.");
     }
 
-    /// <inheritdoc/>
     public bool CanProcessEvents { get; private set; }
 
-    /// <summary>
-    /// Processes all pending Windows messages from the message queue.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// This method continuously retrieves and dispatches Windows messages until the queue is empty or <see cref="CanProcessEvents"/> is set to <c>false</c>. If <c>PeekMessage</c> or <c>GetMessage</c> returns an error, an exception is thrown with the last Win32 error. Messages are optionally filtered through the configured <see cref="IApplicationAdapter"/> before being passed to the Windows message system via <c>TranslateMessage</c> and <c>DispatchMessage</c>.
-    /// </remarks>
-    ///
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when a critical error occurs during message retrieval from the Windows message queue.
-    /// </exception>
     public void ProcessEvents()
     {
         if (!this.CanProcessEvents)
@@ -101,9 +41,9 @@ internal sealed class WinFormsEventsProcessor : IEventsProcessor
             return;
         }
 
-        while (this.native.PeekMessage(out var message, nint.Zero, 0, 0, 0) != 0)
+        while (this.native.PeekMessage(out _, nint.Zero, 0, 0, 0) != 0)
         {
-            int result = this.native.GetMessage(out message, nint.Zero, 0, 0);
+            int result = this.native.GetMessage(out var message, nint.Zero, 0, 0);
 
             if (result == -1)
             {

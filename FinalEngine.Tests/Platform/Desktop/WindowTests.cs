@@ -1,21 +1,21 @@
-// <copyright file="WinFormsWindowTests.cs" company="Software Antics">
+// <copyright file="WindowTests.cs" company="Software Antics">
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
 namespace FinalEngine.Tests.Platform.Desktop;
 
-using AutoMapper;
-using FinalEngine.Platform;
-using NSubstitute;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using Microsoft.Extensions.Logging;
+using AutoMapper;
+using FinalEngine.Platform;
 using FinalEngine.Platform.Adapters.Forms;
 using FinalEngine.Platform.Adapters.Native;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
 
 [TestFixture]
-internal sealed class WinFormsWindowTests
+internal sealed class WindowTests
 {
     private IFormAdapter form;
 
