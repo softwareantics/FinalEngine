@@ -12,9 +12,9 @@ internal sealed class Mouse : IMouse, IDisposable
 {
     private readonly List<MouseButton> buttonsDown;
 
-    private readonly IMouseDevice? device;
-
     private List<MouseButton> buttonsDownLast;
+
+    private IMouseDevice? device;
 
     private bool isDisposed;
 
@@ -155,6 +155,9 @@ internal sealed class Mouse : IMouse, IDisposable
             this.device.ButtonUp -= this.Device_ButtonUp;
             this.device.Move -= this.Device_Move;
             this.device.Scroll -= this.Device_Scroll;
+
+            this.device.Dispose();
+            this.device = null;
         }
 
         this.buttonsDown.Clear();

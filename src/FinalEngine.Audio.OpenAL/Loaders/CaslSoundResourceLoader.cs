@@ -22,7 +22,7 @@ internal sealed class CaslSoundResourceLoader : ResourceLoaderBase<ISound>
         this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
 
-    protected override ISound LoadResource(string filePath)
+    public override ISound LoadResource(string filePath)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 

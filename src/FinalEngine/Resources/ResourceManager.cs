@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FinalEngine.Resources.Exceptions;
 
-public sealed class ResourceManager : IResourceManager
+internal sealed class ResourceManager : IResourceManager
 {
     private static ResourceManager? instance;
 
@@ -30,7 +30,7 @@ public sealed class ResourceManager : IResourceManager
         this.Dispose(false);
     }
 
-    public static ResourceManager Instance
+    public static IResourceManager Instance
     {
         get { return instance ??= new ResourceManager(); }
     }
@@ -66,12 +66,17 @@ public sealed class ResourceManager : IResourceManager
     public void RegisterLoader<T>(ResourceLoaderBase<T> loader)
         where T : IResource
     {
+        this.RegisterLoader(loader);
+    }
+
+    void IResourceManager.RegisterLoader(IResourceLoader loader)
+    {
         ObjectDisposedException.ThrowIf(this.isDisposed, typeof(ResourceManager));
         ArgumentNullException.ThrowIfNull(loader);
 
-        var type = typeof(T);
+        var type = loader.GetResourceType();
 
-        if (this.typeToLoaderMap.ContainsKey(type))
+        if (this.ContainsLoader(type))
         {
             throw new InvalidOperationException($"The specified {nameof(type)} parameter has already been registered to a resource loader: '{type.FullName}'");
         }
@@ -104,6 +109,11 @@ public sealed class ResourceManager : IResourceManager
                 }
             }
         }
+    }
+
+    private bool ContainsLoader(Type type)
+    {
+        return this.typeToLoaderMap.ContainsKey(type);
     }
 
     private void Dispose(bool disposing)

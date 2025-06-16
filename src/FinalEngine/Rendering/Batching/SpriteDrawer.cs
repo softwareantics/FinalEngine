@@ -92,7 +92,7 @@ internal sealed class SpriteDrawer : ISpriteDrawer, IDisposable
         get
         {
             ObjectDisposedException.ThrowIf(this.isDisposed, typeof(SpriteDrawer));
-            return this.shaderProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Resources\\Shaders\\Batching\\sprite-geometry.fesp");
+            return this.shaderProgram ??= ResourceManager.Instance.LoadResource<IShaderProgram>("Rendering\\Resources\\Shaders\\Batching\\sprite-geometry.fesp");
         }
     }
 

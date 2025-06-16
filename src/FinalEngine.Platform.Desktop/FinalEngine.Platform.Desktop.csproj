@@ -8,6 +8,6 @@
 	</ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\FinalEngine.Hosting\FinalEngine.Hosting.csproj" />
+    <ProjectReference Include="..\FinalEngine\FinalEngine.csproj" />
   </ItemGroup>
 </Project>

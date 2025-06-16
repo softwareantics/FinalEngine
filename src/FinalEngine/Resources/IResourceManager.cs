@@ -15,4 +15,6 @@ public interface IResourceManager : IDisposable
         where T : IResource;
 
     void UnloadResource(IResource resource);
+
+    internal void RegisterLoader(IResourceLoader loader);
 }

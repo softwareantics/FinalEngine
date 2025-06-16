@@ -7,8 +7,6 @@ namespace FinalEngine.Platform;
 using System;
 using System.Drawing;
 
-//// TODO: nint Handle?
-
 public enum WindowState
 {
     Normal,

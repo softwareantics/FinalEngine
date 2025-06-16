@@ -1,4 +1,0 @@
-{
-    "Vertex": "lighting-main.vert",
-    "Fragment": "lighting-directional.frag"
-}

@@ -9,9 +9,9 @@ using System.Collections.Generic;
 
 internal sealed class Keyboard : IKeyboard, IDisposable
 {
-    private readonly IKeyboardDevice? device;
-
     private readonly List<Key> keysDown;
+
+    private IKeyboardDevice? device;
 
     private bool isDisposed;
 
@@ -114,6 +114,9 @@ internal sealed class Keyboard : IKeyboard, IDisposable
         {
             this.device.KeyDown -= this.Device_KeyDown;
             this.device.KeyUp -= this.Device_KeyUp;
+
+            this.device.Dispose();
+            this.device = null;
         }
 
         this.keysDown.Clear();

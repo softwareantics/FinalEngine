@@ -4,7 +4,9 @@
 
 namespace FinalEngine.Resources;
 
-internal interface IResourceLoader
+public interface IResourceLoader
 {
+    Type GetResourceType();
+
     IResource LoadResource(string filePath);
 }

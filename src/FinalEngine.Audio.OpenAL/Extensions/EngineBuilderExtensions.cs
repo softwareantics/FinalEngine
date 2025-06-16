@@ -7,7 +7,7 @@ namespace FinalEngine.Audio.Extensions;
 using FinalEngine.Audio.Factories;
 using FinalEngine.Audio.Loaders;
 using FinalEngine.Hosting;
-using FinalEngine.Resources;
+using FinalEngine.Resources.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class EngineBuilderExtensions
@@ -17,7 +17,7 @@ public static class EngineBuilderExtensions
         ArgumentNullException.ThrowIfNull(builder);
 
         builder.Services.AddSingleton<ICaslAudioFactory, CaslAudioFactory>();
-        builder.Services.AddSingleton<ResourceLoaderBase<ISound>, CaslSoundResourceLoader>();
+        builder.Services.AddResourceLoader<ISound, CaslSoundResourceLoader>();
 
         return builder;
     }

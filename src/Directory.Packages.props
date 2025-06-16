@@ -1,9 +1,11 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="[9.0.0,)" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="[9.0.6,)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[9.0.6,)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="[9.0.6,)" />
     <PackageVersion Include="KinsonDigital.CASL" Version="[1.0.0-preview.21,)" />
-    <PackageVersion Include="System.IO.Abstractions" Version="[22.0.14,)" />
+    <PackageVersion Include="System.IO.Abstractions" Version="21.3.1" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="[3.1.10,)" />
     <PackageVersion Include="OpenTK" Version="[4.8.2,)" />
     <PackageVersion Include="AutoMapper.Extensions.EnumMapping" Version="[4.1.0,)" />
