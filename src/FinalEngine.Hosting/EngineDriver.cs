@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Hosting;
 
-using System.Drawing;
 using FinalEngine.Input.Keyboards;
 using FinalEngine.Input.Mouses;
 using FinalEngine.Platform;
@@ -14,8 +13,6 @@ using Microsoft.Extensions.Logging;
 internal sealed class EngineDriver : IEngineDriver
 {
     private readonly IEventsProcessor eventsProcessor;
-
-    private readonly GameContainerBase? gameContainer;
 
     private readonly IGameTime gameTime;
 
@@ -43,11 +40,8 @@ internal sealed class EngineDriver : IEngineDriver
         IMouse mouse,
         IRenderContext renderContext,
         IRenderPipeline renderPipeline,
-        IGameTime gameTime,
-        IGameContainerFactory factory)
+        IGameTime gameTime)
     {
-        ArgumentNullException.ThrowIfNull(factory);
-
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         this.window = window ?? throw new ArgumentNullException(nameof(window));
@@ -60,8 +54,6 @@ internal sealed class EngineDriver : IEngineDriver
         this.renderPipeline = renderPipeline ?? throw new ArgumentNullException(nameof(renderPipeline));
 
         this.gameTime = gameTime ?? throw new ArgumentNullException(nameof(gameTime));
-
-        this.gameContainer = factory.CreateGameContainer();
     }
 
     ~EngineDriver()
@@ -100,8 +92,6 @@ internal sealed class EngineDriver : IEngineDriver
 
             this.keyboard!.Update();
             this.mouse!.Update();
-
-            this.renderDevice.Clear(Color.CornflowerBlue);
 
             this.renderContext!.SwapBuffers();
             this.eventsProcessor.ProcessEvents();
