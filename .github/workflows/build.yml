@@ -1,0 +1,26 @@
+name: ✅ Build
+run-name: ✅ Build (${{ github.base_ref }} branch)
+
+on:
+  push:
+    branches: [ "final" ]
+  pull_request:
+    branches: [ "final" ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore src/${{ github.event.repository.name }}.sln
+
+      - name: Build
+        run: dotnet build src/${{ github.event.repository.name }}.sln --no-restore --configuration Debug

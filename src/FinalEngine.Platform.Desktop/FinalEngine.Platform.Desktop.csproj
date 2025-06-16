@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FinalEngine.Platform</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+	  <PackageReference Include="OpenTK" />
+	</ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Hosting\FinalEngine.Hosting.csproj" />
+  </ItemGroup>
+</Project>

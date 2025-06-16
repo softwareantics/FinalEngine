@@ -1,91 +1,81 @@
-![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
+# TODO
+
+- Replace Project Name in /github
+- Ensure that all binaries are built in src/bin
+- Ensure that build, unit and release workflows work.
+- Create nice README.
+
+<div align="center">  
+  
+  ![Logo1](https://github.com/user-attachments/assets/685303c1-4357-4b0e-ac5f-2df69abed36c#gh-light-mode-only)  
+  ![Logo](https://github.com/user-attachments/assets/d19450e2-b91f-48ca-b8ca-3fe0f8a30c29#gh-dark-mode-only)
+
+</div>
+
+<div align="center">
+
+# Welcome to {{Project Name}}!
+
+  [![✅ Build Status Check](https://github.com/softwareantics/{{ProjectName}}/actions/workflows/build-status-check.yml/badge.svg?branch=final)](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml)
+  [![🧪 Unit Tests Status Check](https://github.com/softwareantics/{{ProjectName}}/actions/workflows/unit-test-status-check.yml/badge.svg)](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml)
+  
+</div>
+
+<div align="center">
+
+https://www.softwareantics.com.au
+<br><br>
+ <a href="https://www.x.com/softwareantics"><img src="https://raw.githubusercontent.com/CLorant/readme-social-icons/refs/heads/main/large/colored/twitter.svg" alt="Twitter"></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.youtube.com/@softwareantics"><img src="https://raw.githubusercontent.com/CLorant/readme-social-icons/refs/heads/main/large/colored/youtube.svg" alt="YouTube"></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://discord.gg/UNdKXsdeQb"><img src="https://raw.githubusercontent.com/CLorant/readme-social-icons/refs/heads/main/large/colored/discord.svg" alt="Discord"></a>
+</div>
 
 <p align="center">
-    Final Engine is an open-source, cross-platform Game Engine developed in C# 11.0, using .NET 7.0. What began as a hobby project has rapidly evolved into a project that I'm committed to maintaining and developing actively over time. The primary objective of Final Engine is to offer a feature-rich Game Engine that prioritizes simplicity and accessibility for new users. Our mission statement:
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-download">Download</a> •
+  <a href="#-contributing">Contributing</a> •
+  <a href="#-license">License</a>
 </p>
 
-<p align="center">
-    <em>Create an engine that makes game development enjoyable, straightforward, and effortless while granting users complete creative freedom.</em>
-</p>
+---
 
-<p align="center">
-    <a href="https://discord.gg/edCTVFVwnV">
-        <img alt="Discord" src="https://img.shields.io/discord/1085050447410241556?style=flat&logo=discord&label=discord">
-    </a>
-    <a href="https://github.com/softwareantics/FinalEngine/issues?q=is%3Aopen+is%3Aissue+label%3A%22%F0%9F%8F%81+Good+First+Issue%22">
-        <img alt="GitHub issues" src="https://img.shields.io/github/issues/softwareantics/FinalEngine/🏁%20Good%20First%20Issue?color=7057ff&label=Good%20First%20Issues">
-    </a>
-</p>
+## 🚀 Getting Started
 
-<p align="center">
-    <a href="#key-features">Key Features</a> •
-    <a href="#getting-started">Getting Started</a> •
-    <a href="#download">Download</a> •
-    <a href="#contributing">Contributing</a> 
-</p>
+Follow these steps to build and run the engine.
 
-<p align="center">
-    <img src="https://user-images.githubusercontent.com/50978201/202500840-07f0a568-633b-4494-99af-4ca0e17afd4f.png" alt="Screenshot">
-</p>
+> 💬 **Need help?** Join our [Discord](https://discord.gg/UNdKXsdeQb) if you run into any setup issues or have feature questions, your feedback is invaluable and helps shape development.
 
-## Key Features
+### ✅ Prerequisites
 
-### Cross-Platform Compatibility
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
-Built using C# 11 and .NET 7.0, the engine boasts excellent cross-platform compatibility. It's important to note that while the engine is actively in development, some features might not function as expected on certain platforms. If you encounter any issues while using _Final Engine_ on a specific platform, please don't hesitate to [report it](https://github.com/softwareantics/FinalEngine/issues/new/choose).
+### 🧱 Building (Windows, Mac, Linux)
 
-### Advanced Rendering API
+1. Clone or download the repository.
+2. Open `{{ProjectName}}.sln` in your preferred IDE.
+3. Build the solution or run `dotnet build` from the CLI.
 
-_Final Engine_ offers a meticulously designed, feature-rich rendering abstraction layer built over OpenGL (with plans to support additional backends like Direct3D and Vulkan in the future). This API empowers users to engage directly with the graphics card while also providing systems and features for easily rendering meshes and sprites within scenes.
+---
 
-### Rendering Engine
+## 📦 Download
 
-_Final Engine_ has a powerful forward rendering engine that encapsulates a blend of simplicity and robust capabilities. Continuously evolving through active development, the current feature set includes:
+Release builds will be available via:
 
-- **Forward Rendering**: Embraces a classical rendering pipeline for efficient processing.
-- **Mesh Rendering**: Empowers diverse rendering of intricate mesh structures.
-- **Camera System**: Orchestrates scene views and perspectives seamlessly.
-- **Material System**: Enables the utilization of Diffuse, Specular, and Normal Mapping for versatile surface aesthetics.
-- **Lighting**: Embodies the esteemed Blinn-Phong Lighting Model for lifelike illumination.
-- **Light Sources**: Encompasses Directional, Point, and Spot lights for scene ambiance.
-- **Global Illumination**: Augments scene realism through ambient lighting.
+- [GitHub Releases](https://github.com/softwareantics/{{ProjectName}}/releases)
+- [NuGet Packages](https://www.nuget.org/profiles/softwareantics)
 
-More rendering features are constantly being added to _Final Engine_, check out the [features](https://github.com/softwareantics/FinalEngine/blob/master/Documentation/RenderingFeatures.md) list.
+---
 
-### Entity-Component-System (ECS) Architecture
+## 🤝 Contributing
 
-Driven by the ECS architectural pattern, _Final Engine_ employs the entity-component-system model to power its core functionality. Learn more about ECS [here](https://en.wikipedia.org/wiki/Entity_component_system). This architectural choice serves as the foundation of the engine, enabling swift game design while maintaining a clear separation of concerns.
+We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTING.md) to get started.
 
-### Effortless Resource Management
+---
 
-_Final Engine_ incorporates a straightforward and user-friendly _Resource Manager_ to handle various resources utilized within the engine (such as audio, textures, and shaders). Expanding the engine with new resources is made simple through the `ResourceLoaderBase` abstraction and the `IResourceManager.RegisterLoader` method.
+## 🧾 License
 
-### [Desktop Editor (Work in Progress)](#editor)
+Licensed under the **GNU AGPL-3.0**.
 
-We're actively developing an editor application for creating games using _Final Engine_. This editor will grant users the ability to craft entities, components, systems, manage projects, scenes, and resources. Our goal is to offer a preview of the editor by 2024.
-
-![image](https://github.com/softwareantics/FinalEngine/assets/50978201/6bbacbce-7746-41b7-9e15-4ffb5699ec56)
-
-## Getting Started
-
-Below are the prerequisites and instructions for building the engine.
-
-Feel free to reach out to us on [Discord](https://discord.gg/edCTVFVwnV) if you encounter any challenges while setting up the engine or working with its features. Please note that comprehensive user documentation, including tutorials, have not yet been provided. Your inquiries and feedback are greatly valued as they contribute to the ongoing development of our project.
-
-### Prerequisites
-
-- [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0).
-
-### Building on Windows, Mac, and Linux
-
-1. Download or clone the repository.
-2. Open `FinalEngine.sln` in your preferred IDE.
-3. Build the solution (or use `dotnet build`).
-
-### Download
-
-- Release builds will be accessible on GitHub and as NuGet packages.
-
-## Contributing
-
-Follow our contribution guidelines [here](https://github.com/softwareantics/FinalEngine/blob/master/.github/CONTRIBUTING.md) if you wish to contribute to the project.
+See [LICENSE](./LICENSE) for full terms.

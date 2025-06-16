@@ -78,3 +78,4 @@ body:
       placeholder: "Share any additional information that could facilitate development."
     validations:
       required: false
+

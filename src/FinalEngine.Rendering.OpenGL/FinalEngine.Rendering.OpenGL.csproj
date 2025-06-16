@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FinalEngine.Rendering</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTK" />
+    <PackageReference Include="AutoMapper.Extensions.EnumMapping" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalEngine.Hosting\FinalEngine.Hosting.csproj" />
+  </ItemGroup>
+
+</Project>

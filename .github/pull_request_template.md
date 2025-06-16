@@ -2,15 +2,13 @@
 
 Please include a summary of your changes along with relevant motivation and context.
 
-Fixes # (issue)
+- Fixes # (issue)
 
 ## Dependencies
 
 Please list any dependencies that are required for this change.
 
 ## Type of change
-
-Please delete any irrelevant changes.
 
 - [ ] Bug fix (non-breaking change which fixes an issue).
 - [ ] New feature (non-breaking change which adds functionality).
@@ -21,9 +19,9 @@ Please delete any irrelevant changes.
 Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
 
 **Test Configuration**:
-* Operating System:
-* Hardware:
-* Toolchain:
+* Operating System: Windows 11 Home
+* Hardware: Intel i7-10710U, 32GB RAM, Intel UHD Graphics
+* Toolchain: VS Community 2022
 
 ## Proposed Design
 
@@ -39,6 +37,7 @@ Please list any possible issues that may arise from the merge of this PR.
 
 ## Checklist:
 
+- [ ] I have updated the CHANGELOG to reflect my changes
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code in hard-to-understand areas

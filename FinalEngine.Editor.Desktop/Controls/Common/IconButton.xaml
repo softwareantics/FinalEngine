@@ -1,7 +1,0 @@
-<Button x:Class="FinalEngine.Editor.Desktop.Controls.Common.IconButton"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <Image x:Name="image" Width="16" Height="16" />
-    </Grid>
-</Button>

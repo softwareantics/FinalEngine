@@ -1,0 +1,23 @@
+name: 🧪 Unit Tests
+run-name: 🧪 Unit Tests (${{ github.base_ref }} branch)
+
+on:
+  push:
+    branches: [ "final" ]
+  pull_request:
+    branches: [ "final" ]
+
+jobs:
+  run_tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Test
+        run: dotnet test src/${{ github.event.repository.name }}.sln --verbosity normal

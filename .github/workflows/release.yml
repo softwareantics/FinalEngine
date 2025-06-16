@@ -1,0 +1,76 @@
+name: 🚀 Release
+run-name: 🚀 ${{ github.ref_name }} Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  set_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - id: get_version
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore src/${{ github.event.repository.name }}.sln
+
+      - name: Build
+        run: dotnet build src/${{ github.event.repository.name }}.sln --no-restore --configuration Release
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: src/bin/Release/net9.0/
+
+  release:
+    name: Create GitHub Release
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: artifacts/${{ github.event.repository.name }}
+
+      - name: Zip artifacts
+        run: |
+          cd artifacts
+          zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+
+      - name: Extract version
+        id: kacl
+        uses: zogot/kacl-parser@1.0.0
+        with:
+          version: ${{ github.ref_name }}
+        
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.kacl.outputs.release }}
+          files: |
+            artifacts/${{ github.event.repository.name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
