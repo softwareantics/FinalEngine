@@ -1,25 +1,20 @@
-# TODO
+![GitHub-Mark-Light](https://user-images.githubusercontent.com/50978201/193459338-32d71599-19d6-4eb6-b5b3-c34348d623b9.svg#gh-dark-mode-only)
+![GitHub-Mark-Dark](https://user-images.githubusercontent.com/50978201/193459322-b078ed0d-cf0d-4791-ad10-ee2f3131cd20.svg#gh-light-mode-only)
 
-- Replace Project Name in /github
-- Ensure that all binaries are built in src/bin
-- Ensure that build, unit and release workflows work.
-- Create nice README.
-
-<div align="center">  
-  
-  ![Logo1](https://github.com/user-attachments/assets/685303c1-4357-4b0e-ac5f-2df69abed36c#gh-light-mode-only)  
-  ![Logo](https://github.com/user-attachments/assets/d19450e2-b91f-48ca-b8ca-3fe0f8a30c29#gh-dark-mode-only)
-
-</div>
 
 <div align="center">
 
-# Welcome to {{Project Name}}!
-
-  [![✅ Build Status Check](https://github.com/softwareantics/{{ProjectName}}/actions/workflows/build-status-check.yml/badge.svg?branch=final)](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml)
-  [![🧪 Unit Tests Status Check](https://github.com/softwareantics/{{ProjectName}}/actions/workflows/unit-test-status-check.yml/badge.svg)](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml)
+  [![✅ Build Status Check](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml/badge.svg?branch=final)](https://github.com/softwareantics/FinalEngine/actions/workflows/build-status-check.yml)
+  [![🧪 Unit Tests Status Check](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml/badge.svg)](https://github.com/softwareantics/FinalEngine/actions/workflows/unit-test-status-check.yml)
   
+  <strong>Final Engine</strong> is an open-source game engine developed in C# using .NET 9.0. 
+  What began as a hobby project has rapidly evolved into a tool we're committed to actively developing and maintaining. 
+  The core objective of Final Engine is to offer a feature-rich environment that prioritizes simplicity, accessibility, and full creative freedom.
 </div>
+
+<p align="center">
+  <em>Create an engine that makes game development enjoyable, straightforward, and effortless while granting users complete creative freedom.</em>
+</p>
 
 <div align="center">
 
@@ -33,6 +28,7 @@ https://www.softwareantics.com.au
 </div>
 
 <p align="center">
+  <a href="#-key-features">Key Features</a> •
   <a href="#-getting-started">Getting Started</a> •
   <a href="#-download">Download</a> •
   <a href="#-contributing">Contributing</a> •
@@ -41,11 +37,37 @@ https://www.softwareantics.com.au
 
 ---
 
+## 🔑 Key Features
+
+### 🖥️ Platform Support
+
+While currently Windows-only, the architecture is intentionally modular and extensible. Key systems (such as rendering, input, and resource management) follow interface-driven design, allowing cross-platform implementations to be added over time.
+
+### 🎨 Rendering Engine
+
+Final Engine currently uses a minimal GDI+ software renderer to prioritize accessibility and simplicity. Through interface segregation, the rendering backend is **designed to be extensible**, paving the way for future support for APIs like OpenGL, Vulkan, or DirectX without disrupting existing code.
+
+### ⚙️ Entity-Component-System (ECS) Architecture
+
+Final Engine is built on the ECS paradigm, promoting a clean separation of concerns and a flexible game structure. This pattern enables high-performance systems and easily testable game logic.
+
+> Learn more about ECS [here](https://en.wikipedia.org/wiki/Entity_component_system).
+
+### 📦 Effortless Resource Management
+
+Includes a lightweight and intuitive `IResourceManager` system, with plug-and-play support via `ResourceLoaderBase`. It’s easy to register and manage new asset types like textures, audio, and more.
+
+### 🛠️ Desktop Editor *(Work in Progress)*
+
+We're actively developing a desktop editor to streamline game development. This visual tool will help users manage scenes, entities, systems, and resources. A preview build is expected by the end of 2025.
+
+---
+
 ## 🚀 Getting Started
 
 Follow these steps to build and run the engine.
 
-> 💬 **Need help?** Join our [Discord](https://discord.gg/UNdKXsdeQb) if you run into any setup issues or have feature questions, your feedback is invaluable and helps shape development.
+> 💬 **Need help?** Join our [Discord](https://discord.gg/UNdKXsdeQb) if you run into any setup issues or have feature questions. While we don’t yet have full user documentation, your feedback is invaluable and helps shape development.
 
 ### ✅ Prerequisites
 
@@ -54,7 +76,7 @@ Follow these steps to build and run the engine.
 ### 🧱 Building (Windows, Mac, Linux)
 
 1. Clone or download the repository.
-2. Open `{{ProjectName}}.sln` in your preferred IDE.
+2. Open `FinalEngine.sln` in your preferred IDE.
 3. Build the solution or run `dotnet build` from the CLI.
 
 ---
@@ -63,7 +85,7 @@ Follow these steps to build and run the engine.
 
 Release builds will be available via:
 
-- [GitHub Releases](https://github.com/softwareantics/{{ProjectName}}/releases)
+- [GitHub Releases](https://github.com/softwareantics/FinalEngine/releases)
 - [NuGet Packages](https://www.nuget.org/profiles/softwareantics)
 
 ---
@@ -76,6 +98,6 @@ We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTI
 
 ## 🧾 License
 
-Licensed under the **GNU AGPL-3.0**.
+Licensed under the **GNU AGPL-3.0** with a special exception allowing proprietary games built using the engine.
 
 See [LICENSE](./LICENSE) for full terms.
