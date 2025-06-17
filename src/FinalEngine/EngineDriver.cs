@@ -93,8 +93,8 @@ internal sealed class EngineDriver : IEngineDriver
         this.renderPipeline!.Initialize();
 
         //// TODO: Setup a way to set a default starting scene!
+        //// I'm thinking the best way to handle this might be a ISceneStartup.ConfigureScene(IScene) interface.
         //// TODO: Setup service configurators to register automatically through Assembly.Load for all FinalEngine.* assemblies.
-        //// TODO: Remove ResourceManager.Instance and use DI instead (singleton)
         //// TODO: Setup a FinalEngine.Hosting project, register all configurators there and set up an entry point like a way to take a scene and set it as the default
 
         var scene = this.sceneFactory.CreateScene();
