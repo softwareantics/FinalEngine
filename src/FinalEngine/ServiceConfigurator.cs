@@ -28,6 +28,8 @@ internal sealed class ServiceConfigurator : IServiceConfigurator
 
         builder.Services.AddSingleton<IFileSystem, FileSystem>();
 
+        //// TODO: Move all resource loaders and their registration to separate extension projects
+        //// or at least any resource loaders that add dependencies to Core. Use IServiceConfigurator(s)
         builder.Services.AddResourceLoader<IShader, ShaderResourceLoader>();
         builder.Services.AddResourceLoader<IShaderProgram, ShaderProgramResourceLoader>();
         builder.Services.AddResourceLoader<ITexture2D, Texture2DResourceLoader>();
