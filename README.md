@@ -41,11 +41,11 @@ https://www.softwareantics.com.au
 
 ### 🖥️ Platform Support
 
-While currently Windows-only, the architecture is intentionally modular and extensible. Key systems (such as rendering, input, and resource management) follow interface-driven design, allowing cross-platform implementations to be added over time.
+Tested on Windows, but designed to work across Windows, macOS, and Linux. The architecture is intentionally modular and extensible. Key systems—such as rendering, input, and resource management—follow an interface-driven design, enabling cross-platform implementations to be added as needed.
 
 ### 🎨 Rendering Engine
 
-Final Engine currently uses a minimal GDI+ software renderer to prioritize accessibility and simplicity. Through interface segregation, the rendering backend is **designed to be extensible**, paving the way for future support for APIs like OpenGL, Vulkan, or DirectX without disrupting existing code.
+_Final Engine_ offers a feature-rich rendering abstraction layer built over OpenGL (with plans to support additional backends like Direct3D and Vulkan in the future). This API empowers users to engage directly with the graphics card while also providing systems and features for easily rendering meshes and sprites within scenes.
 
 ### ⚙️ Entity-Component-System (ECS) Architecture
 
@@ -59,7 +59,7 @@ Includes a lightweight and intuitive `IResourceManager` system, with plug-and-pl
 
 ### 🛠️ Desktop Editor *(Work in Progress)*
 
-We're actively developing a desktop editor to streamline game development. This visual tool will help users manage scenes, entities, systems, and resources. A preview build is expected by the end of 2025.
+We're actively developing a desktop editor to streamline game development. This visual tool will help users manage scenes, entities, systems, and resources. A preview build is expected by to be available alongside the first initialize release (v0.1.0).
 
 ---
 
