@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering.Profiles;
 
 using AutoMapper;
 using AutoMapper.Extensions.EnumMapping;
+using FinalEngine.Decoding.Imaging;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.States;

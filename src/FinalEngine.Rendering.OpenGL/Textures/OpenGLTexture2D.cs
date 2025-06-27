@@ -6,6 +6,7 @@ namespace FinalEngine.Rendering.Textures;
 
 using System;
 using AutoMapper;
+using FinalEngine.Decoding.Imaging;
 using FinalEngine.Rendering.Invocation;
 using TKPixelForamt = OpenTK.Graphics.OpenGL4.PixelFormat;
 using TKPixelType = OpenTK.Graphics.OpenGL4.PixelType;

@@ -2,6 +2,8 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
+using FinalEngine.Decoding.Imaging;
+
 namespace FinalEngine.Rendering;
 
 using System;
@@ -13,7 +15,7 @@ using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Invocation;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;
-using PixelFormat = Textures.PixelFormat;
+using PixelFormat = PixelFormat;
 
 internal sealed class OpenGLRenderResourceFactory : IRenderResourceFactory
 {

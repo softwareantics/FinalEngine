@@ -6,6 +6,7 @@ namespace FinalEngine.Audio;
 
 using System;
 using CASL;
+using FinalEngine.Audio.Sounds;
 
 internal sealed class CaslSound : ISound
 {

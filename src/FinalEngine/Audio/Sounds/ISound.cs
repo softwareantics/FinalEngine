@@ -2,7 +2,7 @@
 //     Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Audio;
+namespace FinalEngine.Audio.Sounds;
 
 using FinalEngine.Resources;
 

@@ -5,6 +5,7 @@
 namespace FinalEngine.Rendering;
 
 using System.Collections.Generic;
+using FinalEngine.Decoding.Imaging;
 using FinalEngine.Rendering.Buffers;
 using FinalEngine.Rendering.Pipeline;
 using FinalEngine.Rendering.Textures;

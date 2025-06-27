@@ -4,14 +4,17 @@
 
 namespace FinalEngine.Rendering.Primitives;
 
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using FinalEngine.Rendering.Buffers;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct SpriteVertex : IEquatable<SpriteVertex>
+public readonly record struct SpriteVertex(
+    Vector2 Position,
+    Vector4 Color,
+    Vector2 TextureCoordinate,
+    float TextureSlotIndex)
 {
     public static readonly int SizeInBytes = Marshal.SizeOf<SpriteVertex>();
 
@@ -27,46 +30,5 @@ public struct SpriteVertex : IEquatable<SpriteVertex>
                 new (3, 1, InputElementType.Float, 8 * sizeof(float)),
             ];
         }
-    }
-
-    public Vector2 Position { get; set; }
-
-    public Vector4 Color { get; set; }
-
-    public Vector2 TextureCoordinate { get; set; }
-
-    public float TextureSlotIndex { get; set; }
-
-    public static bool operator ==(SpriteVertex left, SpriteVertex right)
-    {
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(SpriteVertex left, SpriteVertex right)
-    {
-        return !(left == right);
-    }
-
-    public readonly bool Equals(SpriteVertex other)
-    {
-        return this.Position == other.Position &&
-               this.Color == other.Color &&
-               this.TextureCoordinate == other.TextureCoordinate &&
-               this.TextureSlotIndex == other.TextureSlotIndex;
-    }
-
-    public override readonly bool Equals(object? obj)
-    {
-        return obj is SpriteVertex vertex && this.Equals(vertex);
-    }
-
-    public override readonly int GetHashCode()
-    {
-        const int accumulator = 17;
-
-        return (this.Position.GetHashCode() * accumulator) +
-               (this.Color.GetHashCode() * accumulator) +
-               (this.TextureCoordinate.GetHashCode() * accumulator) +
-               (this.TextureSlotIndex.GetHashCode() * accumulator);
     }
 }

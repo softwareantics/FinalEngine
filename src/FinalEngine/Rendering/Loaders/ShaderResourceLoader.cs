@@ -2,11 +2,12 @@
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Resources.Loaders;
+namespace FinalEngine.Rendering.Loaders;
 
 using System.IO.Abstractions;
 using FinalEngine.Rendering;
 using FinalEngine.Rendering.Pipeline;
+using FinalEngine.Resources;
 
 internal sealed class ShaderResourceLoader : ResourceLoaderBase<IShader>
 {

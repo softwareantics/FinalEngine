@@ -4,6 +4,7 @@
 
 namespace FinalEngine.Rendering.Textures;
 
+using FinalEngine.Decoding.Imaging;
 using FinalEngine.Resources;
 
 public interface ITexture2D : IResource

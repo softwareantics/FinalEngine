@@ -4,8 +4,6 @@
 
 namespace FinalEngine.Rendering.Textures;
 
-using System;
-
 public enum TextureFilterType
 {
     NearestNeighbour,
@@ -15,14 +13,12 @@ public enum TextureFilterType
     Trilinear,
 }
 
-public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
+public readonly record struct TextureQualitySettings(
+    TextureFilterType FilterType)
 {
-    private TextureFilterType? filterType;
-
-    public TextureFilterType FilterType
+    public TextureQualitySettings()
+        : this(TextureFilterType.Trilinear)
     {
-        readonly get { return this.filterType ?? TextureFilterType.Trilinear; }
-        set { this.filterType = value; }
     }
 
     public readonly TextureFilterMode MagFilter
@@ -51,32 +47,5 @@ public struct TextureQualitySettings : IEquatable<TextureQualitySettings>
                 _ => TextureFilterMode.LinearMipmapLinear,
             };
         }
-    }
-
-    public static bool operator !=(TextureQualitySettings left, TextureQualitySettings right)
-    {
-        return !(left == right);
-    }
-
-    public static bool operator ==(TextureQualitySettings left, TextureQualitySettings right)
-    {
-        return left.Equals(right);
-    }
-
-    public readonly bool Equals(TextureQualitySettings other)
-    {
-        return this.FilterType == other.FilterType;
-    }
-
-    public override readonly bool Equals(object? obj)
-    {
-        return obj is TextureQualitySettings settings && this.Equals(settings);
-    }
-
-    public override readonly int GetHashCode()
-    {
-        const int accumulator = 17;
-
-        return this.FilterType.GetHashCode() * accumulator;
     }
 }

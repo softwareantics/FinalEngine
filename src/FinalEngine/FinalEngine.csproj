@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="System.IO.Abstractions" />
-    <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Rendering\Resources\Shaders\Batching\sprite-geometry.fesp">

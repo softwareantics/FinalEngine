@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.IO.Abstractions;
 using FinalEngine.Audio.Factories;
+using FinalEngine.Audio.Sounds;
 using FinalEngine.Resources;
 
 internal sealed class CaslSoundResourceLoader : ResourceLoaderBase<ISound>

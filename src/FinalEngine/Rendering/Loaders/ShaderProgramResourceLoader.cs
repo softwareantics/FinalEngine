@@ -2,7 +2,9 @@
 //   Copyright (c) Software Antics. All rights reserved.
 // </copyright>
 
-namespace FinalEngine.Resources.Loaders;
+using FinalEngine.Resources;
+
+namespace FinalEngine.Rendering.Loaders;
 
 using System.IO.Abstractions;
 using System.Text.Json;

@@ -4,7 +4,6 @@
 
 namespace FinalEngine.Rendering.States;
 
-using System;
 using System.Drawing;
 
 public enum BlendEquationMode
@@ -43,74 +42,15 @@ public enum BlendMode
     OneMinusDestinationAlpha,
 }
 
-public struct BlendStateDescription : IEquatable<BlendStateDescription>
+public readonly record struct BlendStateDescription(
+    Color Color,
+    BlendMode DestinationMode,
+    BlendEquationMode EquationMode,
+    BlendMode SourceMode,
+    bool Enabled = false)
 {
-    private Color? color;
-
-    private BlendMode? destinationMode;
-
-    private BlendEquationMode? equationMode;
-
-    private BlendMode? sourceMode;
-
-    public Color Color
+    public BlendStateDescription()
+        : this(Color.Black, BlendMode.Zero, BlendEquationMode.Add, BlendMode.One, false)
     {
-        readonly get { return this.color ?? Color.Black; }
-        set { this.color = value; }
-    }
-
-    public BlendMode DestinationMode
-    {
-        readonly get { return this.destinationMode ?? BlendMode.Zero; }
-        set { this.destinationMode = value; }
-    }
-
-    public bool Enabled { get; set; }
-
-    public BlendEquationMode EquationMode
-    {
-        readonly get { return this.equationMode ?? BlendEquationMode.Add; }
-        set { this.equationMode = value; }
-    }
-
-    public BlendMode SourceMode
-    {
-        readonly get { return this.sourceMode ?? BlendMode.One; }
-        set { this.sourceMode = value; }
-    }
-
-    public static bool operator !=(BlendStateDescription left, BlendStateDescription right)
-    {
-        return !(left == right);
-    }
-
-    public static bool operator ==(BlendStateDescription left, BlendStateDescription right)
-    {
-        return left.Equals(right);
-    }
-
-    public readonly bool Equals(BlendStateDescription other)
-    {
-        return this.Color == other.Color &&
-               this.DestinationMode == other.DestinationMode &&
-               this.Enabled == other.Enabled &&
-               this.EquationMode == other.EquationMode &&
-               this.SourceMode == other.SourceMode;
-    }
-
-    public override readonly bool Equals(object? obj)
-    {
-        return obj is BlendStateDescription description && this.Equals(description);
-    }
-
-    public override readonly int GetHashCode()
-    {
-        const int accumulator = 17;
-
-        return (this.Color.GetHashCode() * accumulator) +
-               (this.DestinationMode.GetHashCode() * accumulator) +
-               (this.Enabled.GetHashCode() * accumulator) +
-               (this.EquationMode.GetHashCode() * accumulator) +
-               (this.SourceMode.GetHashCode() * accumulator);
     }
 }
